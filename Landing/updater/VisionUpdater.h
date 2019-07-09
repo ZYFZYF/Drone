@@ -1,7 +1,3 @@
-//
-// Created by 97344 on 2019/7/8.
-//
-
 #ifndef LANDING_VISIONPLANNER_H
 #define LANDING_VISIONPLANNER_H
 
@@ -14,7 +10,7 @@ public:
     static VisionUpdater *Instance(int client_id);
 private:
     VisionUpdater(int client_id);
-    void update() const override ;
+    void update() override ;
 };
 
 

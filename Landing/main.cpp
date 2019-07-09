@@ -2,24 +2,25 @@
 #include <cstdlib>
 #include <iostream>
 #include <thread>
-#include "PathUpdater.h"
-#include "VisionUpdater.h"
-#include "logging.h"
+#include "updater/PathUpdater.h"
+#include "updater/VisionUpdater.h"
 #include <windows.h>
-#include <signal.h>
-extern "C" {
-#include "extApi.h"
-}
 int client_id;
 bool ctrlHandler(DWORD fdwctrltype)
 {
     switch (fdwctrltype)
     {
         case CTRL_C_EVENT:
+        {
             simxStopSimulation(client_id, simx_opmode_blocking);
             simxFinish(client_id);
             std::cout<<"Close connection to V-REP"<<std::endl;
             return false;
+        }
+        default:
+        {
+            return false;
+        }
     }
 }
 int main(int argc, char const *argv[])

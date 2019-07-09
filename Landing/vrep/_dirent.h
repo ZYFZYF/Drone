@@ -11,7 +11,7 @@
 #define DIRENT_H
 
 /*
- * Define architecture flags so we don't need to include windows.h.
+ * Define architecture flags so we don't need to vrep windows.h.
  * Avoiding windows.h makes it simpler to use windows sockets in conjunction
  * with dirent.h.
  */
@@ -419,7 +419,7 @@ _wopendir(
 /*
  * Read next directory entry.  The directory entry is returned in dirent
  * structure in the d_name field.  Individual directory entries returned by
- * this function include regular files, sub-directories, pseudo-directories
+ * this function vrep regular files, sub-directories, pseudo-directories
  * "." and ".." as well as volume labels, hidden files and system files.
  */
 static struct _wdirent*
