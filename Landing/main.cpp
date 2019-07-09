@@ -20,20 +20,6 @@ bool ctrlHandler(DWORD fdwctrltype)
             simxFinish(client_id);
             std::cout<<"Close connection to V-REP"<<std::endl;
             return false;
-//        case CTRL_CLOSE_EVENT:
-//            printf("ctrl-close event\n\n");
-//            return(true);
-//        case CTRL_BREAK_EVENT:
-//            printf("ctrl-break event\n\n");
-//            return false;
-//        case CTRL_LOGOFF_EVENT:
-//            printf("ctrl-logoff event\n\n");
-//            return false;
-//            case CTRL_SHUTDOWN_EVENT:
-//            printf("ctrl-shutdown event\n\n");
-//            return false;
-//        default:
-//            return false;
     }
 }
 int main(int argc, char const *argv[])
