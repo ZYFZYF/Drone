@@ -23,27 +23,39 @@ void Updater::run()
     }
 }
 
-void Updater::getCarPosition(simxFloat *pos)
+const Point Updater::getDronePosition()
 {
-    simxGetObjectPosition(m_cid, m_handle_car, -1, pos, simx_opmode_blocking);
-}
-
-void Updater::getDronePosition(simxFloat *pos)
-{
+    simxFloat pos[3];
     simxGetObjectPosition(m_cid, m_handle_drone, -1, pos, simx_opmode_blocking);
+    return Point(pos[0], pos[1], pos[2]);
 }
 
-void Updater::getTargetPosition(simxFloat *pos)
+const Point Updater::getCarPosition()
 {
+    simxFloat pos[3];
+    simxGetObjectPosition(m_cid, m_handle_car, -1, pos, simx_opmode_blocking);
+    return Point(pos);
+}
+
+const Point Updater::getTargetPosition()
+{
+    simxFloat pos[3];
     simxGetObjectPosition(m_cid, m_handle_target, -1, pos, simx_opmode_blocking);
+    return Point(pos);
 }
 
-void Updater::getPlanePosition(simxFloat *pos)
+const Point Updater::getPlanePosition()
 {
+    simxFloat pos[3];
     simxGetObjectPosition(m_cid, m_handle_plane, -1, pos, simx_opmode_blocking);
+    return Point(pos);
 }
 
-void Updater::setTargetPosition(simxFloat *pos)
+void Updater::setTargetPosition(Point p)
 {
+    simxFloat pos[3];
+    pos[0] = p[0];
+    pos[1] = p[1];
+    pos[2] = p[2];
     simxSetObjectPosition(m_cid, m_handle_target, -1, pos, simx_opmode_oneshot);
 }

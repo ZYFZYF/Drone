@@ -39,14 +39,15 @@ int main(int argc, char const *argv[])
     }
     std::cout<< "Connect to remote API server and cid is " << client_id <<std::endl;
     simxStartSimulation(client_id, simx_opmode_blocking);
-    std::thread path([]() {
-        PathUpdater::Instance(client_id)->run();
-    });
-    std::thread vision([]() {
-        VisionUpdater::Instance(client_id)->run();
-    });
-    path.join();
-    vision.join();
+//    std::thread path([]() {
+//        PathUpdater::Instance(client_id)->run();
+//    });
+//    std::thread vision([]() {
+//        VisionUpdater::Instance(client_id)->run();
+//    });
+//    path.join();
+//    vision.join();
+    PathUpdater::Instance(client_id)->run();
     return 0;
 }
 

@@ -1,7 +1,3 @@
-//
-// Created by 97344 on 2019/7/8.
-//
-
 #include <iostream>
 #include "VisionUpdater.h"
 VisionUpdater* VisionUpdater::Instance(int client_id)

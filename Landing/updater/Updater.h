@@ -4,6 +4,7 @@
 extern "C" {
 #include "extApi.h"
 }
+#include "Point.h"
 
 class Updater
 {
@@ -14,15 +15,15 @@ public:
 
     void run();
 
-    void getDronePosition(simxFloat *pos);
+    const Point getDronePosition();
 
-    void getCarPosition(simxFloat *pos);
+    const Point getCarPosition();
 
-    void getTargetPosition(simxFloat *pos);
+    const Point getTargetPosition();
 
-    void getPlanePosition(simxFloat *pos);
+    const Point getPlanePosition();
 
-    void setTargetPosition(simxFloat *pos);
+    void setTargetPosition(Point p);
 
 
 protected:

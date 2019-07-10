@@ -1,5 +1,7 @@
 #include <iostream>
 #include "RisingState.h"
+#include "ApproachingState.h"
+#include "WaitState.h"
 
 RisingState::RisingState() {}
 
@@ -15,15 +17,20 @@ void RisingState::Enter(PathUpdater *t)
 
 void RisingState::Execute(PathUpdater *t)
 {
-    simxFloat target_pos[3];
-    t->getDronePosition(target_pos);
+    Point target_pos = t->getDronePosition();
     std::cout << target_pos[0] << " " << target_pos[1] << " " << target_pos[2] << std::endl;
-    target_pos[2] += 0.05;
+    target_pos.setZ(target_pos[2] + RISING_STEP_LENGTH);
     std::cout << target_pos[2] << std::endl;
     t->setTargetPosition(target_pos);
+
+    if(target_pos[2] > RISING_HEIGHT)
+    {
+        t->changeState(new WaitState(200, ApproachingState::Instance()));
+        //t->changeState(ApproachingState::Instance());
+    }
 }
 
 void RisingState::Exit(PathUpdater *t)
 {
-    std::cout << "rising finished and prepare to leave" << std::endl;
+    std::cout << "rising to height " << RISING_HEIGHT << " and prepare to leave" << std::endl;
 }

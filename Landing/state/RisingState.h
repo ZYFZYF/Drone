@@ -17,6 +17,11 @@ public:
 
 private:
     RisingState();
+
+    const simxFloat RISING_HEIGHT = 3.0;
+
+    const float RISING_STEP_LENGTH = 0.08;
+
 };
 
 

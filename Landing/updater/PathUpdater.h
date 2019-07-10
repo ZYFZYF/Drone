@@ -11,13 +11,13 @@ class PathUpdater : public Updater
 {
 public:
     static PathUpdater *Instance(simxInt);
+    void changeState(State<PathUpdater>*);
 
 private:
     explicit PathUpdater(simxInt);
 
     void update() override;
 
-    void changeState(State<PathUpdater>*);
 
     State<PathUpdater>* m_current_state;
 };
