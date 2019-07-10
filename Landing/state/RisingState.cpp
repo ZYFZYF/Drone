@@ -25,7 +25,7 @@ void RisingState::Execute(PathUpdater *t)
 
     if(target_pos[2] > RISING_HEIGHT)
     {
-        t->changeState(new WaitState(200, ApproachingState::Instance()));
+        t->changeState(WaitState::Instance(200, ApproachingState::Instance()));
         //t->changeState(ApproachingState::Instance());
     }
 }

@@ -7,7 +7,7 @@
 class WaitState : public State<PathUpdater>
 {
 public:
-    WaitState(int rounds, State *next_state);
+
 
     void Enter(PathUpdater *t) override;
 
@@ -15,7 +15,12 @@ public:
 
     void Exit(PathUpdater *t) override;
 
+    static WaitState *Instance(int remain_rounds, State *next_state);
+
+    void reset(int remain_rounds, State *next_state);
+
 private:
+    WaitState();
     int m_remain_rounds;
     State *m_next_state;
 };
