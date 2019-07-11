@@ -25,6 +25,7 @@ public:
     const Point operator /(simxFloat p) const;
     const Point normalize() const;
     simxFloat operator *(const Point &p) const;
+    simxFloat norm() const;
     friend const Point operator *(const Point &lhs, simxFloat rhs);
     friend const Point operator *(simxFloat lhs, const Point &rhs);
 

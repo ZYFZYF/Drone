@@ -7,6 +7,8 @@
 class ApproachingState : public State<PathUpdater>
 {
 public:
+    ApproachingState();
+
     void Enter(PathUpdater *t) override;
 
     void Execute(PathUpdater *t) override;
@@ -16,7 +18,7 @@ public:
     static ApproachingState *Instance();
 
 private:
-    ApproachingState();
+
 
     const simxFloat APPROACHING_OVER_HEIGHT = 1.0;
 

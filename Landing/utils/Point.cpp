@@ -110,3 +110,8 @@ void Point::set(int ind, simxFloat val)
     pos[ind] = val;
 }
 
+simxFloat Point::norm() const
+{
+    return std::fmax(fabsf(pos[0]), std::fmax(fabsf(pos[1]), fabsf(pos[2])));
+}
+

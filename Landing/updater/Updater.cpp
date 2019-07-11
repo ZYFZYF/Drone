@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cassert>
 #include "Updater.h"
 #include "windows.h"
 
@@ -58,4 +59,12 @@ void Updater::setTargetPosition(Point p)
     pos[1] = p[1];
     pos[2] = p[2];
     simxSetObjectPosition(m_cid, m_handle_target, -1, pos, simx_opmode_oneshot);
+}
+
+void
+Updater::setLandingSignal(simxFloat landing_begin_height, simxFloat landing_end_height)
+{
+    assert(landing_end_height > 0 && landing_end_height < landing_begin_height);
+    simxSetFloatSignal(m_cid, "landing_begin_height", landing_begin_height, simx_opmode_oneshot);
+    simxSetFloatSignal(m_cid, "landing_end_height", landing_end_height, simx_opmode_oneshot);
 }

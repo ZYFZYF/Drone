@@ -25,6 +25,8 @@ public:
 
     void setTargetPosition(Point p);
 
+    void setLandingSignal(simxFloat landing_begin_height, simxFloat landing_end_height);
+
 
 protected:
     simxInt m_cid;

@@ -7,18 +7,18 @@
 class RisingState : public State<PathUpdater>
 {
 public:
+    RisingState();
+
     void Enter(PathUpdater *t) override;
 
     void Execute(PathUpdater *t) override;
 
     void Exit(PathUpdater *t) override;
 
-    static RisingState *Instance();
-
 private:
-    RisingState();
 
-    const simxFloat RISING_HEIGHT = 3.0;
+
+    const simxFloat RISING_HEIGHT = 2.0;
 
     const float RISING_STEP_LENGTH = 0.08;
 
