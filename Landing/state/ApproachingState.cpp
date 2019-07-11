@@ -6,6 +6,10 @@
 void ApproachingState::Enter(PathUpdater *t)
 {
     std::cout << "now begin approaching to the car" << std::endl;
+    Point plane_pos = t->getPlanePosition();
+    t->setLandingSignal(plane_pos[2] + RELATIVE_LANDING_BEGIN_HEIGHT, plane_pos[2] + RELATIVE_LANDING_END_HEIGHT);
+    std::cout << "adjust landing height to " << plane_pos[2] + RELATIVE_LANDING_BEGIN_HEIGHT << " and "
+              << plane_pos[2] + RELATIVE_LANDING_END_HEIGHT << std::endl;
 }
 
 void ApproachingState::Execute(PathUpdater *t)

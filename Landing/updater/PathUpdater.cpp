@@ -28,3 +28,8 @@ void PathUpdater::changeState(State<PathUpdater> *p_new_state)
     m_current_state = p_new_state;
     m_current_state->Enter(this);
 }
+
+void PathUpdater::setLandingFinished()
+{
+    simxSetFloatSignal(m_cid, "is_landing_finished", 1.0, simx_opmode_oneshot);
+}

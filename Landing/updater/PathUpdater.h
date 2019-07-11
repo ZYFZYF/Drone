@@ -12,7 +12,7 @@ class PathUpdater : public Updater
 public:
     static PathUpdater *Instance(simxInt);
     void changeState(State<PathUpdater>*);
-
+    void setLandingFinished();
 private:
     explicit PathUpdater(simxInt);
 
