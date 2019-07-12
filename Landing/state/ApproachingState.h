@@ -15,15 +15,12 @@ public:
 
     void Exit(PathUpdater *t) override;
 
-    static ApproachingState *Instance();
-
 private:
 
-
-    const simxFloat APPROACHING_OVER_HEIGHT = 0.3;
+    const simxFloat APPROACHING_OVER_HEIGHT = 0.6;
     const simxFloat APPROACHING_STEP_LENGTH = 0.03;
     const simxFloat RELATIVE_LANDING_BEGIN_HEIGHT = 0.75;
-    const simxFloat RELATIVE_LANDING_END_HEIGHT = 0.3;
+    const simxFloat RELATIVE_LANDING_END_HEIGHT = 0.4;
 };
 
 

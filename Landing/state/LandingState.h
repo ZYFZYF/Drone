@@ -16,8 +16,9 @@ public:
     void Exit(PathUpdater *t) override;
 
 private:
-    const simxFloat RELATIVE_LANDING_HEIGHT = 0.28;
+    const simxFloat RELATIVE_LANDING_HEIGHT = 0.35;
     const simxFloat LANDING_STEP_LENGTH = 0.03;
+    int close_rounds = 0;
 };
 
 
