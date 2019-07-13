@@ -5,22 +5,24 @@
 #include "Updater.h"
 #include "State.h"
 
-const int PATHTIMESTEP = 60;
-
 class PathUpdater : public Updater
 {
 public:
     static PathUpdater *Instance(simxInt);
-    void changeState(State<PathUpdater>*);
+
+    void changeState(State<PathUpdater> *);
+
     void setLandingFinished();
+
 private:
     explicit PathUpdater(simxInt);
 
     void update() override;
 
 
-    State<PathUpdater>* m_current_state;
-};
+    State<PathUpdater> *m_current_state;
 
+    const int PATH_TIME_STEP = config.getIntParam("PathUpdater", "PATH_TIME_STEP");
+};
 
 #endif //LANDING_PATHPLANER_H

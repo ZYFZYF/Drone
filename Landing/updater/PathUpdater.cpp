@@ -9,9 +9,9 @@ PathUpdater *PathUpdater::Instance(int client_id)
     return &instance;
 }
 
-PathUpdater::PathUpdater(int client_id) : Updater(PATHTIMESTEP, client_id)
+PathUpdater::PathUpdater(int client_id) : Updater(PATH_TIME_STEP, client_id)
 {
-    std::cout << "VisionPlanner constructed" << std::endl;
+    std::cout << "PathPlanner constructed" << std::endl;
     m_current_state = new RisingState;
 }
 

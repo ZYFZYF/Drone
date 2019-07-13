@@ -17,10 +17,10 @@ public:
 
 private:
 
-    const simxFloat APPROACHING_OVER_HEIGHT = 0.6;
-    const simxFloat APPROACHING_STEP_LENGTH = 0.03;
-    const simxFloat RELATIVE_LANDING_BEGIN_HEIGHT = 0.75;
-    const simxFloat RELATIVE_LANDING_END_HEIGHT = 0.4;
+    const simxFloat APPROACHING_OVER_HEIGHT = config.getFloatParam("ApproachingState", "APPROACHING_OVER_HEIGHT");
+    const simxFloat APPROACHING_STEP_LENGTH = config.getFloatParam("ApproachingState", "APPROACHING_STEP_LENGTH");
+    const simxFloat RELATIVE_LANDING_BEGIN_HEIGHT = config.getFloatParam("ApproachingState", "RELATIVE_LANDING_BEGIN_HEIGHT");
+    const simxFloat RELATIVE_LANDING_END_HEIGHT = config.getFloatParam("ApproachingState", "RELATIVE_LANDING_END_HEIGHT");
 };
 
 

@@ -6,7 +6,7 @@ VisionUpdater* VisionUpdater::Instance(int client_id)
     return &instance;
 }
 
-VisionUpdater::VisionUpdater(int client_id): Updater(VISIONTIMESTEP, client_id)
+VisionUpdater::VisionUpdater(int client_id): Updater(VISION_TIME_STEP, client_id)
 {
     std::cout<<"VisionPlanner constructed"<<std::endl;
 }

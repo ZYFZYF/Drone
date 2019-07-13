@@ -5,6 +5,7 @@ extern "C" {
 #include "extApi.h"
 }
 #include "Point.h"
+#include "Config.h"
 
 class Updater
 {

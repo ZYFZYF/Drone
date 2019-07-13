@@ -18,9 +18,9 @@ public:
 private:
 
 
-    const simxFloat RISING_HEIGHT = 2.0;
+    const simxFloat RISING_HEIGHT = config.getFloatParam("RisingState", "RISING_HEIGHT");
 
-    const float RISING_STEP_LENGTH = 0.08;
+    const float RISING_STEP_LENGTH = config.getFloatParam("RisingState", "RISING_STEP_LENGTH");
 
 };
 

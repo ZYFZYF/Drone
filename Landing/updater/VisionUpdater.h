@@ -3,14 +3,19 @@
 
 
 #include "Updater.h"
-const int VISIONTIMESTEP = 25;
-class VisionUpdater: public Updater
+
+class VisionUpdater : public Updater
 {
 public:
     static VisionUpdater *Instance(int client_id);
+
 private:
     VisionUpdater(int client_id);
-    void update() override ;
+
+    void update() override;
+
+    const int VISION_TIME_STEP = config.getIntParam("VisionUpdater", "VISION_TIME_STEP");
+
 };
 
 

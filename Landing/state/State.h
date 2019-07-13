@@ -1,6 +1,7 @@
 #ifndef LANDING_STATE_H
 #define LANDING_STATE_H
 
+#include "Config.h"
 template <class T>
 class State
 {
