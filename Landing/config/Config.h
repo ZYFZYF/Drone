@@ -24,8 +24,6 @@ public:
 
 
 private:
-    std::mutex mutex;
-
     setting_type settings;
 };
 
