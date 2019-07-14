@@ -72,6 +72,14 @@ int main(int argc, char const *argv[])
     std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
 
 
+//    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
+//    ShallowLearning::updateParam("test", 1);
+//    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
+//    ShallowLearning::updateParam("test", 2);
+//    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
+//    ShallowLearning::updateParam("test", 3);
+//    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
+
 //    std::thread path([]() {
 //        PathUpdater::Instance(client_id)->run();
 //    });
