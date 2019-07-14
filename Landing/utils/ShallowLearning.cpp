@@ -2,6 +2,7 @@
 #include <fstream>
 #include <iostream>
 #include "ShallowLearning.h"
+#include "utils.h"
 
 float ShallowLearning::evalParam(const std::string &param, float default_value)
 {
@@ -15,7 +16,8 @@ float ShallowLearning::evalParam(const std::string &param, float default_value)
     {
         std::vector<float> history_data;
         float data;
-        while (file >> data)
+        std::string now_time;
+        while (file >> data >> now_time)
         {
             history_data.push_back(data);
         }
@@ -33,7 +35,7 @@ void ShallowLearning::updateParam(const std::string &param, float actual_value)
 {
     std::string file_path = generateFileFromParamName(param);
     std::fstream file(file_path, std::ios::out | std::ios::app);
-    file << actual_value << std::endl;
+    file << actual_value << '\t' << utils::getNowTime() << std::endl;
     file.close();
 }
 

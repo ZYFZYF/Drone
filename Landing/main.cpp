@@ -61,7 +61,7 @@ int main(int argc, char const *argv[])
     {
         std::cout << "Capture ctrl-c event failed" << std::endl;
         exit(0);
-    };
+    }
     doSomethingBeforeSimulation();
 
 //    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
