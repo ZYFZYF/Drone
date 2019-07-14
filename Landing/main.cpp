@@ -62,15 +62,7 @@ int main(int argc, char const *argv[])
         std::cout << "Capture ctrl-c event failed" << std::endl;
         exit(0);
     };
-    //doSomethingBeforeSimulation();
-    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
-    ShallowLearning::updateParam("test", 1);
-    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
-    ShallowLearning::updateParam("test", 2);
-    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
-    ShallowLearning::updateParam("test", 3);
-    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
-
+    doSomethingBeforeSimulation();
 
 //    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
 //    ShallowLearning::updateParam("test", 1);
@@ -88,7 +80,7 @@ int main(int argc, char const *argv[])
 //    });
 //    path.join();
 //    vision.join();
-    // PathUpdater::Instance(client_id)->run();
+    PathUpdater::Instance(client_id)->run();
     return 0;
 }
 
