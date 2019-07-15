@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="Planning"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="D:/2019 Summer Vacation/Drone/Planning/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/PROGRA~2/Dev-Cpp/MinGW64/bin/mingw32-make.exe -f &quot;D:/2019 Summer Vacation/Drone/Planning/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="C:/PROGRA~2/Dev-Cpp/MinGW64/bin/mingw32-make.exe -f &quot;D:/2019 Summer Vacation/Drone/Planning/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/PROGRA~2/Dev-Cpp/MinGW64/bin/mingw32-make.exe -f &quot;D:/2019 Summer Vacation/Drone/Planning/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/PROGRA~2/Dev-Cpp/MinGW64/bin/mingw32-make.exe -f &quot;D:/2019 Summer Vacation/Drone/Planning/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="D:/2019 Summer Vacation/Drone/Planning/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/PROGRA~2/Dev-Cpp/MinGW64/bin/mingw32-make.exe -f &quot;D:/2019 Summer Vacation/Drone/Planning/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="C:/PROGRA~2/Dev-Cpp/MinGW64/bin/mingw32-make.exe -f &quot;D:/2019 Summer Vacation/Drone/Planning/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/PROGRA~2/Dev-Cpp/MinGW64/bin/mingw32-make.exe -f &quot;D:/2019 Summer Vacation/Drone/Planning/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/PROGRA~2/Dev-Cpp/MinGW64/bin/mingw32-make.exe -f &quot;D:/2019 Summer Vacation/Drone/Planning/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Planning">
+				<Option output="D:/2019 Summer Vacation/Drone/Planning/cmake-build-debug/Planning.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="D:/2019 Summer Vacation/Drone/Planning/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DNON_MATLAB_PARSING=1"/>
+					<Add option="-DMAX_EXT_API_CONNECTIONS=255"/>
+					<Add option="-DDO_NOT_USE_SHARED_MEMORY=1"/>
+					<Add directory="D:/2019 Summer Vacation/Drone/Planning/vrep"/>
+					<Add directory="D:/2019 Summer Vacation/Drone/Planning/stack"/>
+					<Add directory="D:/2019 Summer Vacation/Drone/Planning/updater"/>
+					<Add directory="D:/2019 Summer Vacation/Drone/Planning/utils"/>
+					<Add directory="D:/2019 Summer Vacation/Drone/Planning/state"/>
+					<Add directory="D:/2019 Summer Vacation/Drone/Planning/config"/>
+					<Add directory="C:/Program Files (x86)/Dev-Cpp/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"/>
+					<Add directory="C:/Program Files (x86)/Dev-Cpp/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++/x86_64-w64-mingw32"/>
+					<Add directory="C:/Program Files (x86)/Dev-Cpp/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++/backward"/>
+					<Add directory="C:/Program Files (x86)/Dev-Cpp/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/4.9.2/include"/>
+					<Add directory="C:/Program Files (x86)/Dev-Cpp/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/4.9.2/../../../../include"/>
+					<Add directory="C:/Program Files (x86)/Dev-Cpp/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/4.9.2/include-fixed"/>
+					<Add directory="C:/Program Files (x86)/Dev-Cpp/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/4.9.2/../../../../x86_64-w64-mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/PROGRA~2/Dev-Cpp/MinGW64/bin/mingw32-make.exe -f &quot;D:/2019 Summer Vacation/Drone/Planning/cmake-build-debug/Makefile&quot;  VERBOSE=1 Planning"/>
+					<CompileFile command="C:/PROGRA~2/Dev-Cpp/MinGW64/bin/mingw32-make.exe -f &quot;D:/2019 Summer Vacation/Drone/Planning/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/PROGRA~2/Dev-Cpp/MinGW64/bin/mingw32-make.exe -f &quot;D:/2019 Summer Vacation/Drone/Planning/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/PROGRA~2/Dev-Cpp/MinGW64/bin/mingw32-make.exe -f &quot;D:/2019 Summer Vacation/Drone/Planning/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Planning/fast">
+				<Option output="D:/2019 Summer Vacation/Drone/Planning/cmake-build-debug/Planning.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="D:/2019 Summer Vacation/Drone/Planning/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DNON_MATLAB_PARSING=1"/>
+					<Add option="-DMAX_EXT_API_CONNECTIONS=255"/>
+					<Add option="-DDO_NOT_USE_SHARED_MEMORY=1"/>
+					<Add directory="D:/2019 Summer Vacation/Drone/Planning/vrep"/>
+					<Add directory="D:/2019 Summer Vacation/Drone/Planning/stack"/>
+					<Add directory="D:/2019 Summer Vacation/Drone/Planning/updater"/>
+					<Add directory="D:/2019 Summer Vacation/Drone/Planning/utils"/>
+					<Add directory="D:/2019 Summer Vacation/Drone/Planning/state"/>
+					<Add directory="D:/2019 Summer Vacation/Drone/Planning/config"/>
+					<Add directory="C:/Program Files (x86)/Dev-Cpp/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"/>
+					<Add directory="C:/Program Files (x86)/Dev-Cpp/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++/x86_64-w64-mingw32"/>
+					<Add directory="C:/Program Files (x86)/Dev-Cpp/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++/backward"/>
+					<Add directory="C:/Program Files (x86)/Dev-Cpp/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/4.9.2/include"/>
+					<Add directory="C:/Program Files (x86)/Dev-Cpp/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/4.9.2/../../../../include"/>
+					<Add directory="C:/Program Files (x86)/Dev-Cpp/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/4.9.2/include-fixed"/>
+					<Add directory="C:/Program Files (x86)/Dev-Cpp/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/4.9.2/../../../../x86_64-w64-mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/PROGRA~2/Dev-Cpp/MinGW64/bin/mingw32-make.exe -f &quot;D:/2019 Summer Vacation/Drone/Planning/cmake-build-debug/Makefile&quot;  VERBOSE=1 Planning/fast"/>
+					<CompileFile command="C:/PROGRA~2/Dev-Cpp/MinGW64/bin/mingw32-make.exe -f &quot;D:/2019 Summer Vacation/Drone/Planning/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/PROGRA~2/Dev-Cpp/MinGW64/bin/mingw32-make.exe -f &quot;D:/2019 Summer Vacation/Drone/Planning/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/PROGRA~2/Dev-Cpp/MinGW64/bin/mingw32-make.exe -f &quot;D:/2019 Summer Vacation/Drone/Planning/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="D:/2019 Summer Vacation/Drone/Planning/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/PROGRA~2/Dev-Cpp/MinGW64/bin/mingw32-make.exe -f &quot;D:/2019 Summer Vacation/Drone/Planning/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="C:/PROGRA~2/Dev-Cpp/MinGW64/bin/mingw32-make.exe -f &quot;D:/2019 Summer Vacation/Drone/Planning/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/PROGRA~2/Dev-Cpp/MinGW64/bin/mingw32-make.exe -f &quot;D:/2019 Summer Vacation/Drone/Planning/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/PROGRA~2/Dev-Cpp/MinGW64/bin/mingw32-make.exe -f &quot;D:/2019 Summer Vacation/Drone/Planning/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/config/Config.cpp">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/config/Config.h">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/main.cpp">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/stack/stackArray.h">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/stack/stackBool.h">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/stack/stackMap.h">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/stack/stackNull.h">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/stack/stackNumber.h">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/stack/stackObject.h">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/stack/stackString.h">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/state/ApproachingState.cpp">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/state/ApproachingState.h">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/state/FinishState.cpp">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/state/FinishState.h">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/state/LandingState.cpp">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/state/LandingState.h">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/state/RisingState.cpp">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/state/RisingState.h">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/state/State.cpp">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/state/State.h">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/state/WaitState.cpp">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/state/WaitState.h">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/updater/PathUpdater.cpp">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/updater/PathUpdater.h">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/updater/Updater.cpp">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/updater/Updater.h">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/updater/VisionUpdater.cpp">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/updater/VisionUpdater.h">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/utils/Lock.cpp">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/utils/Lock.h">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/utils/Point.cpp">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/utils/Point.h">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/utils/ShallowLearning.cpp">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/utils/ShallowLearning.h">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/utils/logging.cpp">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/utils/logging.h">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/utils/utils.cpp">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/utils/utils.h">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/vrep/_dirent.h">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/vrep/extApi.c">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/vrep/extApi.h">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/vrep/extApiInternal.h">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/vrep/extApiPlatform.c">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/vrep/extApiPlatform.h">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/vrep/luaFunctionData.h">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/vrep/luaFunctionDataItem.h">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/vrep/scriptFunctionData.h">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/vrep/scriptFunctionDataItem.h">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/vrep/shared_memory.h">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/vrep/socketInConnection.h">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/vrep/socketOutConnection.h">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/vrep/v_repConst.h">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/vrep/v_repLib.h">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/vrep/v_repTypes.h">
+			<Option target="Planning"/>
+		</Unit>
+		<Unit filename="D:/2019 Summer Vacation/Drone/Planning/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

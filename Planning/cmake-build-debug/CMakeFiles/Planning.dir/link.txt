@@ -1,0 +1,3 @@
+"C:\Program Files\CMake\bin\cmake.exe" -E remove -f CMakeFiles\Planning.dir/objects.a
+C:\PROGRA~2\Dev-Cpp\MinGW64\bin\ar.exe cr CMakeFiles\Planning.dir/objects.a @CMakeFiles\Planning.dir\objects1.rsp
+C:\PROGRA~2\Dev-Cpp\MinGW64\bin\G__~1.EXE  -std=c++11 -g   -Wl,--whole-archive CMakeFiles\Planning.dir/objects.a -Wl,--no-whole-archive  -o Planning.exe -Wl,--out-implib,libPlanning.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\Planning.dir\linklibs.rsp
