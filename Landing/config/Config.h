@@ -11,7 +11,6 @@ typedef std::map<std::string, std::map<std::string, std::string>> setting_type;
 class Config
 {
 public:
-    Config(const std::string &file);
 
     static setting_type readConfig(const std::string &file);
 
@@ -21,14 +20,14 @@ public:
 
     const int getIntParam(const std::string &class_name, const std::string &param_name);
 
-
+    static Config *Instance();
 
 private:
+    Config(const std::string &file);
     setting_type settings;
 };
 
 template <class Type>
 Type convertString(const std::string& str);
 
-extern Config config;
 #endif //LANDING_CONFIG_H

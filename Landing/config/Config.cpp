@@ -67,7 +67,11 @@ const int Config::getIntParam(const std::string &class_name, const std::string &
     return atoi(getStringParam(class_name, param_name).c_str());
 }
 
-Config config("../config/config.ini");
+Config* Config::Instance()
+{
+    static Config config("../config/config.ini");
+    return &config;
+}
 
 template<class Type>
 Type convertString(const std::string &str)

@@ -9,7 +9,7 @@
 namespace ShallowLearning
 {
     //std::mutex mutex;
-    const float SHRINK_RATE = config.getFloatParam("ShallowLearning", "SHRINK_RATE");
+    const float SHRINK_RATE = Config::Instance()->getFloatParam("ShallowLearning", "SHRINK_RATE");
     float evalParam(const std::string &param, float default_value);
     float evalDistance(const std::string &source, const std::string &destination, float default_value);
     void updateParam(const std::string &param, float actual_value);

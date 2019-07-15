@@ -14,7 +14,7 @@ private:
 
     void update() override;
 
-    const int VISION_TIME_STEP = config.getIntParam("VisionUpdater", "VISION_TIME_STEP");
+    const int VISION_TIME_STEP = Config::Instance()->getIntParam("VisionUpdater", "VISION_TIME_STEP");
 
 };
 

@@ -16,8 +16,8 @@ public:
     void Exit(PathUpdater *t) override;
 
 private:
-    const simxFloat RELATIVE_LANDING_HEIGHT = config.getFloatParam("LandingState", "RELATIVE_LANDING_HEIGHT");
-    const simxFloat LANDING_STEP_LENGTH = config.getFloatParam("LandingState", "LANDING_STEP_LENGTH");
+    const simxFloat RELATIVE_LANDING_HEIGHT = Config::Instance()->getFloatParam("LandingState", "RELATIVE_LANDING_HEIGHT");
+    const simxFloat LANDING_STEP_LENGTH = Config::Instance()->getFloatParam("LandingState", "LANDING_STEP_LENGTH");
     int close_rounds = 0;
 };
 

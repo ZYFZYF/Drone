@@ -22,7 +22,7 @@ private:
 
     State<PathUpdater> *m_current_state;
 
-    const int PATH_TIME_STEP = config.getIntParam("PathUpdater", "PATH_TIME_STEP");
+    const int PATH_TIME_STEP = Config::Instance()->getIntParam("PathUpdater", "PATH_TIME_STEP");
 };
 
 #endif //LANDING_PATHPLANER_H
