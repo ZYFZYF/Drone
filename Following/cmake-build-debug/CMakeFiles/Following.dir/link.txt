@@ -1,3 +1,0 @@
-"C:\Program Files\CMake\bin\cmake.exe" -E remove -f CMakeFiles\Following.dir/objects.a
-C:\PROGRA~2\Dev-Cpp\MinGW64\bin\ar.exe cr CMakeFiles\Following.dir/objects.a @CMakeFiles\Following.dir\objects1.rsp
-C:\PROGRA~2\Dev-Cpp\MinGW64\bin\G__~1.EXE  -std=c++11 -g   -Wl,--whole-archive CMakeFiles\Following.dir/objects.a -Wl,--no-whole-archive  -o Following.exe -Wl,--out-implib,libFollowing.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\Following.dir\linklibs.rsp

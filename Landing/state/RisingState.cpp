@@ -20,7 +20,7 @@ void RisingState::Execute(PathUpdater *t)
     // check leave
     if(drone_pos[2] > RISING_HEIGHT)
     {
-        t->changeState(new WaitState(200, new ApproachingState));
+        t->changeState(new WaitState(WAITING_ROUNDS, new ApproachingState));
     }
 }
 

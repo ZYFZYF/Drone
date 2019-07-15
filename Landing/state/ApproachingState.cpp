@@ -21,7 +21,7 @@ void ApproachingState::Execute(PathUpdater *t)
     std::cout << error[0] << ' ' << error[1] << ' ' << error[2] << std::endl;
     target_pos = target_pos + error.normalize() * std::min(APPROACHING_STEP_LENGTH, error.length());
     t->setTargetPosition(target_pos);
-    if(error.norm() < 0.1)
+    if(error.norm() < CLOSE_THRESHOLD)
     {
         t->changeState(new LandingState);
     }

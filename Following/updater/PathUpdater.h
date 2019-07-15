@@ -2,8 +2,8 @@
 #define LANDING_PATHPLANER_H
 
 
-#include "Updater.h"
-#include "State.h"
+#include "../../Common/updater/Updater.h"
+#include "../../Common/state/State.h"
 
 class PathUpdater : public Updater
 {
@@ -12,13 +12,10 @@ public:
 
     void changeState(State<PathUpdater> *);
 
-    void setLandingFinished();
-
 private:
     explicit PathUpdater(simxInt);
 
     void update() override;
-
 
     State<PathUpdater> *m_current_state;
 

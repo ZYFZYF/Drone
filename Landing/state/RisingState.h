@@ -1,8 +1,8 @@
 #ifndef LANDING_RISINGSTATE_H
 #define LANDING_RISINGSTATE_H
 
-#include <PathUpdater.h>
-#include "State.h"
+
+#include "../updater/PathUpdater.h"
 
 class RisingState : public State<PathUpdater>
 {
@@ -22,6 +22,7 @@ private:
 
     const float RISING_STEP_LENGTH = Config::Instance()->getFloatParam("RisingState", "RISING_STEP_LENGTH");
 
+    const simxInt WAITING_ROUNDS = Config::Instance()->getIntParam("RisingState", "WAITING_ROUNDS");
 };
 
 

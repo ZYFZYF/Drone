@@ -4,11 +4,21 @@
 #include <thread>
 #include "updater/PathUpdater.h"
 #include "updater/VisionUpdater.h"
-#include <windows.h>
 #include <vector>
-#include "ShallowLearning.h"
+#include "../Common/utils/ShallowLearning.h"
+#include "../Common/utils/utils.h"
 
 int client_id;
+std::vector<std::string> float_signals = Config::Instance()->getStringVectorParam("Main", "CLEAN_FLOAT_SIGNALS");
+
+void clearSignals()
+{
+    for (auto float_signal: float_signals)
+    {
+        std::cout << float_signal << std::endl;
+        simxClearFloatSignal(client_id, float_signal.c_str(), simx_opmode_oneshot);
+    }
+}
 
 void doSomethingBeforeSimulation()
 {
@@ -21,21 +31,22 @@ void doSomethingBeforeSimulation()
     }
     std::cout << "Connect to remote API server and cid is " << client_id << std::endl;
     simxStartSimulation(client_id, simx_opmode_blocking);
+    clearSignals();
 }
 
 void doSomethingAfterSimulation()
 {
-    // clear signals
-    std::vector<std::string> float_signals = {"landing_begin_height", "landing_end_height", "is_landing_finished"};
-    for (auto float_signal: float_signals)
-    {
-        simxClearFloatSignal(client_id, float_signal.c_str(), simx_opmode_oneshot);
-    }
+    clearSignals();
     // stop simulation
     simxStopSimulation(client_id, simx_opmode_blocking);
     // close connection
     simxFinish(client_id);
     std::cout << "Close connection to V-REP" << std::endl;
+}
+
+void doSomethingAfterSimulationForLinux(int sig)
+{
+    doSomethingAfterSimulation();
 }
 
 bool ctrlHandler(DWORD fdwctrltype)
@@ -57,20 +68,27 @@ bool ctrlHandler(DWORD fdwctrltype)
 
 int main(int argc, char const *argv[])
 {
-    if (!SetConsoleCtrlHandler((PHANDLER_ROUTINE) ctrlHandler, true))
+    if(utils::isWindows())
     {
-        std::cout << "Capture ctrl-c event failed" << std::endl;
-        exit(0);
+        if (!SetConsoleCtrlHandler((PHANDLER_ROUTINE) ctrlHandler, true))
+        {
+            std::cout << "Capture ctrl-c event failed" << std::endl;
+            exit(0);
+        };
+    }
+    if(utils::isLinux())
+    {
+        signal(SIGINT, doSomethingAfterSimulationForLinux);
     }
     doSomethingBeforeSimulation();
 
-//    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
-//    ShallowLearning::updateParam("test", 1);
-//    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
-//    ShallowLearning::updateParam("test", 2);
-//    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
-//    ShallowLearning::updateParam("test", 3);
-//    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
+    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
+    ShallowLearning::updateParam("test", 1);
+    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
+    ShallowLearning::updateParam("test", 2);
+    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
+    ShallowLearning::updateParam("test", 3);
+    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
 
 //    std::thread path([]() {
 //        PathUpdater::Instance(client_id)->run();

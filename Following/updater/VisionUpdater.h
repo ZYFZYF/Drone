@@ -2,7 +2,8 @@
 #define LANDING_VISIONPLANNER_H
 
 
-#include "Updater.h"
+#include "../../Common/updater/Updater.h"
+#include "../../Common/config/Config.h"
 
 class VisionUpdater : public Updater
 {

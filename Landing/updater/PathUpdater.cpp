@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cassert>
 #include "PathUpdater.h"
-#include "RisingState.h"
+#include "../state/RisingState.h"
 
 PathUpdater *PathUpdater::Instance(int client_id)
 {

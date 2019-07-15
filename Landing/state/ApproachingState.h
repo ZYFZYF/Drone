@@ -1,8 +1,8 @@
 #ifndef LANDING_APPROCHINGSTATE_H
 #define LANDING_APPROCHINGSTATE_H
 
-#include <PathUpdater.h>
-#include "State.h"
+
+#include "../updater/PathUpdater.h"
 
 class ApproachingState : public State<PathUpdater>
 {
@@ -21,6 +21,7 @@ private:
     const simxFloat APPROACHING_STEP_LENGTH = Config::Instance()->getFloatParam("ApproachingState", "APPROACHING_STEP_LENGTH");
     const simxFloat RELATIVE_LANDING_BEGIN_HEIGHT = Config::Instance()->getFloatParam("ApproachingState", "RELATIVE_LANDING_BEGIN_HEIGHT");
     const simxFloat RELATIVE_LANDING_END_HEIGHT = Config::Instance()->getFloatParam("ApproachingState", "RELATIVE_LANDING_END_HEIGHT");
+    const simxFloat CLOSE_THRESHOLD = Config::Instance()->getFloatParam("ApproachingState", "CLOSE_THRESHOLD");
 };
 
 

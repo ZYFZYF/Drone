@@ -25,7 +25,7 @@ void LandingState::Execute(PathUpdater *t)
     std::cout << "plane pos " << plane_pos[0] << ' ' << plane_pos[1] << ' ' << plane_pos[2] << std::endl;
     error = t->getDronePosition() - plane_pos;
     std::cout << "error is " << error[0] << ' ' << error[1] << ' ' << error[2] << std::endl;
-    if(error.norm() < 0.03)
+    if(error.norm() < CLOSE_THRESHOLD)
     {
         close_rounds ++;
         //t->changeState(new FinishState);
@@ -34,7 +34,7 @@ void LandingState::Execute(PathUpdater *t)
         close_rounds = 0;
     }
     std::cout << "close rounds = " << close_rounds << std::endl;
-    if(close_rounds >= 10)
+    if(close_rounds >= KEEP_CLOSE_ROUNDS)
     {
         std::cout << "prepare to stop the rotor" << std::endl;
         t->setLandingFinished();

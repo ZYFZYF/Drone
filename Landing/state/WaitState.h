@@ -1,8 +1,7 @@
 #ifndef LANDING_WAITSTATE_H
 #define LANDING_WAITSTATE_H
 
-
-#include <PathUpdater.h>
+#include "../updater/PathUpdater.h"
 
 class WaitState : public State<PathUpdater>
 {

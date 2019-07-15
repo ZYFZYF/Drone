@@ -1,3 +1,0 @@
-D:/2019 Summer Vacation/Drone/Following/cmake-build-debug/CMakeFiles/Following.dir
-D:/2019 Summer Vacation/Drone/Following/cmake-build-debug/CMakeFiles/edit_cache.dir
-D:/2019 Summer Vacation/Drone/Following/cmake-build-debug/CMakeFiles/rebuild_cache.dir
