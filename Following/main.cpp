@@ -2,8 +2,8 @@
 #include <cstdlib>
 #include <iostream>
 #include <thread>
-#include "updater/PathUpdater.h"
-#include "updater/VisionUpdater.h"
+#include "updater/FollowingPathUpdater.h"
+#include "updater/FollowingVisionUpdater.h"
 #include <vector>
 #include "../Common/utils/ShallowLearning.h"
 #include "../Common/utils/utils.h"
@@ -82,23 +82,23 @@ int main(int argc, char const *argv[])
     }
     doSomethingBeforeSimulation();
 
-    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
-    ShallowLearning::updateParam("test", 1);
-    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
-    ShallowLearning::updateParam("test", 2);
-    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
-    ShallowLearning::updateParam("test", 3);
-    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
-
-//    std::thread path([]() {
-//        LandingPathUpdater::Instance(client_id)->run();
-//    });
-//    std::thread vision([]() {
-//        VisionUpdater::Instance(client_id)->run();
-//    });
-//    path.join();
-//    vision.join();
-    LandingPathUpdater::Instance(client_id)->run();
+//    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
+//    ShallowLearning::updateParam("test", 1);
+//    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
+//    ShallowLearning::updateParam("test", 2);
+//    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
+//    ShallowLearning::updateParam("test", 3);
+//    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
+    FollowingPathUpdater path_updater(client_id);
+    FollowingVisionUpdater vision_updater(client_id);
+    std::thread path([&path_updater]() {
+        path_updater.run();
+    });
+    std::thread vision([&vision_updater]() {
+        vision_updater.run();
+    });
+    path.join();
+    vision.join();
     return 0;
 }
 

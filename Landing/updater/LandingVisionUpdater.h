@@ -5,18 +5,14 @@
 #include "LandingUpdater.h"
 #include "../../Common/config/Config.h"
 
-class VisionUpdater : public LandingUpdater
+class LandingVisionUpdater : public LandingUpdater
 {
 public:
-    static VisionUpdater *Instance(int client_id);
+    LandingVisionUpdater(int client_id);
 
 private:
-    VisionUpdater(int client_id);
 
     void update() override;
-
-    const int VISION_TIME_STEP = Config::Instance()->getIntParam("VisionUpdater", "VISION_TIME_STEP");
-
 };
 
 

@@ -94,7 +94,7 @@ int main(int argc, char const *argv[])
 //        LandingPathUpdater::Instance(client_id)->run();
 //    });
 //    std::thread vision([]() {
-//        VisionUpdater::Instance(client_id)->run();
+//        LandingVisionUpdater::Instance(client_id)->run();
 //    });
 //    path.join();
 //    vision.join();

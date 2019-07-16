@@ -3,13 +3,7 @@
 #include "LandingPathUpdater.h"
 #include "../state/RisingState.h"
 
-LandingPathUpdater *LandingPathUpdater::Instance(int client_id)
-{
-    static LandingPathUpdater instance(client_id);
-    return &instance;
-}
-
-LandingPathUpdater::LandingPathUpdater(int client_id) : LandingUpdater(PATH_TIME_STEP, client_id)
+LandingPathUpdater::LandingPathUpdater(int client_id) : LandingUpdater(Config::Instance()->getIntParam("LandingPathUpdater", "TIME_STEP"), client_id)
 {
     std::cout << "PathPlanner constructed" << std::endl;
     m_current_state = new RisingState;

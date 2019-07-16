@@ -87,23 +87,25 @@ int main(int argc, char const *argv[])
 #endif
     doSomethingBeforeSimulation();
 
-    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
-    ShallowLearning::updateParam("test", 1);
-    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
-    ShallowLearning::updateParam("test", 2);
-    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
-    ShallowLearning::updateParam("test", 3);
-    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
+//    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
+//    ShallowLearning::updateParam("test", 1);
+//    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
+//    ShallowLearning::updateParam("test", 2);
+//    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
+//    ShallowLearning::updateParam("test", 3);
+//    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
 
-//    std::thread path([]() {
-//        LandingPathUpdater::Instance(client_id)->run();
+    LandingPathUpdater path_updater(client_id);
+    LandingVisionUpdater vision_updater(client_id);
+//    std::thread path([&path_updater]() {
+//        path_updater.run();
 //    });
-//    std::thread vision([]() {
-//        VisionUpdater::Instance(client_id)->run();
+//    std::thread vision([&vision_updater]() {
+//        vision_updater.run();
 //    });
 //    path.join();
 //    vision.join();
-    LandingPathUpdater::Instance(client_id)->run();
+    path_updater.run();
     return 0;
 }
 
