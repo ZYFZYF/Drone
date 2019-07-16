@@ -38,7 +38,6 @@ void LandingVisionUpdater::update()
         //读回来的图像数据时rgb通道分布的，而cvMat 默认bgr
         Mat gray;
         cvtColor(channel, gray, cv::COLOR_RGB2GRAY);
-
         vector<Vec3f> circles;
         HoughCircles(gray,circles,CV_HOUGH_GRADIENT,1,120,100,100,0,0);
         cout<<circles[0][0]<<circles[0][1]<<circles[0][2]<<endl;
