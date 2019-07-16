@@ -15,10 +15,9 @@ namespace utils
 {
     const std::string getNowTime();
     const std::vector<std::string> regexSplit(const std::string &str, const std::string &delimiter);
-    bool isWindows();
-    bool isLinux();
     void sleep(int microseconds);
     void transformUTCtoBJC(int &year, int &month, int &day, int &hour, int &minute, int &second);
+    Point getObjectPosition(simxInt handle, simxInt client_id);
 };
 
 

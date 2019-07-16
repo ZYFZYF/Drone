@@ -1,4 +1,6 @@
 #include "utils.h"
+#include "Point.h"
+#include "../vrep/extApiPlatform.h"
 
 const std::string utils::getNowTime()
 {
@@ -34,24 +36,6 @@ const std::vector<std::string> utils::regexSplit(const std::string &str, const s
     if (pos1 != len)
         res.emplace_back(str.substr(pos1));
     return res;
-}
-
-bool utils::isWindows()
-{
-#ifdef __WIN32
-    return true;
-#else
-    return false;
-#endif
-}
-
-bool utils::isLinux()
-{
-#ifdef __linux
-    return true;
-#else
-    return false;
-#endif
 }
 
 void utils::sleep(int microseconds)
@@ -93,4 +77,11 @@ void utils::transformUTCtoBJC(int &year, int &month, int &day, int &hour, int &m
         year += 1;
         month -= 12;
     }
+}
+
+Point utils::getObjectPosition(simxInt handle, simxInt client_id)
+{
+    simxFloat pos[3];
+    simxGetObjectPosition(client_id, handle, -1, pos, simx_opmode_blocking);
+    return Point(pos[0], pos[1], pos[2]);
 }
