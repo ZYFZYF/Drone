@@ -2,8 +2,8 @@
 #include <cstdlib>
 #include <iostream>
 #include <thread>
-#include "updater/PathUpdater.h"
-#include "updater/VisionUpdater.h"
+#include "updater/PlanningPathUpdater.h"
+#include "updater/PlanningVisionUpdater.h"
 #include <vector>
 #include "../Common/utils/ShallowLearning.h"
 #include "../Common/utils/utils.h"
@@ -49,6 +49,7 @@ void doSomethingAfterSimulationForLinux(int sig)
     doSomethingAfterSimulation();
 }
 
+#ifdef __WIN32
 bool ctrlHandler(DWORD fdwctrltype)
 {
     switch (fdwctrltype)
@@ -64,41 +65,38 @@ bool ctrlHandler(DWORD fdwctrltype)
         }
     }
 }
-
+#endif
 
 int main(int argc, char const *argv[])
 {
-    if(utils::isWindows())
+#ifdef __WIN32
+    if (!SetConsoleCtrlHandler((PHANDLER_ROUTINE) ctrlHandler, true))
     {
-        if (!SetConsoleCtrlHandler((PHANDLER_ROUTINE) ctrlHandler, true))
-        {
-            std::cout << "Capture ctrl-c event failed" << std::endl;
-            exit(0);
-        };
-    }
-    if(utils::isLinux())
-    {
-        signal(SIGINT, doSomethingAfterSimulationForLinux);
-    }
+        std::cout << "Capture ctrl-c event failed" << std::endl;
+        exit(0);
+    };
+#else
+    signal(SIGINT, doSomethingAfterSimulationForLinux);
+#endif
     doSomethingBeforeSimulation();
 
-    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
-    ShallowLearning::updateParam("test", 1);
-    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
-    ShallowLearning::updateParam("test", 2);
-    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
-    ShallowLearning::updateParam("test", 3);
-    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
-
-//    std::thread path([]() {
-//        LandingPathUpdater::Instance(client_id)->run();
-//    });
-//    std::thread vision([]() {
-//        LandingVisionUpdater::Instance(client_id)->run();
-//    });
-//    path.join();
-//    vision.join();
-    LandingPathUpdater::Instance(client_id)->run();
+//    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
+//    ShallowLearning::updateParam("test", 1);
+//    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
+//    ShallowLearning::updateParam("test", 2);
+//    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
+//    ShallowLearning::updateParam("test", 3);
+//    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
+    PlanningPathUpdater path_updater(client_id);
+    PlanningVisionUpdater vision_updater(client_id);
+    std::thread path([&path_updater]() {
+        path_updater.run();
+    });
+    std::thread vision([&vision_updater]() {
+        vision_updater.run();
+    });
+    path.join();
+    vision.join();
     return 0;
 }
 
