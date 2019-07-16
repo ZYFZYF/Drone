@@ -1,5 +1,7 @@
 #include <cmath>
 #include <cassert>
+#include <iosfwd>
+#include <ostream>
 #include "Point.h"
 
 Point::Point()
@@ -113,5 +115,11 @@ void Point::set(int ind, simxFloat val)
 simxFloat Point::norm() const
 {
     return std::fmax(fabsf(pos[0]), std::fmax(fabsf(pos[1]), fabsf(pos[2])));
+}
+
+std::ostream &operator<<(std::ostream &out, const Point &ls)
+{
+    out << ls[0] << ' ' << ls[1] << ' '<< ls[2];
+    return out;
 }
 

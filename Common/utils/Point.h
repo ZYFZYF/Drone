@@ -3,6 +3,7 @@
 extern "C" {
 #include "../vrep/extApi.h"
 }
+#include <ostream>
 
 class Point
 {
@@ -28,6 +29,7 @@ public:
     simxFloat norm() const;
     friend const Point operator *(const Point &lhs, simxFloat rhs);
     friend const Point operator *(simxFloat lhs, const Point &rhs);
+    friend std::ostream &operator <<(std::ostream &out, const Point &ls);
 
 private:
     simxFloat pos[3];

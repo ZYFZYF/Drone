@@ -1,5 +1,4 @@
 #include "utils.h"
-#include "Point.h"
 #include "../vrep/extApiPlatform.h"
 
 const std::string utils::getNowTime()

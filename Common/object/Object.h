@@ -20,6 +20,14 @@ public:
 
     virtual bool isCylinder();
 
+    const std::string &getName() const;
+
+    const Point &getPosition() const;
+
+    const Point &getSize() const;
+
+    simxInt getObjectHandle() const;
+
 private:
     std::string m_name;
     int m_cid;

@@ -2,9 +2,13 @@
 #define DRONE_CYLINDER_H
 
 
-class Cylinder
-{
+#include "Object.h"
 
+class Cylinder : public Object
+{
+    using Object::Object;
+public:
+    bool isCylinder() override;
 };
 
 

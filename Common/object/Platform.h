@@ -4,9 +4,9 @@
 
 #include "Object.h"
 
-class Platform: public Object
+class Platform : public Object
 {
-using Object::Object;
+    using Object::Object;
 public:
     bool isPlatform() override;
 };

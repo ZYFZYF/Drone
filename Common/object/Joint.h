@@ -2,9 +2,13 @@
 #define DRONE_JOINT_H
 
 
-class Joint
-{
+#include "Object.h"
 
+class Joint : public Object
+{
+    using Object::Object;
+public:
+    bool isJoint() override;
 };
 
 

@@ -2,9 +2,13 @@
 #define DRONE_TREE_H
 
 
-class Tree
-{
+#include "Object.h"
 
+class Tree : public Object
+{
+    using Object::Object;
+public:
+    bool isTree() override;
 };
 
 
