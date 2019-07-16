@@ -5,6 +5,7 @@
 #include <vector>
 #include <regex>
 #include <time.h>
+#include "Point.h"
 #ifdef _WIN32
 #include <windows.h>
 #elif defined (__linux) || defined (__APPLE__)

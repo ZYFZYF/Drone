@@ -42,6 +42,7 @@ void doSomethingAfterSimulation()
     // close connection
     simxFinish(client_id);
     std::cout << "Close connection to V-REP" << std::endl;
+    exit(0);
 }
 
 void doSomethingAfterSimulationForLinux(int sig)
@@ -101,7 +102,7 @@ int main(int argc, char const *argv[])
 //    });
 //    path.join();
 //    vision.join();
-    path_updater.run();
+    vision_updater.run();
     return 0;
 }
 
