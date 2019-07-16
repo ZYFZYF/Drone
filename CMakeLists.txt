@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 project(DRONE)
 set(CMAKE_CXX_STANDARD 11)
+
 if(UNIX)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -pthread")
 else()
@@ -12,3 +13,4 @@ link_libraries(common)
 add_subdirectory(Landing)
 add_subdirectory(Planning)
 add_subdirectory(Following)
+
