@@ -7,12 +7,12 @@ LandingState::LandingState()
 
 }
 
-void LandingState::Enter(PathUpdater *t)
+void LandingState::Enter(LandingPathUpdater *t)
 {
     std::cout << "now begin to land" << std::endl;
 }
 
-void LandingState::Execute(PathUpdater *t)
+void LandingState::Execute(LandingPathUpdater *t)
 {
     Point target_pos = t->getTargetPosition();
     Point plane_pos = t->getPlanePosition();
@@ -41,7 +41,7 @@ void LandingState::Execute(PathUpdater *t)
     }
 }
 
-void LandingState::Exit(PathUpdater *t)
+void LandingState::Exit(LandingPathUpdater *t)
 {
     std::cout << "finish landing, keep this" << std::endl;
 }

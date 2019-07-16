@@ -53,8 +53,10 @@ Config::Config(const std::string &file) : settings(readConfig(file))
 
 const std::string Config::getStringParam(const std::string &class_name, const std::string &param_name)
 {
+    std::cout << "Query " << class_name << " -> " << param_name;
     assert(settings.find(class_name) != settings.end());
     assert(settings[class_name].find(param_name) != settings[class_name].end());
+    std::cout << " and get " << settings[class_name][param_name] << std::endl;
     return settings[class_name][param_name];
 }
 

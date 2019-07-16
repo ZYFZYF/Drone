@@ -1,18 +1,18 @@
 #ifndef LANDING_LANDINGSTATE_H
 #define LANDING_LANDINGSTATE_H
 
-#include "../updater/PathUpdater.h"
+#include "../updater/LandingPathUpdater.h"
 
-class LandingState : public State<PathUpdater>
+class LandingState : public State<LandingPathUpdater>
 {
 public:
     LandingState();
 
-    void Enter(PathUpdater *t) override;
+    void Enter(LandingPathUpdater *t) override;
 
-    void Execute(PathUpdater *t) override;
+    void Execute(LandingPathUpdater *t) override;
 
-    void Exit(PathUpdater *t) override;
+    void Exit(LandingPathUpdater *t) override;
 
 private:
     const simxFloat RELATIVE_LANDING_HEIGHT = Config::Instance()->getFloatParam("LandingState", "RELATIVE_LANDING_HEIGHT");

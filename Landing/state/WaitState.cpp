@@ -5,12 +5,12 @@
 #include <iostream>
 #include "WaitState.h"
 
-void WaitState::Enter(PathUpdater *t)
+void WaitState::Enter(LandingPathUpdater *t)
 {
     std::cout << "wait to keep stable for " << m_remain_rounds << " rounds" << std::endl;
 }
 
-void WaitState::Execute(PathUpdater *t)
+void WaitState::Execute(LandingPathUpdater *t)
 {
     m_remain_rounds --;
     std::cout << "remain " << m_remain_rounds << " rounds" << std::endl;
@@ -20,7 +20,7 @@ void WaitState::Execute(PathUpdater *t)
     }
 }
 
-void WaitState::Exit(PathUpdater *t)
+void WaitState::Exit(LandingPathUpdater *t)
 {
     std::cout << "time up, move to next state" << std::endl;
 }

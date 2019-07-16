@@ -1,26 +1,26 @@
 #include <iostream>
 #include <cassert>
-#include "PathUpdater.h"
+#include "LandingPathUpdater.h"
 #include "../state/RisingState.h"
 
-PathUpdater *PathUpdater::Instance(int client_id)
+LandingPathUpdater *LandingPathUpdater::Instance(int client_id)
 {
-    static PathUpdater instance(client_id);
+    static LandingPathUpdater instance(client_id);
     return &instance;
 }
 
-PathUpdater::PathUpdater(int client_id) : Updater(PATH_TIME_STEP, client_id)
+LandingPathUpdater::LandingPathUpdater(int client_id) : LandingUpdater(PATH_TIME_STEP, client_id)
 {
     std::cout << "PathPlanner constructed" << std::endl;
     m_current_state = new RisingState;
 }
 
-void PathUpdater::update()
+void LandingPathUpdater::update()
 {
     m_current_state->Execute(this);
 }
 
-void PathUpdater::changeState(State<PathUpdater> *p_new_state)
+void LandingPathUpdater::changeState(State<LandingPathUpdater> *p_new_state)
 {
     //Memory leak exist
     assert(m_current_state && p_new_state);
@@ -29,7 +29,7 @@ void PathUpdater::changeState(State<PathUpdater> *p_new_state)
     m_current_state->Enter(this);
 }
 
-void PathUpdater::setLandingFinished()
+void LandingPathUpdater::setLandingFinished()
 {
     simxSetFloatSignal(m_cid, "is_landing_finished", 1.0, simx_opmode_oneshot);
 }

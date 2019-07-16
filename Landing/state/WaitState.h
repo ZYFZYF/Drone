@@ -1,19 +1,19 @@
 #ifndef LANDING_WAITSTATE_H
 #define LANDING_WAITSTATE_H
 
-#include "../updater/PathUpdater.h"
+#include "../updater/LandingPathUpdater.h"
 
-class WaitState : public State<PathUpdater>
+class WaitState : public State<LandingPathUpdater>
 {
 public:
 
     WaitState(int remain_rounds, State *next_state);
 
-    void Enter(PathUpdater *t) override;
+    void Enter(LandingPathUpdater *t) override;
 
-    void Execute(PathUpdater *t) override;
+    void Execute(LandingPathUpdater *t) override;
 
-    void Exit(PathUpdater *t) override;
+    void Exit(LandingPathUpdater *t) override;
 
 
 private:

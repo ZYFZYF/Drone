@@ -2,10 +2,10 @@
 #define LANDING_VISIONPLANNER_H
 
 
-#include "../../Common/updater/Updater.h"
+#include "LandingUpdater.h"
 #include "../../Common/config/Config.h"
 
-class VisionUpdater : public Updater
+class VisionUpdater : public LandingUpdater
 {
 public:
     static VisionUpdater *Instance(int client_id);

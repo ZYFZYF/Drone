@@ -5,12 +5,12 @@
 
 RisingState::RisingState() {}
 
-void RisingState::Enter(PathUpdater *t)
+void RisingState::Enter(LandingPathUpdater *t)
 {
     std::cout << "now begin rising to high" << std::endl;
 }
 
-void RisingState::Execute(PathUpdater *t)
+void RisingState::Execute(LandingPathUpdater *t)
 {
     Point drone_pos = t->getDronePosition();
     std::cout << drone_pos[0] << " " << drone_pos[1] << " " << drone_pos[2] << std::endl;
@@ -24,7 +24,7 @@ void RisingState::Execute(PathUpdater *t)
     }
 }
 
-void RisingState::Exit(PathUpdater *t)
+void RisingState::Exit(LandingPathUpdater *t)
 {
     std::cout << "rising to height " << RISING_HEIGHT << " and prepare to leave" << std::endl;
 }

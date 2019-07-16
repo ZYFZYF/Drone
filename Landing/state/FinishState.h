@@ -2,18 +2,18 @@
 #define LANDING_FINISHSTATE_H
 
 
-#include "../updater/PathUpdater.h"
+#include "../updater/LandingPathUpdater.h"
 
-class FinishState: public State<PathUpdater>
+class FinishState: public State<LandingPathUpdater>
 {
 public:
     FinishState();
 
-    void Enter(PathUpdater *t) override;
+    void Enter(LandingPathUpdater *t) override;
 
-    void Execute(PathUpdater *t) override;
+    void Execute(LandingPathUpdater *t) override;
 
-    void Exit(PathUpdater *t) override;
+    void Exit(LandingPathUpdater *t) override;
 };
 
 

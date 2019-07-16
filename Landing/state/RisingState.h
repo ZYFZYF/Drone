@@ -2,18 +2,18 @@
 #define LANDING_RISINGSTATE_H
 
 
-#include "../updater/PathUpdater.h"
+#include "../updater/LandingPathUpdater.h"
 
-class RisingState : public State<PathUpdater>
+class RisingState : public State<LandingPathUpdater>
 {
 public:
     RisingState();
 
-    void Enter(PathUpdater *t) override;
+    void Enter(LandingPathUpdater *t) override;
 
-    void Execute(PathUpdater *t) override;
+    void Execute(LandingPathUpdater *t) override;
 
-    void Exit(PathUpdater *t) override;
+    void Exit(LandingPathUpdater *t) override;
 
 private:
 

@@ -2,8 +2,8 @@
 #include <cstdlib>
 #include <iostream>
 #include <thread>
-#include "updater/PathUpdater.h"
-#include "updater/VisionUpdater.h"
+#include "updater/LandingPathUpdater.h"
+#include "updater/LandingVisionUpdater.h"
 #include <vector>
 #include "../Common/utils/ShallowLearning.h"
 #include "../Common/utils/utils.h"
@@ -91,14 +91,14 @@ int main(int argc, char const *argv[])
     std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
 
 //    std::thread path([]() {
-//        PathUpdater::Instance(client_id)->run();
+//        LandingPathUpdater::Instance(client_id)->run();
 //    });
 //    std::thread vision([]() {
 //        VisionUpdater::Instance(client_id)->run();
 //    });
 //    path.join();
 //    vision.join();
-    PathUpdater::Instance(client_id)->run();
+    LandingPathUpdater::Instance(client_id)->run();
     return 0;
 }
 

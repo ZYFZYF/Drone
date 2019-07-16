@@ -91,14 +91,14 @@ int main(int argc, char const *argv[])
     std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
 
 //    std::thread path([]() {
-//        PathUpdater::Instance(client_id)->run();
+//        LandingPathUpdater::Instance(client_id)->run();
 //    });
 //    std::thread vision([]() {
 //        VisionUpdater::Instance(client_id)->run();
 //    });
 //    path.join();
 //    vision.join();
-    PathUpdater::Instance(client_id)->run();
+    LandingPathUpdater::Instance(client_id)->run();
     return 0;
 }
 

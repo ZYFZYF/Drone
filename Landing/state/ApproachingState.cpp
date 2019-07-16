@@ -3,7 +3,7 @@
 #include "math.h"
 #include "LandingState.h"
 
-void ApproachingState::Enter(PathUpdater *t)
+void ApproachingState::Enter(LandingPathUpdater *t)
 {
     std::cout << "now begin approaching to the car" << std::endl;
     Point plane_pos = t->getPlanePosition();
@@ -12,7 +12,7 @@ void ApproachingState::Enter(PathUpdater *t)
               << plane_pos[2] + RELATIVE_LANDING_END_HEIGHT << std::endl;
 }
 
-void ApproachingState::Execute(PathUpdater *t)
+void ApproachingState::Execute(LandingPathUpdater *t)
 {
     Point target_pos = t->getTargetPosition();
     Point plane_pos = t->getPlanePosition();
@@ -27,7 +27,7 @@ void ApproachingState::Execute(PathUpdater *t)
     }
 }
 
-void ApproachingState::Exit(PathUpdater *t)
+void ApproachingState::Exit(LandingPathUpdater *t)
 {
     std::cout << "finished approaching, now we are suspending above the car" << std::endl;
 }
