@@ -50,6 +50,7 @@ void doSomethingAfterSimulationForLinux(int sig)
 }
 
 #ifdef __WIN32
+
 bool ctrlHandler(DWORD fdwctrltype)
 {
     switch (fdwctrltype)
@@ -65,25 +66,20 @@ bool ctrlHandler(DWORD fdwctrltype)
         }
     }
 }
+
 #endif
 
 
 int main(int argc, char const *argv[])
 {
 #ifdef __WIN32
-    if(utils::isWindows())
+    if (!SetConsoleCtrlHandler((PHANDLER_ROUTINE) ctrlHandler, true))
     {
-        if (!SetConsoleCtrlHandler((PHANDLER_ROUTINE) ctrlHandler, true))
-        {
-            std::cout << "Capture ctrl-c event failed" << std::endl;
-            exit(0);
-        };
-    }
+        std::cout << "Capture ctrl-c event failed" << std::endl;
+        exit(0);
+    };
 #else
-    if(utils::isLinux())
-    {
-        signal(SIGINT, doSomethingAfterSimulationForLinux);
-    }
+    signal(SIGINT, doSomethingAfterSimulationForLinux);
 #endif
     doSomethingBeforeSimulation();
 

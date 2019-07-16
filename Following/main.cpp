@@ -49,6 +49,7 @@ void doSomethingAfterSimulationForLinux(int sig)
     doSomethingAfterSimulation();
 }
 
+#ifdef __WIN32
 bool ctrlHandler(DWORD fdwctrltype)
 {
     switch (fdwctrltype)
@@ -64,22 +65,19 @@ bool ctrlHandler(DWORD fdwctrltype)
         }
     }
 }
-
+#endif
 
 int main(int argc, char const *argv[])
 {
-    if(utils::isWindows())
+#ifdef __WIN32
+    if (!SetConsoleCtrlHandler((PHANDLER_ROUTINE) ctrlHandler, true))
     {
-        if (!SetConsoleCtrlHandler((PHANDLER_ROUTINE) ctrlHandler, true))
-        {
-            std::cout << "Capture ctrl-c event failed" << std::endl;
-            exit(0);
-        };
-    }
-    if(utils::isLinux())
-    {
-        signal(SIGINT, doSomethingAfterSimulationForLinux);
-    }
+        std::cout << "Capture ctrl-c event failed" << std::endl;
+        exit(0);
+    };
+#else
+    signal(SIGINT, doSomethingAfterSimulationForLinux);
+#endif
     doSomethingBeforeSimulation();
 
 //    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
