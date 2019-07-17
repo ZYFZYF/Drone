@@ -65,5 +65,8 @@ void LandingVisionUpdater::update()
         p.setZ(height);
         simxGetObjectPosition(clientID, target, -1,tar_position, simx_opmode_blocking);
         cout << p.x() << " "<<p.y()<<" "<<p.z()<<"  "<<tar_position[0]<<" "<<tar_position[1]<<" "<<tar_position[2]<<endl;
+        simxSetFloatSignal(clientID,"QRcode_x",p.x(),simx_opmode_blocking);
+        simxSetFloatSignal(clientID,"QRcode_y",p.y(),simx_opmode_blocking);
+        simxSetFloatSignal(clientID,"QRcode_z",p.z(),simx_opmode_blocking);
     }
 }
