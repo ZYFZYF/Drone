@@ -4,8 +4,9 @@
 
 #include <vector>
 #include "PlanningUpdater.h"
-#include "../../Common/object/Object.h"
 
+class Object;
+class Task;
 class PlanningPathUpdater: public PlanningUpdater
 {
 public:
@@ -13,8 +14,18 @@ public:
 
     void update() override;
 
+    virtual ~PlanningPathUpdater();
+
+    void startTasks();
+
+    void finishCurrentTask();
+
+    void finishTasks();
+
 private:
     std::vector<Object *> m_objects;
+    std::vector<Task *> m_tasks;
+    int m_running_task_index;
 };
 
 

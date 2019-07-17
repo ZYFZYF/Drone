@@ -3,7 +3,6 @@
 #include <iostream>
 #include <thread>
 #include "updater/PlanningPathUpdater.h"
-#include "updater/PlanningVisionUpdater.h"
 #include <vector>
 #include "../Common/utils/ShallowLearning.h"
 #include "../Common/utils/utils.h"
@@ -87,8 +86,8 @@ int main(int argc, char const *argv[])
 //    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
 //    ShallowLearning::updateParam("test", 3);
 //    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
-//    PlanningPathUpdater path_updater(client_id);
-    PlanningVisionUpdater vision_updater(client_id);
+    PlanningPathUpdater path_updater(client_id);
+//    PlanningVisionUpdater vision_updater(client_id);
 //    std::thread path([&path_updater]() {
 //        path_updater.run();
 //    });
@@ -97,7 +96,8 @@ int main(int argc, char const *argv[])
 //    });
 //    path.join();
 //    vision.join();
-    vision_updater.run();
+    path_updater.run();
+//    vision_updater.run();
     return 0;
 }
 

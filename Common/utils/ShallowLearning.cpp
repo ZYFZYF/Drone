@@ -10,7 +10,7 @@ float ShallowLearning::evalParam(const std::string &param, float default_value)
     std::fstream file(file_path, std::ios::in);
     if (!file)
     {
-        std::cout << file_path + " not exist, so return default value" << std::endl;
+        //std::cout << file_path + " not exist, so return default value" << std::endl;
         return default_value;
     } else
     {

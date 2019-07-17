@@ -119,7 +119,13 @@ simxFloat Point::norm() const
 
 std::ostream &operator<<(std::ostream &out, const Point &ls)
 {
-    out << ls[0] << ' ' << ls[1] << ' '<< ls[2];
+    out << ls[0] << ' ' << ls[1] << ' ' << ls[2];
     return out;
+}
+
+float distance(const Point &lhs, const Point &rhs)
+{
+    return sqrtf((rhs[0] - lhs[0]) * (rhs[0] - lhs[0]) + (rhs[1] - lhs[1]) * (rhs[1] - lhs[1]) +
+                 (rhs[2] - lhs[2]) * (rhs[2] - lhs[2]));
 }
 
