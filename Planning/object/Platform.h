@@ -6,11 +6,10 @@
 
 class Platform : public Object
 {
-    using Object::Object;
 public:
-    bool isPlatform() override;
+    Platform(const std::string &name, int client_id);
 
-    Task *getTask() override;
+    bool isPlatform() override;
 };
 
 

@@ -2,10 +2,11 @@
 #define DRONE_TASK_H
 
 
-#include "../updater/PlanningPathUpdater.h"
 #include "../../Common/state/State.h"
 #include <ctime>
 
+
+class PlanningPathUpdater;
 class Task : public State<PlanningPathUpdater>
 {
 public:

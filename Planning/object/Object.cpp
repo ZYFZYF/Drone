@@ -2,7 +2,7 @@
 #include "Object.h"
 #include "../../Common/utils/utils.h"
 
-Object::Object(const std::string &name, int client_id) : m_name(name), m_cid(client_id)
+Object::Object(const std::string &name, int client_id) : m_name(name), m_cid(client_id), m_task(nullptr)
 {
     simxGetObjectHandle(m_cid, m_name.c_str(), &m_object_handle, simx_opmode_blocking);
     m_pos = utils::getObjectPosition(m_object_handle, m_cid);
@@ -70,5 +70,5 @@ simxInt Object::getObjectHandle() const
 
 Task *Object::getTask()
 {
-    return nullptr;
+    return m_task;
 }

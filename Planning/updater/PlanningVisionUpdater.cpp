@@ -20,6 +20,7 @@ PlanningVisionUpdater::PlanningVisionUpdater(int client_id): PlanningUpdater(Con
 }
 
 void PlanningVisionUpdater::update() {
+    /*
     simxInt camera;
     simxGetObjectHandle(clientID, "zed_vision0", &camera, simx_opmode_blocking);
     simxInt resolution[2];
@@ -70,4 +71,5 @@ void PlanningVisionUpdater::update() {
             cout<<targetx<<"  "<<targety<<endl;
         }
     }
+     */
 }

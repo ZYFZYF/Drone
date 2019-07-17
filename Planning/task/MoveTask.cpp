@@ -15,7 +15,7 @@ void MoveTask::Exit(PlanningPathUpdater *t)
 
 const std::string MoveTask::getName()
 {
-    return std::string();
+    return "Move_From_" + m_source_object->getName() + "_To_" + m_destination_object->getName();
 }
 
 MoveTask::MoveTask(Object *source, Object *destination):m_source_object(source), m_destination_object(destination)

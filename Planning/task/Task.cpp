@@ -12,7 +12,7 @@ void Task::Exit(PlanningPathUpdater *t)
     ShallowLearning::updateParam(getName(), m_finish_time - m_start_time);
 }
 
-float Task::evalTimeCost(float default_value
+float Task::evalTimeCost(float default_value)
 {
     return ShallowLearning::evalParam(getName(), default_value);
 }

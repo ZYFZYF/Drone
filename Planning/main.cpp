@@ -3,7 +3,6 @@
 #include <iostream>
 #include <thread>
 #include "updater/PlanningPathUpdater.h"
-#include "updater/PlanningVisionUpdater.h"
 #include <vector>
 #include "../Common/utils/ShallowLearning.h"
 #include "../Common/utils/utils.h"

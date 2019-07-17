@@ -3,6 +3,7 @@
 
 
 #include "Task.h"
+#include "../object/Object.h"
 
 class MoveTask : public Task
 {

@@ -4,8 +4,9 @@
 
 #include <vector>
 #include "PlanningUpdater.h"
-#include "../object/Object.h"
 
+class Object;
+class Task;
 class PlanningPathUpdater: public PlanningUpdater
 {
 public:

@@ -6,9 +6,9 @@ bool Platform::isPlatform()
     return true;
 }
 
-Task *Platform::getTask()
+Platform::Platform(const std::string &name, int client_id) : Object(name, client_id)
 {
-    static GrabTask task(this);
-    if (getName() == "Target_platform")return &task;
-    else return nullptr;
+    if (getName() == "Target_platform")
+        m_task = new GrabTask(this);
 }
+

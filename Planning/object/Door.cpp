@@ -6,8 +6,7 @@ bool Door::isDoor()
     return true;
 }
 
-Task *Door::getTask()
+Door::Door(const std::string &name, int client_id) : Object(name, client_id)
 {
-    static ThroughDoorTask task(this);
-    return &task;
+    m_task = new ThroughDoorTask(this);
 }

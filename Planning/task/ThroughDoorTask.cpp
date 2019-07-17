@@ -8,7 +8,7 @@ void ThroughDoorTask::Execute(PlanningPathUpdater *t)
 
 const std::string ThroughDoorTask::getName()
 {
-    return "Through_Door_" + m_object->getName();
+    return "Through_Door_Of_" + m_object->getName();
 }
 
 void ThroughDoorTask::Enter(PlanningPathUpdater *t)

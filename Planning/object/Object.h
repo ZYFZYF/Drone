@@ -21,7 +21,7 @@ public:
 
     virtual bool isCylinder();
 
-    virtual Task *getTask();
+    Task *getTask();
 
     const std::string &getName() const;
 
@@ -31,6 +31,8 @@ public:
 
     simxInt getObjectHandle() const;
 
+protected:
+    Task * m_task;
 private:
     std::string m_name;
     int m_cid;

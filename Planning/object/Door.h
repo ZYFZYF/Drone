@@ -6,11 +6,10 @@
 
 class Door: public Object
 {
-    using Object::Object;
 public:
-    bool isDoor() override;
+    Door(const std::string &name, int client_id);
 
-    Task *getTask() override;
+    bool isDoor() override;
 };
 
 
