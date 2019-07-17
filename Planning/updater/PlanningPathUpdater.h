@@ -4,6 +4,7 @@
 
 #include <vector>
 #include "PlanningUpdater.h"
+#include "../../Common/config/Config.h"
 
 class Object;
 class Task;
@@ -22,10 +23,13 @@ public:
 
     void finishTasks();
 
+    void failCurrentTask();
+
 private:
     std::vector<Object *> m_objects;
     std::vector<Task *> m_tasks;
     int m_running_task_index;
+    const simxFloat CRASH_HEIGHT = Config::Instance()->getFloatParam("PlanningPathUpdater", "CRASH_HEIGHT");
 };
 
 

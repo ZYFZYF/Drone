@@ -16,3 +16,8 @@ float Task::evalTimeCost(float default_value)
 {
     return ShallowLearning::evalParam(getName(), default_value);
 }
+
+void Task::Fail()
+{
+    ShallowLearning::updateParam(getName(), 1000000000);
+}

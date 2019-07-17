@@ -11,7 +11,14 @@ void MoveTask::Enter(PlanningPathUpdater *t)
     if (m_destination_object->isPlatform())
     {
         m_target_pos = m_destination_object->getPosition();
-        m_target_pos.setZ(HOVER_HEIGHT_OVER_PLATFORM);
+        if(m_destination_object->getName() == "End")
+        {
+            m_target_pos.setZ(HOVER_HEIGHT_OVER_END);
+        } else
+        {
+            m_target_pos.setZ(HOVER_HEIGHT_OVER_PLATFORM);
+        }
+
     }
     if (m_destination_object->isDoor())
     {
