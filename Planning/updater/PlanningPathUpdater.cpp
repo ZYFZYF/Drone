@@ -76,10 +76,10 @@ PlanningPathUpdater::PlanningPathUpdater(int client_id) : PlanningUpdater(
                 int y = i, cc = c + (1 << y);
                 MoveTask task(nodes[x], nodes[y]);
                 float new_distance =
-                        dp[x][c] + task.evalTimeCost(100 * distance(nodes[x]->getPosition(), nodes[y]->getPosition()));
+                        dp[x][c] + task.evalTimeCost(distance(nodes[x]->getPosition(), nodes[y]->getPosition()));
                 if (nodes[y]->getTask() != nullptr)
                 {
-                    new_distance += nodes[y]->getTask()->evalTimeCost(100);
+                    new_distance += nodes[y]->getTask()->evalTimeCost(1000000);
                 }
                 if (new_distance < dp[y][cc])
                 {
@@ -134,9 +134,61 @@ PlanningPathUpdater::PlanningPathUpdater(int client_id) : PlanningUpdater(
     {
         cout << task->getName() << endl;
     }
+    startTasks();
 }
 
 void PlanningPathUpdater::update()
 {
+    if(m_running_task_index < m_tasks.size())
+    {
+        m_tasks[m_running_task_index]->Execute(this);
+    } else
+    {
+        cout << "已经不用再努力了_(:з」∠)_" << endl;
+    }
+}
 
+PlanningPathUpdater::~PlanningPathUpdater()
+{
+    //point in vector need to release alone
+    //tasks first
+    for(auto &m_task : m_tasks)
+    {
+        if(m_task != nullptr)
+        {
+            delete m_task;
+            m_task = nullptr;
+        }
+    }
+    for (auto &m_object : m_objects)
+    {
+        if(m_object != nullptr)
+        {
+            delete m_object;
+            m_object = nullptr;
+        }
+    }
+}
+
+void PlanningPathUpdater::startTasks()
+{
+    m_running_task_index = 0;
+    m_tasks[m_running_task_index]->Enter(this);
+}
+
+void PlanningPathUpdater::finishCurrentTask()
+{
+    m_tasks[m_running_task_index]->Exit(this);
+    m_running_task_index ++;
+    if(m_running_task_index == m_tasks.size())
+    {
+        finishTasks();
+        return;
+    }
+    m_tasks[m_running_task_index]->Enter(this);
+}
+
+void PlanningPathUpdater::finishTasks()
+{
+    cout << "Finish all tasks. Congratulations to you!!!!!!!!!" << endl;
 }

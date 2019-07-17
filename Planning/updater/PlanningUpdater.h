@@ -8,6 +8,15 @@ class PlanningUpdater: public Updater
 {
 public:
     explicit PlanningUpdater(int time_step=0, int client_id=-1);
+
+    const Point getDronePosition();
+
+    const Point getTargetPosition();
+
+    void setTargetPosition(Point p);
+
+private:
+    simxInt m_handle_drone, m_handle_target;
 };
 
 

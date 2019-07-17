@@ -1,10 +1,18 @@
 #include <iostream>
 #include <utility>
 #include "GrabTask.h"
+#include "../updater/PlanningPathUpdater.h"
 
 void GrabTask::Execute(PlanningPathUpdater *t)
 {
-
+    //fake implement, TODO
+    static auto remain_rounds = 200;
+    remain_rounds--;
+    std::cout << "remain " << remain_rounds << " rounds" << std::endl;
+    if (!remain_rounds)
+    {
+        t->finishCurrentTask();
+    }
 }
 
 const std::string GrabTask::getName()
@@ -12,7 +20,7 @@ const std::string GrabTask::getName()
     return "Grab_On_" + m_object->getName();
 }
 
-GrabTask::GrabTask(Object *object):m_object(object)
+GrabTask::GrabTask(Object *object) : m_object(object)
 {
 
 }
@@ -25,6 +33,6 @@ void GrabTask::Enter(PlanningPathUpdater *t)
 
 void GrabTask::Exit(PlanningPathUpdater *t)
 {
-    std::cout << "Success to grab cylinder on platform " << m_object->getName() <<"and go to next task" << std::endl;
+    std::cout << "Success to grab cylinder on platform " << m_object->getName() << "and go to next task" << std::endl;
     Task::Exit(t);
 }
