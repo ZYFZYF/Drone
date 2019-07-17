@@ -1,12 +1,16 @@
 #include <iostream>
+#include <queue>
+#include <algorithm>
 #include "PlanningPathUpdater.h"
 #include "../../Common/config/Config.h"
-#include "../../Common/object/Object.h"
-#include "../../Common/object/Door.h"
-#include "../../Common/object/Tree.h"
-#include "../../Common/object/Cylinder.h"
-#include "../../Common/object/Joint.h"
-#include "../../Common/object/Platform.h"
+#include "../object/Object.h"
+#include "../object/Door.h"
+#include "../object/Tree.h"
+#include "../object/Cylinder.h"
+#include "../object/Joint.h"
+#include "../object/Platform.h"
+#include "../task/MoveTask.h"
+
 
 using namespace std;
 PlanningPathUpdater::PlanningPathUpdater(int client_id) : PlanningUpdater(
@@ -46,6 +50,64 @@ PlanningPathUpdater::PlanningPathUpdater(int client_id) : PlanningUpdater(
         if(nodes[i] -> getName() == grab_pos) z = i;
     }
     // next is dynamic planning to calculate the route and task lists
+    queue<pair<int, int> > q;
+    float dp[n][n];
+    bool v[n][n];
+    pair<int,int> prev[n][n];
+    for(int i = 0; i < n; i ++)
+        for(int j = 0; j < n; j ++)
+        {
+            dp[i][j] = 1000000000;
+            v[i][j] = false;
+        }
+    q.push(make_pair(s, 0));
+    dp[s][0] = 0;
+    while(!q.empty())
+    {
+        int x = q.front().first, c = q.front().second;
+        for(int i = 0; i < n; i ++)
+        {
+            int  y = i, cc = c + (nodes[y] -> isDoor());
+            MoveTask task(nodes[x], nodes[y]);
+            float new_distance = dp[x][c] + task.evalTimeCost(100 * distance(nodes[x]->getPosition(), nodes[y]->getPosition()));
+            if(nodes[y]->getTask() != nullptr)
+            {
+                new_distance += nodes[y] ->getTask()->evalTimeCost(100);
+            }
+            if(new_distance < dp[y][cc])
+            {
+                dp[y][cc] = new_distance;
+                prev[y][cc] = make_pair(x, c);
+                if(!v[y][cc])
+                {
+                    v[y][cc] = true;
+                    q.push(make_pair(y, cc));
+                }
+            }
+        }
+    }
+    int min_y = 3;
+    for (int i = 3; i < n; i ++)
+        if(dp[t][i] < dp[t][min_y])
+        {
+            min_y = i;
+        }
+    vector<int> path;
+    pair<int,int> now = make_pair(t, min_y);
+    while(now.first != s)
+    {
+        path.push_back(now.first);
+        now = prev[now.first][now.second];
+    }
+    reverse(path.begin(), path.end());
+    for(int i = 1; i < path.size(); i ++)
+    {
+        m_tasks.push_back(new MoveTask(nodes[path[i-1]], nodes[path[i]]));
+        if (nodes[path[i]]->getTask() != nullptr)
+        {
+            m_tasks.push_back(nodes[path[i]]->getTask());
+        }
+    }
 }
 
 void PlanningPathUpdater::update()

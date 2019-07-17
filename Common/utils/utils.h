@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 #include <regex>
-#include <time.h>
+#include <ctime>
 #include "Point.h"
 #ifdef _WIN32
 #include <windows.h>

@@ -30,7 +30,7 @@ public:
     friend const Point operator *(const Point &lhs, simxFloat rhs);
     friend const Point operator *(simxFloat lhs, const Point &rhs);
     friend std::ostream &operator <<(std::ostream &out, const Point &ls);
-
+    friend float distance(const Point &lhs, const Point &rhs);
 private:
     simxFloat pos[3];
 };

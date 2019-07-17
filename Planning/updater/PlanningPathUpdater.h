@@ -4,7 +4,7 @@
 
 #include <vector>
 #include "PlanningUpdater.h"
-#include "../../Common/object/Object.h"
+#include "../object/Object.h"
 
 class PlanningPathUpdater: public PlanningUpdater
 {
@@ -15,6 +15,7 @@ public:
 
 private:
     std::vector<Object *> m_objects;
+    std::vector<Task *> m_tasks;
 };
 
 

@@ -9,6 +9,8 @@ class Door: public Object
     using Object::Object;
 public:
     bool isDoor() override;
+
+    Task *getTask() override;
 };
 
 

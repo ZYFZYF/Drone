@@ -1,6 +1,6 @@
 #include <iostream>
 #include "Object.h"
-#include "../utils/utils.h"
+#include "../../Common/utils/utils.h"
 
 Object::Object(const std::string &name, int client_id) : m_name(name), m_cid(client_id)
 {
@@ -66,4 +66,9 @@ const Point &Object::getSize() const
 simxInt Object::getObjectHandle() const
 {
     return m_object_handle;
+}
+
+Task *Object::getTask()
+{
+    return nullptr;
 }

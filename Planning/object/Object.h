@@ -3,7 +3,8 @@
 
 
 #include <string>
-#include "../utils/Point.h"
+#include "../../Common/utils/Point.h"
+#include "../task/Task.h"
 
 class Object
 {
@@ -19,6 +20,8 @@ public:
     virtual bool isPlatform();
 
     virtual bool isCylinder();
+
+    virtual Task *getTask();
 
     const std::string &getName() const;
 

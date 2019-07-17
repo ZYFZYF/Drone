@@ -9,6 +9,8 @@ class Platform : public Object
     using Object::Object;
 public:
     bool isPlatform() override;
+
+    Task *getTask() override;
 };
 
 
