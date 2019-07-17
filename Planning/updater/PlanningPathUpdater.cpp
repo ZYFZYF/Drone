@@ -34,8 +34,18 @@ PlanningPathUpdater::PlanningPathUpdater(int client_id) : PlanningUpdater(
         {
             nodes.push_back(object);
         }
+        auto source = Config::Instance()->getStringParam("PlanningPathUpdater", "SOURCE");
+    auto destination = Config::Instance()->getStringParam("PlanningPathUpdater", "DESTINATION");
+    auto grab_pos = Config::Instance()->getStringParam("PlanningPathUpdater", "GRAB_POS");
     auto n = nodes.size();
-
+    auto s = -1, t = -1, z = -1;
+    for(int i = 0; i < n; i ++)
+    {
+        if(nodes[i] -> getName() == source) s = i;
+        if(nodes[i] -> getName() == destination) t = i;
+        if(nodes[i] -> getName() == grab_pos) z = i;
+    }
+    // next is dynamic planning to calculate the route and task lists
 }
 
 void PlanningPathUpdater::update()
