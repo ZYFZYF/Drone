@@ -10,6 +10,13 @@ LandingUpdater::LandingUpdater(int time_step, int client_id) : Updater(time_step
     simxGetObjectHandle(m_cid, "Quadricopter_target", &m_handle_target, simx_opmode_blocking);
     simxGetObjectHandle(m_cid, "land_plane", &m_handle_plane, simx_opmode_blocking);
     simxGetObjectHandle(m_cid, "Car", &m_handle_car, simx_opmode_blocking);
+    simxFloat pos[3];
+    simxGetObjectPosition(m_cid, m_handle_drone, -1, pos, simx_opmode_streaming);
+    simxGetObjectPosition(m_cid, m_handle_target, -1, pos, simx_opmode_streaming);
+    simxGetObjectPosition(m_cid, m_handle_plane, -1, pos, simx_opmode_streaming);
+    simxGetObjectPosition(m_cid, m_handle_car, -1, pos, simx_opmode_streaming);
+
+
 }
 
 const Point LandingUpdater::getDronePosition()

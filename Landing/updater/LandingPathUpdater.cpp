@@ -7,8 +7,8 @@
 LandingPathUpdater::LandingPathUpdater(int client_id) : LandingUpdater(Config::Instance()->getIntParam("LandingPathUpdater", "TIME_STEP"), client_id)
 {
     std::cout << "PathPlanner constructed" << std::endl;
-    //m_current_state = new RisingState;
-    m_current_state = new WaitState(Config::Instance()->getIntParam("LandingPathUpdater", "BEGIN_WAITING_ROUNDS"), new RisingState);
+    m_current_state = new RisingState;
+    //m_current_state = new WaitState(Config::Instance()->getIntParam("LandingPathUpdater", "BEGIN_WAITING_ROUNDS"), new RisingState);
 }
 
 void LandingPathUpdater::update()

@@ -18,8 +18,11 @@ void ApproachingState::Execute(LandingPathUpdater *t)
     Point plane_pos = t->getPlanePosition();
     plane_pos.setZ(plane_pos[2] + APPROACHING_OVER_HEIGHT);
     Point error = plane_pos - target_pos;
-    std::cout << error[0] << ' ' << error[1] << ' ' << error[2] << std::endl;
+    std::cout << "plane_pos: " << plane_pos << std::endl;
+    std::cout << "error: " << error << std::endl;
+    std::cout << "target_pos: " << target_pos << std::endl;
     target_pos = target_pos + error.normalize() * std::min(APPROACHING_STEP_LENGTH, error.length());
+    std::cout << "new_target_pos: " << target_pos << std::endl;
     t->setTargetPosition(target_pos);
     if(error.norm() < CLOSE_THRESHOLD)
     {

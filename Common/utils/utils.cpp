@@ -1,3 +1,4 @@
+#include <iostream>
 #include "utils.h"
 #include "../vrep/extApiPlatform.h"
 
@@ -81,6 +82,6 @@ void utils::transformUTCtoBJC(int &year, int &month, int &day, int &hour, int &m
 Point utils::getObjectPosition(simxInt handle, simxInt client_id)
 {
     simxFloat pos[3];
-    simxGetObjectPosition(client_id, handle, -1, pos, simx_opmode_blocking);
+    simxGetObjectPosition(client_id, handle, -1, pos, simx_opmode_buffer);
     return Point(pos[0], pos[1], pos[2]);
 }
