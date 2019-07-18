@@ -14,6 +14,7 @@ void RisingState::Execute(LandingPathUpdater *t)
 {
     Point drone_pos = t->getDronePosition();
     std::cout << drone_pos[0] << " " << drone_pos[1] << " " << drone_pos[2] << std::endl;
+    std::cout << t->getTargetPosition() << std::endl;
     drone_pos.setZ(drone_pos[2] + RISING_STEP_LENGTH);
     std::cout << drone_pos[2] << std::endl;
     t->setTargetPosition(drone_pos);
