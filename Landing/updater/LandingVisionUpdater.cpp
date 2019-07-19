@@ -2,6 +2,7 @@
 #include "LandingVisionUpdater.h"
 #include <cmath>
 #include "LandingUpdater.h"
+#include "../../Common/utils/utils.h"
 
 using namespace std;
 
@@ -19,7 +20,7 @@ float offsetx;
 float offsety;
 simxFloat position[3];
 simxFloat angle[3];
-simxFloat tar_position[3];
+Point tar_position;
 simxInt camera;
 simxInt target;
 simxUChar *image = 0;
@@ -37,7 +38,6 @@ LandingVisionUpdater::LandingVisionUpdater(int client_id) : LandingUpdater(
     simxGetObjectPosition(clientID, camera, -1, position, simx_opmode_streaming);
     simxGetObjectOrientation(clientID, camera, -1, angle, simx_opmode_streaming);
     simxGetVisionSensorImage(clientID, camera, resolution, &image, 0, simx_opmode_streaming);
-
 }
 
 void LandingVisionUpdater::update()
@@ -76,7 +76,7 @@ void LandingVisionUpdater::update()
     p.setX(position[0] + offsetx * cos(angle[2]) + offsety * sin(angle[2]));
     p.setY(position[1] + offsety * cos(angle[2]) - offsetx * sin(angle[2]));
     p.setZ(height);
-    simxGetObjectPosition(clientID, target, -1, tar_position, simx_opmode_buffer);
+    tar_position = utils::getObjectPosition(target, m_cid);
     cout << p.x() << " " << p.y() << " " << p.z() << "  " << tar_position[0] << " " << tar_position[1] << " "
          << tar_position[2] << endl;
     simxSetFloatSignal(clientID, "QRcode_x", p.x(), simx_opmode_blocking);

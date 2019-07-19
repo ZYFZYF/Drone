@@ -6,8 +6,9 @@ Object::Object(const std::string &name, int client_id) : m_name(name), m_cid(cli
 {
     simxGetObjectHandle(m_cid, m_name.c_str(), &m_object_handle, simx_opmode_blocking);
     m_pos = utils::getObjectPosition(m_object_handle, m_cid);
+    std::cout << name << " 's handle is " << m_object_handle << std::endl;
     //a little naive but who care _(:з」∠)_
-    simxFloat min_x, min_y, min_z, max_x, max_y, max_z;
+/*    simxFloat min_x, min_y, min_z, max_x, max_y, max_z;
     simxGetObjectFloatParameter(m_cid, m_object_handle, sim_objfloatparam_modelbbox_min_x, &min_x,
                                 simx_opmode_blocking);
     simxGetObjectFloatParameter(m_cid, m_object_handle, sim_objfloatparam_modelbbox_min_y, &min_y,
@@ -20,7 +21,7 @@ Object::Object(const std::string &name, int client_id) : m_name(name), m_cid(cli
                                 simx_opmode_blocking);
     simxGetObjectFloatParameter(m_cid, m_object_handle, sim_objfloatparam_modelbbox_max_z, &max_z,
                                 simx_opmode_blocking);
-    m_size = Point(fabsf(max_x - min_x), fabsf(max_y - min_y), fabsf(max_z - min_z));
+    m_size = Point(fabsf(max_x - min_x), fabsf(max_y - min_y), fabsf(max_z - min_z));*/
 }
 
 bool Object::isDoor()

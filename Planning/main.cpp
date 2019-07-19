@@ -98,6 +98,7 @@ int main(int argc, char const *argv[])
 //    vision.join();
     path_updater.run();
 //    vision_updater.run();
+    doSomethingAfterSimulation();
     return 0;
 }
 

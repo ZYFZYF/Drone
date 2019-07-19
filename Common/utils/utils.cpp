@@ -1,4 +1,5 @@
 #include <iostream>
+#include <set>
 #include "utils.h"
 #include "../vrep/extApiPlatform.h"
 
@@ -81,7 +82,14 @@ void utils::transformUTCtoBJC(int &year, int &month, int &day, int &hour, int &m
 
 Point utils::getObjectPosition(simxInt handle, simxInt client_id)
 {
+    static std::set<simxInt> streamed_position_handle;
     simxFloat pos[3];
-    simxGetObjectPosition(client_id, handle, -1, pos, simx_opmode_buffer);
+    //first call with streaming and following with buffer
+    if (streamed_position_handle.find(handle) == streamed_position_handle.end())
+    {
+        streamed_position_handle.insert(handle);
+        simxGetObjectPosition(client_id, handle, -1, pos, simx_opmode_streaming);
+    }
+    while (simxGetObjectPosition(client_id, handle, -1, pos, simx_opmode_buffer) == simx_return_novalue_flag);
     return Point(pos[0], pos[1], pos[2]);
 }

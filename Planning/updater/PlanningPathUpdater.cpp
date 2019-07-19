@@ -198,10 +198,13 @@ void PlanningPathUpdater::finishCurrentTask()
 void PlanningPathUpdater::finishTasks()
 {
     cout << "Finish all tasks. Congratulations to you!!!!!!!!!" << endl;
+    setFinished();
 }
 
 void PlanningPathUpdater::failCurrentTask()
 {
     m_tasks[m_running_task_index]->Fail();
     m_running_task_index = -1;
+    cout << "已经不用再努力了" << endl;
+    setFinished();
 }
