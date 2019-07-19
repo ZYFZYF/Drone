@@ -20,7 +20,7 @@ float offsetx;
 float offsety;
 simxFloat position[3];
 simxFloat angle[3];
-Point tar_position;
+simxFloat tar_position[3];
 simxInt camera;
 simxInt target;
 simxUChar *image = 0;
@@ -40,12 +40,10 @@ LandingVisionUpdater::LandingVisionUpdater(int client_id) : LandingUpdater(
     simxGetVisionSensorImage(clientID, camera, resolution, &image, 0, simx_opmode_streaming);
 }
 
-void LandingVisionUpdater::update()
-{
+void LandingVisionUpdater::update() {
 
     int ret = simxGetVisionSensorImage(clientID, camera, resolution, &image, 0, simx_opmode_buffer);
-    if (ret != simx_return_ok)
-    {
+    if (ret != simx_return_ok) {
         return;
     }
 
@@ -59,27 +57,33 @@ void LandingVisionUpdater::update()
     for (int i = 0; i < channel.rows; i++)
         for (int j = 0; j < channel.cols; j++)
             if (channel.at<cv::Vec3b>(i, j)[0] > 230 && channel.at<cv::Vec3b>(i, j)[1] > 230 &&
-                channel.at<cv::Vec3b>(i, j)[2] > 230)
-            {
-                if (startx == -1)
-                {
+                channel.at<cv::Vec3b>(i, j)[2] > 230) {
+                if (startx == -1) {
                     startx = i;
                     starty = j;
                 }
                 finishx = i;
                 finishy = j;
             }
-    midx = (startx + finishx) / 2;
-    midy = (starty + finishy) / 2;
-    offsetx = (position[2] - height) * rate / 1280 * (640 - midy);
-    offsety = (position[2] - height) * rate / 1280 * (midx - 360);
-    p.setX(position[0] + offsetx * cos(angle[2]) + offsety * sin(angle[2]));
-    p.setY(position[1] + offsety * cos(angle[2]) - offsetx * sin(angle[2]));
-    p.setZ(height);
-    tar_position = utils::getObjectPosition(target, m_cid);
-    cout << p.x() << " " << p.y() << " " << p.z() << "  " << tar_position[0] << " " << tar_position[1] << " "
-         << tar_position[2] << endl;
+    if (startx == -1) {
+        cout << "未发现二维码" << endl;
+        p.setX(-1);
+        p.setY(-1);
+        p.setZ(-1);
+    } else {
+        midx = (startx + finishx) / 2;
+        midy = (starty + finishy) / 2;
+        offsetx = (position[2] - height) * rate / 1280 * (640 - midy);
+        offsety = (position[2] - height) * rate / 1280 * (midx - 360);
+        p.setX(position[0] + offsetx * cos(angle[2]) + offsety * sin(angle[2]));
+        p.setY(position[1] + offsety * cos(angle[2]) - offsetx * sin(angle[2]));
+        p.setZ(height);
+        simxGetObjectPosition(clientID, target, -1, tar_position, simx_opmode_blocking);
+        cout << p.x() << " " << p.y() << " " << p.z() << "  " << tar_position[0] << " " << tar_position[1] << " "
+             << tar_position[2] << endl;
+    }
     simxSetFloatSignal(clientID, "QRcode_x", p.x(), simx_opmode_blocking);
     simxSetFloatSignal(clientID, "QRcode_y", p.y(), simx_opmode_blocking);
     simxSetFloatSignal(clientID, "QRcode_z", p.z(), simx_opmode_blocking);
 }
+

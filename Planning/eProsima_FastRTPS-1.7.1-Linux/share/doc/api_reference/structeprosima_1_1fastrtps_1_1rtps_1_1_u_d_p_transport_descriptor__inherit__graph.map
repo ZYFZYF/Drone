@@ -1,0 +1,6 @@
+<map id="UDPTransportDescriptor" name="UDPTransportDescriptor">
+<area shape="rect" id="node4" href="$structeprosima_1_1fastrtps_1_1rtps_1_1_u_d_pv4_transport_descriptor.html" title="Transport configuration. " alt="" coords="5,229,185,256"/>
+<area shape="rect" id="node5" href="$structeprosima_1_1fastrtps_1_1rtps_1_1_u_d_pv6_transport_descriptor.html" title="Transport configuration. " alt="" coords="209,229,389,256"/>
+<area shape="rect" id="node2" href="$structeprosima_1_1fastrtps_1_1rtps_1_1_socket_transport_descriptor.html" title="Virtual base class for the data type used to define configuration of transports using sockets..." alt="" coords="107,80,286,107"/>
+<area shape="rect" id="node3" href="$structeprosima_1_1fastrtps_1_1rtps_1_1_transport_descriptor_interface.html" title="Virtual base class for the data type used to define transport configuration. " alt="" coords="103,5,291,32"/>
+</map>
