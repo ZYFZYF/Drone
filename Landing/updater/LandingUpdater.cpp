@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cassert>
 #include "LandingUpdater.h"
+#include "../../Common/utils/utils.h"
 
 
 LandingUpdater::LandingUpdater(int time_step, int client_id) : Updater(time_step, client_id)
@@ -13,30 +14,22 @@ LandingUpdater::LandingUpdater(int time_step, int client_id) : Updater(time_step
 
 const Point LandingUpdater::getDronePosition()
 {
-    simxFloat pos[3];
-    simxGetObjectPosition(m_cid, m_handle_drone, -1, pos, simx_opmode_blocking);
-    return Point(pos[0], pos[1], pos[2]);
+    return utils::getObjectPosition(m_handle_drone, m_cid);
 }
 
 const Point LandingUpdater::getCarPosition()
 {
-    simxFloat pos[3];
-    simxGetObjectPosition(m_cid, m_handle_car, -1, pos, simx_opmode_blocking);
-    return Point(pos);
+    return utils::getObjectPosition(m_handle_car, m_cid);
 }
 
 const Point LandingUpdater::getTargetPosition()
 {
-    simxFloat pos[3];
-    simxGetObjectPosition(m_cid, m_handle_target, -1, pos, simx_opmode_blocking);
-    return Point(pos);
+    return utils::getObjectPosition(m_handle_target, m_cid);
 }
 
 const Point LandingUpdater::getPlanePosition()
 {
-    simxFloat pos[3];
-    simxGetObjectPosition(m_cid, m_handle_plane, -1, pos, simx_opmode_blocking);
-    return Point(pos);
+    return utils::getObjectPosition(m_handle_plane, m_cid);
 }
 
 void LandingUpdater::setTargetPosition(Point p)

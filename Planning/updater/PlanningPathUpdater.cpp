@@ -64,8 +64,8 @@ PlanningPathUpdater::PlanningPathUpdater(int client_id) : PlanningUpdater(
             dp[i][j] = 1000000000;
             v[i][j] = false;
         }
-    q.push(make_pair(s, 0));
-    dp[s][0] = 0;
+    q.push(make_pair(s, 1<<s));
+    dp[s][1<<s] = 0;
     while (!q.empty())
     {
         auto x = q.front().first, c = q.front().second;
@@ -139,9 +139,16 @@ PlanningPathUpdater::PlanningPathUpdater(int client_id) : PlanningUpdater(
 
 void PlanningPathUpdater::update()
 {
-    if(m_running_task_index < m_tasks.size())
+    if(m_running_task_index >= 0 && m_running_task_index < m_tasks.size())
     {
-        m_tasks[m_running_task_index]->Execute(this);
+        //如果已经坠机了就结束吧，这几个函数的调用关系有点臭
+        if(getDronePosition()[2] < CRASH_HEIGHT)
+        {
+            failCurrentTask();
+        } else
+        {
+            m_tasks[m_running_task_index]->Execute(this);
+        }
     } else
     {
         cout << "已经不用再努力了_(:з」∠)_" << endl;
@@ -191,4 +198,13 @@ void PlanningPathUpdater::finishCurrentTask()
 void PlanningPathUpdater::finishTasks()
 {
     cout << "Finish all tasks. Congratulations to you!!!!!!!!!" << endl;
+    setFinished();
+}
+
+void PlanningPathUpdater::failCurrentTask()
+{
+    m_tasks[m_running_task_index]->Fail();
+    m_running_task_index = -1;
+    cout << "已经不用再努力了" << endl;
+    setFinished();
 }

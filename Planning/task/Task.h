@@ -18,6 +18,8 @@ public:
 
     virtual const std::string getName() = 0;
 
+    void Fail();
+
 private:
     clock_t m_start_time{0}, m_finish_time{0};
 };

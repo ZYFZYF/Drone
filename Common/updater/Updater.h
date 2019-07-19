@@ -17,11 +17,14 @@ public:
 
     void run();
 
+    void setFinished();
+
 protected:
     simxInt m_cid;
 
 private:
     float m_time_step;
+    bool m_is_finished;
 };
 
 
