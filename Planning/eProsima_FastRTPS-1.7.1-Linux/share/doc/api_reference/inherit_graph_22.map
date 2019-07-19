@@ -1,0 +1,5 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classeprosima_1_1fastrtps_1_1rtps_1_1_channel_resource.html" title="ChannelResource" alt="" coords="5,31,132,57"/>
+<area shape="rect" id="node2" href="$classeprosima_1_1fastrtps_1_1rtps_1_1_t_c_p_channel_resource.html" title="TCPChannelResource" alt="" coords="181,5,334,32"/>
+<area shape="rect" id="node3" href="$classeprosima_1_1fastrtps_1_1rtps_1_1_u_d_p_channel_resource.html" title="UDPChannelResource" alt="" coords="180,56,335,83"/>
+</map>

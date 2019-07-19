@@ -1,0 +1,23 @@
+var searchData=
+[
+  ['reader',['READER',['../group___c_o_m_m_o_n___m_o_d_u_l_e.html#gga78cea4e085868c7e037e09dbc0a5e9f2a59b08a92a4278fb506399a5944d06124',1,'eprosima::fastrtps::rtps']]],
+  ['reliable',['RELIABLE',['../group___c_o_m_m_o_n___m_o_d_u_l_e.html#gga367af915bdda2d6f964f4f049066f992abc6ba98e9404532481e43eea39731929',1,'eprosima::fastrtps::rtps']]],
+  ['reliable_5freliability_5fqos',['RELIABLE_RELIABILITY_QOS',['../namespaceeprosima_1_1fastrtps.html#a5496223ce8b7f98276430e96f551d005a4c3da736b9f52c1423aa7e2aa9162990',1,'eprosima::fastrtps::RELIABLE_RELIABILITY_QOS()'],['../namespace_d_d_s.html#a24d7b323629249772049e2db4ea0ed4fa4c3da736b9f52c1423aa7e2aa9162990',1,'DDS::RELIABLE_RELIABILITY_QOS()']]],
+  ['removed_5fmatching',['REMOVED_MATCHING',['../namespaceeprosima_1_1fastrtps_1_1rtps.html#ga46673f05b59e42646c8fc581135c791ca28e6e18ef83be0c31c1251576535c3f2',1,'eprosima::fastrtps::rtps']]],
+  ['removed_5freader',['REMOVED_READER',['../group___f_a_s_t_r_t_p_s___m_o_d_u_l_e.html#gga18427f14cac7a522ae28cce7ba03cb02a366cfb9ca04b62276784e107ec2d3f99',1,'eprosima::fastrtps::rtps::ReaderDiscoveryInfo']]],
+  ['removed_5fwriter',['REMOVED_WRITER',['../group___f_a_s_t_r_t_p_s___m_o_d_u_l_e.html#gga18427f14cac7a522ae28cce7ba03cb02ac16c6c71ba808001582ecacb0584099e',1,'eprosima::fastrtps::rtps::WriterDiscoveryInfo']]],
+  ['retcode_5falready_5fdeleted',['RETCODE_ALREADY_DELETED',['../namespaceeprosima_1_1fastrtps_1_1types.html#ade9c94f3256bfd76019b6d4ff4b7c5fdaeaeb9efcb97cb18b479c6c7575d480dd',1,'eprosima::fastrtps::types']]],
+  ['retcode_5fbad_5fparameter',['RETCODE_BAD_PARAMETER',['../namespaceeprosima_1_1fastrtps_1_1types.html#ade9c94f3256bfd76019b6d4ff4b7c5fda431c0ac62280e88b43141b8c9ece0b50',1,'eprosima::fastrtps::types']]],
+  ['retcode_5fbad_5frequest',['RETCODE_BAD_REQUEST',['../namespaceeprosima_1_1fastrtps_1_1rtps.html#ade9c94f3256bfd76019b6d4ff4b7c5fdabe3778882fde2c474fec40c805b499e2',1,'eprosima::fastrtps::rtps']]],
+  ['retcode_5ferror',['RETCODE_ERROR',['../namespaceeprosima_1_1fastrtps_1_1types.html#ade9c94f3256bfd76019b6d4ff4b7c5fdae4bdcf09e9020b5655aed4da2e72121c',1,'eprosima::fastrtps::types']]],
+  ['retcode_5fexisting_5fconnection',['RETCODE_EXISTING_CONNECTION',['../namespaceeprosima_1_1fastrtps_1_1rtps.html#ade9c94f3256bfd76019b6d4ff4b7c5fdad75ea78a2c15b62dc89fef8cc597bc8e',1,'eprosima::fastrtps::rtps']]],
+  ['retcode_5fincompatible_5fversion',['RETCODE_INCOMPATIBLE_VERSION',['../namespaceeprosima_1_1fastrtps_1_1rtps.html#ade9c94f3256bfd76019b6d4ff4b7c5fda0959c3e84fa942b6677331afc0b52b17',1,'eprosima::fastrtps::rtps']]],
+  ['retcode_5finvalid_5fport',['RETCODE_INVALID_PORT',['../namespaceeprosima_1_1fastrtps_1_1rtps.html#ade9c94f3256bfd76019b6d4ff4b7c5fdacb34508636ed1d5d728168143f3834bb',1,'eprosima::fastrtps::rtps']]],
+  ['retcode_5fok',['RETCODE_OK',['../namespaceeprosima_1_1fastrtps_1_1rtps.html#ade9c94f3256bfd76019b6d4ff4b7c5fda3b5c76d392a7fd06c65b195ddb9c3d8e',1,'eprosima::fastrtps::rtps::RETCODE_OK()'],['../namespaceeprosima_1_1fastrtps_1_1types.html#ade9c94f3256bfd76019b6d4ff4b7c5fda3b5c76d392a7fd06c65b195ddb9c3d8e',1,'eprosima::fastrtps::types::RETCODE_OK()']]],
+  ['retcode_5fprecondition_5fnot_5fmet',['RETCODE_PRECONDITION_NOT_MET',['../namespaceeprosima_1_1fastrtps_1_1types.html#ade9c94f3256bfd76019b6d4ff4b7c5fda72e23ac70089a2b6237d942544e03c4e',1,'eprosima::fastrtps::types']]],
+  ['retcode_5fserver_5ferror',['RETCODE_SERVER_ERROR',['../namespaceeprosima_1_1fastrtps_1_1rtps.html#ade9c94f3256bfd76019b6d4ff4b7c5fda6f57308af13bd3292764db46bb0dd78c',1,'eprosima::fastrtps::rtps']]],
+  ['retcode_5funknown_5flocator',['RETCODE_UNKNOWN_LOCATOR',['../namespaceeprosima_1_1fastrtps_1_1rtps.html#ade9c94f3256bfd76019b6d4ff4b7c5fda75949f4f099cc15f6175ae1f3a0e09ff',1,'eprosima::fastrtps::rtps']]],
+  ['retcode_5fvoid',['RETCODE_VOID',['../namespaceeprosima_1_1fastrtps_1_1rtps.html#ade9c94f3256bfd76019b6d4ff4b7c5fda6c87eda5c1d3e3480cc28a02c417597f',1,'eprosima::fastrtps::rtps']]],
+  ['root',['ROOT',['../namespaceeprosima_1_1fastrtps_1_1xmlparser.html#acac9cbaeea226ed297804c012dc12b16aea2adde5c377cb5e09d14b71935c6f32',1,'eprosima::fastrtps::xmlparser']]],
+  ['rtps',['RTPS',['../namespaceeprosima_1_1fastrtps_1_1xmlparser.html#acac9cbaeea226ed297804c012dc12b16ab8dcaf61ee6cec8c8786345433eb9ff4',1,'eprosima::fastrtps::xmlparser']]]
+];
