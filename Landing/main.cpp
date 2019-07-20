@@ -16,7 +16,7 @@ void clearSignals()
     for (auto float_signal: float_signals)
     {
         std::cout << float_signal << std::endl;
-        simxClearFloatSignal(client_id, float_signal.c_str(), simx_opmode_oneshot);
+        simxClearFloatSignal(client_id, float_signal.c_str(), simx_opmode_blocking);
     }
 }
 
@@ -38,7 +38,7 @@ void doSomethingAfterSimulation()
 {
     clearSignals();
     // stop simulation
-    simxStopSimulation(client_id, simx_opmode_blocking);
+    while(simxStopSimulation(client_id, simx_opmode_blocking) != simx_return_ok);
     // close connection
     simxFinish(client_id);
     std::cout << "Close connection to V-REP" << std::endl;

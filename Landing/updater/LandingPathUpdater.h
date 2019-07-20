@@ -14,6 +14,8 @@ public:
 
     void setLandingFinished();
 
+    Point getQRcodePosition();
+
 private:
 
     void update() override;

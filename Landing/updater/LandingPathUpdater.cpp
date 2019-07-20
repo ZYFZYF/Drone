@@ -3,11 +3,13 @@
 #include "LandingPathUpdater.h"
 #include "../state/RisingState.h"
 #include "../state/WaitState.h"
+#include "../../Common/utils/utils.h"
 
 LandingPathUpdater::LandingPathUpdater(int client_id) : LandingUpdater(Config::Instance()->getIntParam("LandingPathUpdater", "TIME_STEP"), client_id)
 {
     std::cout << "PathPlanner constructed" << std::endl;
     m_current_state = new RisingState;
+    m_current_state->Enter(this);
     //m_current_state = new WaitState(Config::Instance()->getIntParam("LandingPathUpdater", "BEGIN_WAITING_ROUNDS"), new RisingState);
 }
 
@@ -28,4 +30,12 @@ void LandingPathUpdater::changeState(State<LandingPathUpdater> *p_new_state)
 void LandingPathUpdater::setLandingFinished()
 {
     simxSetFloatSignal(m_cid, "is_landing_finished", 1.0, simx_opmode_oneshot);
+}
+
+Point LandingPathUpdater::getQRcodePosition()
+{
+    float x = utils::getFloatSignal("QRCode_x", m_cid);
+    float y = utils::getFloatSignal("QRCode_y", m_cid);
+    float z = utils::getFloatSignal("QRCode_z", m_cid);
+    return Point(x, y, z);
 }

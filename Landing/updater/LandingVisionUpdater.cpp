@@ -18,9 +18,9 @@ float height = 0.282;
 float rate = 1.75;
 float offsetx;
 float offsety;
-simxFloat position[3];
+Point position;
 simxFloat angle[3];
-simxFloat tar_position[3];
+Point tar_position;
 simxInt camera;
 simxInt target;
 simxUChar *image = 0;
@@ -35,7 +35,6 @@ LandingVisionUpdater::LandingVisionUpdater(int client_id) : LandingUpdater(
     simxGetObjectHandle(clientID, "zed_vision0", &camera, simx_opmode_blocking);
     simxGetObjectHandle(clientID, "land_plane", &target, simx_opmode_blocking);
     std::cout << camera << ' ' << target << std::endl;
-    simxGetObjectPosition(clientID, camera, -1, position, simx_opmode_streaming);
     simxGetObjectOrientation(clientID, camera, -1, angle, simx_opmode_streaming);
     simxGetVisionSensorImage(clientID, camera, resolution, &image, 0, simx_opmode_streaming);
 }
@@ -46,7 +45,7 @@ void LandingVisionUpdater::update() {
     if (ret != simx_return_ok) {
         return;
     }
-
+    position = utils::getObjectPosition(camera, m_cid);
     simxGetObjectOrientation(clientID, camera, -1, angle, simx_opmode_buffer);
 //        cout << position[0] << " "<<position[1]<<" "<<position[2]<<"  "<<angle[0]<<" "<<angle[1]<<" "<<angle[2]<<endl;
     cv::Mat channel(resolution[1], resolution[0], CV_8UC3, image);
@@ -78,12 +77,12 @@ void LandingVisionUpdater::update() {
         p.setX(position[0] + offsetx * cos(angle[2]) + offsety * sin(angle[2]));
         p.setY(position[1] + offsety * cos(angle[2]) - offsetx * sin(angle[2]));
         p.setZ(height);
-        simxGetObjectPosition(clientID, target, -1, tar_position, simx_opmode_blocking);
+        tar_position = utils::getObjectPosition(target, m_cid);
         cout << p.x() << " " << p.y() << " " << p.z() << "  " << tar_position[0] << " " << tar_position[1] << " "
              << tar_position[2] << endl;
     }
-    simxSetFloatSignal(clientID, "QRcode_x", p.x(), simx_opmode_blocking);
-    simxSetFloatSignal(clientID, "QRcode_y", p.y(), simx_opmode_blocking);
-    simxSetFloatSignal(clientID, "QRcode_z", p.z(), simx_opmode_blocking);
+    simxSetFloatSignal(clientID, "QRcode_x", p.x(), simx_opmode_oneshot);
+    simxSetFloatSignal(clientID, "QRcode_y", p.y(), simx_opmode_oneshot);
+    simxSetFloatSignal(clientID, "QRcode_z", p.z(), simx_opmode_oneshot);
 }
 

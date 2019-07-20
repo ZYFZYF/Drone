@@ -93,3 +93,17 @@ Point utils::getObjectPosition(simxInt handle, simxInt client_id)
     while (simxGetObjectPosition(client_id, handle, -1, pos, simx_opmode_buffer) == simx_return_novalue_flag);
     return Point(pos[0], pos[1], pos[2]);
 }
+
+float utils::getFloatSignal(const std::string &signal, simxInt client_id)
+{
+    static std::set<std::string> streamed_float_signal;
+    float value = -1;
+    if (streamed_float_signal.find(signal) == streamed_float_signal.end())
+    {
+        streamed_float_signal.insert(signal);
+        simxGetFloatSignal(client_id, signal.c_str(), &value, simx_opmode_streaming);
+    }
+    while (simxGetFloatSignal(client_id, signal.c_str(), &value, simx_opmode_buffer) == simx_return_novalue_flag);
+    return 0;
+}
+

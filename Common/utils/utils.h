@@ -19,6 +19,7 @@ namespace utils
     void sleep(int microseconds);
     void transformUTCtoBJC(int &year, int &month, int &day, int &hour, int &minute, int &second);
     Point getObjectPosition(simxInt handle, simxInt client_id);
+    float getFloatSignal(const std::string &signal, simxInt client_id);
 };
 
 
