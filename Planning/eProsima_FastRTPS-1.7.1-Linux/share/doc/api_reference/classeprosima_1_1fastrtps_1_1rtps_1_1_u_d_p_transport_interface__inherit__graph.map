@@ -1,6 +1,0 @@
-<map id="UDPTransportInterface" name="UDPTransportInterface">
-<area shape="rect" id="node3" href="$classeprosima_1_1fastrtps_1_1rtps_1_1_u_d_pv4_transport.html" title="This is a default UDPv4 implementation. " alt="" coords="20,155,140,181"/>
-<area shape="rect" id="node5" href="$classeprosima_1_1fastrtps_1_1rtps_1_1_u_d_pv6_transport.html" title="This is a default UDPv6 implementation. " alt="" coords="164,155,284,181"/>
-<area shape="rect" id="node2" href="$classeprosima_1_1fastrtps_1_1rtps_1_1_transport_interface.html" title="Interface against which to implement a transport layer, decoupled from FastRTPS internals. " alt="" coords="88,5,216,32"/>
-<area shape="rect" id="node4" href="$classeprosima_1_1fastrtps_1_1rtps_1_1test___u_d_pv4_transport.html" title="test_UDPv4Transport" alt="" coords="5,229,155,256"/>
-</map>

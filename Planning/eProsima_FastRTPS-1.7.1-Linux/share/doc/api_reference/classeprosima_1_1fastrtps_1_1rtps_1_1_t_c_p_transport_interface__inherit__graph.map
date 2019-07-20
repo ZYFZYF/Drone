@@ -1,6 +1,0 @@
-<map id="TCPTransportInterface" name="TCPTransportInterface">
-<area shape="rect" id="node3" href="$classeprosima_1_1fastrtps_1_1rtps_1_1_t_c_pv4_transport.html" title="This is a default TCPv4 implementation. " alt="" coords="19,155,138,181"/>
-<area shape="rect" id="node5" href="$classeprosima_1_1fastrtps_1_1rtps_1_1_t_c_pv6_transport.html" title="This is a default TCPv6 implementation. " alt="" coords="162,155,281,181"/>
-<area shape="rect" id="node2" href="$classeprosima_1_1fastrtps_1_1rtps_1_1_transport_interface.html" title="Interface against which to implement a transport layer, decoupled from FastRTPS internals. " alt="" coords="85,5,213,32"/>
-<area shape="rect" id="node4" href="$classeprosima_1_1fastrtps_1_1rtps_1_1test___t_c_pv4_transport.html" title="test_TCPv4Transport" alt="" coords="5,229,152,256"/>
-</map>

@@ -1,7 +1,0 @@
-<map id="TCPTransportDescriptor" name="TCPTransportDescriptor">
-<area shape="rect" id="node4" href="$structeprosima_1_1fastrtps_1_1rtps_1_1_t_c_pv4_transport_descriptor.html" title="Transport configuration. " alt="" coords="19,229,198,256"/>
-<area shape="rect" id="node6" href="$structeprosima_1_1fastrtps_1_1rtps_1_1_t_c_pv6_transport_descriptor.html" title="Transport configuration. " alt="" coords="222,229,401,256"/>
-<area shape="rect" id="node2" href="$structeprosima_1_1fastrtps_1_1rtps_1_1_socket_transport_descriptor.html" title="Virtual base class for the data type used to define configuration of transports using sockets..." alt="" coords="121,80,299,107"/>
-<area shape="rect" id="node3" href="$structeprosima_1_1fastrtps_1_1rtps_1_1_transport_descriptor_interface.html" title="Virtual base class for the data type used to define transport configuration. " alt="" coords="116,5,304,32"/>
-<area shape="rect" id="node5" href="$structeprosima_1_1fastrtps_1_1rtps_1_1test___t_c_pv4_transport_descriptor.html" title="test_TCPv4TransportDescriptor" alt="" coords="5,304,212,331"/>
-</map>
