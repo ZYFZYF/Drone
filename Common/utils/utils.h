@@ -7,9 +7,11 @@
 #include <time.h>
 #ifdef _WIN32
 #include <windows.h>
+#include "Point.h"
 #elif defined (__linux) || defined (__APPLE__)
 #include <signal.h>
 #include <unistd.h>
+
 #endif
 namespace utils
 {
