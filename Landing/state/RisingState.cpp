@@ -9,18 +9,18 @@ RisingState::RisingState() {}
 void RisingState::Enter(LandingPathUpdater *t)
 {
     std::cout << "now begin rising to high" << std::endl;
-    m_start_pos = t->getDronePosition();
+    m_target_pos = t->getDronePosition();
 }
 
 void RisingState::Execute(LandingPathUpdater *t)
 {
-    Point drone_pos = m_start_pos;
+    //Point drone_pos = m_target_pos;
     //Point drone_pos = t->getTargetPosition();
     //std::cout << drone_pos[0] << " " << drone_pos[1] << " " << drone_pos[2] << std::endl;
     //std::cout << t->getTargetPosition() << std::endl;
-    drone_pos.setZ(t->getTargetPosition()[2] + RISING_STEP_LENGTH);
-    std::cout << "Set target position: " << drone_pos << std::endl;
-    t->setTargetPosition(drone_pos);
+    m_target_pos.setZ(m_target_pos[2] + RISING_STEP_LENGTH);
+    std::cout << "Set target position: " << m_target_pos << std::endl;
+    t->setTargetPosition(m_target_pos);
     Point qrcode_pos = t->getQRcodePosition();
     std::cout << "QRcode position: " << qrcode_pos << std::endl;
     // check leave

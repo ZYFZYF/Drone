@@ -38,7 +38,7 @@ void LandingUpdater::setTargetPosition(Point p)
     pos[0] = p[0];
     pos[1] = p[1];
     pos[2] = p[2];
-    simxSetObjectPosition(m_cid, m_handle_target, -1, pos, simx_opmode_oneshot);
+    simxSetObjectPosition(m_cid, m_handle_target, -1, pos, simx_opmode_blocking);
 }
 
 void

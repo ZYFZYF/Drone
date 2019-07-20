@@ -17,7 +17,7 @@ public:
 
 private:
 
-    Point m_start_pos;
+    Point m_target_pos;
 
     const simxFloat RISING_HEIGHT = Config::Instance()->getFloatParam("RisingState", "RISING_HEIGHT");
 

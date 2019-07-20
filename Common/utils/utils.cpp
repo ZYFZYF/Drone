@@ -104,6 +104,6 @@ float utils::getFloatSignal(const std::string &signal, simxInt client_id)
         simxGetFloatSignal(client_id, signal.c_str(), &value, simx_opmode_streaming);
     }
     while (simxGetFloatSignal(client_id, signal.c_str(), &value, simx_opmode_buffer) == simx_return_novalue_flag);
-    return 0;
+    return value;
 }
 
