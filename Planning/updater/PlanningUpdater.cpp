@@ -1,10 +1,13 @@
+#include <iostream>
 #include "PlanningUpdater.h"
 #include "../../Common/utils/utils.h"
 
 PlanningUpdater::PlanningUpdater(int time_step, int client_id) : Updater(time_step, client_id)
 {
+    std::cout << "Try to get necessary handle" << std::endl;
     simxGetObjectHandle(m_cid, "Quadricopter_base", &m_handle_drone, simx_opmode_blocking);
     simxGetObjectHandle(m_cid, "Quadricopter_target", &m_handle_target, simx_opmode_blocking);
+    std::cout << "Get drone's handle is " << m_handle_drone << " and target's handle is " << m_handle_target << std::endl;
 }
 
 const Point PlanningUpdater::getDronePosition()

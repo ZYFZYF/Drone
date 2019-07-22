@@ -29,7 +29,9 @@ private:
     std::vector<Object *> m_objects;
     std::vector<Task *> m_tasks;
     int m_running_task_index;
+    int crash_rounds;
     const simxFloat CRASH_HEIGHT = Config::Instance()->getFloatParam("PlanningPathUpdater", "CRASH_HEIGHT");
+    const int CRASH_ROUNDS_THRESHOLD = Config::Instance()->getIntParam("PlanningPathUpdater", "CRASH_ROUNDS_THRESHOLD");
 };
 
 

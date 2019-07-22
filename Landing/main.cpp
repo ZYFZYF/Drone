@@ -92,17 +92,17 @@ int main(int argc, char const *argv[])
 //    ShallowLearning::updateParam("test", 3);
 //    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
 
-    LandingPathUpdater path_updater(client_id);
+    //LandingPathUpdater path_updater(client_id);
     LandingVisionUpdater vision_updater(client_id);
-    std::thread vision([&vision_updater]() {
-        vision_updater.run();
-    });
-    std::thread path([&path_updater]() {
-        path_updater.run();
-    });
-    path.join();
-    vision.join();
-    //vision_updater.run();
+//    std::thread vision([&vision_updater]() {
+//        vision_updater.run();
+//    });
+//    std::thread path([&path_updater]() {
+//        path_updater.run();
+//    });
+//    path.join();
+    //vision.join();
+    vision_updater.run();
     return 0;
 }
 

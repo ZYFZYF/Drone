@@ -16,7 +16,7 @@
 using namespace std;
 
 PlanningPathUpdater::PlanningPathUpdater(int client_id) : PlanningUpdater(
-        Config::Instance()->getIntParam("PlanningPathUpdater", "TIME_STEP"), client_id)
+        Config::Instance()->getIntParam("PlanningPathUpdater", "TIME_STEP"), client_id), crash_rounds(0)
 {
     //can't get the first object's info
     Object trash("nothing", client_id);
@@ -144,8 +144,15 @@ void PlanningPathUpdater::update()
         //如果已经坠机了就结束吧，这几个函数的调用关系有点臭
         if(getDronePosition()[2] < CRASH_HEIGHT)
         {
-            failCurrentTask();
+            crash_rounds ++;
         } else
+        {
+            crash_rounds = 0;
+        }
+        if(crash_rounds >= CRASH_ROUNDS_THRESHOLD)
+        {
+            failCurrentTask();
+        }else
         {
             m_tasks[m_running_task_index]->Execute(this);
         }
@@ -205,6 +212,6 @@ void PlanningPathUpdater::failCurrentTask()
 {
     m_tasks[m_running_task_index]->Fail();
     m_running_task_index = -1;
-    cout << "已经不用再努力了" << endl;
+    cout << "失败了,已经不用再努力了" << endl;
     setFinished();
 }

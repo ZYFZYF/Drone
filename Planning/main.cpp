@@ -13,7 +13,7 @@ std::vector<std::string> float_signals = Config::Instance()->getStringVectorPara
 
 void clearSignals()
 {
-    for (auto float_signal: float_signals)
+    for (const auto &float_signal: float_signals)
     {
         std::cout << float_signal << std::endl;
         simxClearFloatSignal(client_id, float_signal.c_str(), simx_opmode_oneshot);
@@ -22,15 +22,17 @@ void clearSignals()
 
 void doSomethingBeforeSimulation()
 {
-    simxFinish(-1);
+    //simxFinish(-1);
     client_id = simxStart("127.0.0.1", 19997, 1, 1, 2000, 5);
     if (client_id == -1)
     {
         std::cout << "Failed to connect to remote API server" << std::endl;
-        exit(0);
+        std::cout << "So think the first script has been running, so use 0 as client_id" << std::endl;
+        client_id = 0;
+        return;
     }
     std::cout << "Connect to remote API server and cid is " << client_id << std::endl;
-    simxStartSimulation(client_id, simx_opmode_blocking);
+    simxStartSimulation(client_id, simx_opmode_oneshot);
     clearSignals();
 }
 
@@ -38,9 +40,9 @@ void doSomethingAfterSimulation()
 {
     clearSignals();
     // stop simulation
-    simxStopSimulation(client_id, simx_opmode_blocking);
+    while(simxStopSimulation(client_id, simx_opmode_blocking) != simx_return_ok);
     // close connection
-    simxFinish(client_id);
+    simxFinish(-1);
     std::cout << "Close connection to V-REP" << std::endl;
 }
 
@@ -69,6 +71,11 @@ bool ctrlHandler(DWORD fdwctrltype)
 
 int main(int argc, char const *argv[])
 {
+    if(argc < 2)
+    {
+        std::cout << "need a parameter to decide exec path or vision" << std::endl;
+        return 0;
+    }
 #ifdef __WIN32
     if (!SetConsoleCtrlHandler((PHANDLER_ROUTINE) ctrlHandler, true))
     {
@@ -80,25 +87,16 @@ int main(int argc, char const *argv[])
 #endif
     doSomethingBeforeSimulation();
 
-//    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
-//    ShallowLearning::updateParam("test", 1);
-//    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
-//    ShallowLearning::updateParam("test", 2);
-//    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
-//    ShallowLearning::updateParam("test", 3);
-//    std::cout << ShallowLearning::evalParam("test", 100) << std::endl;
-//    PlanningPathUpdater path_updater(client_id);
-    PlanningVisionUpdater vision_updater(client_id);
-//    std::thread path([&path_updater]() {
-//        path_updater.run();
-//    });
-//    std::thread vision([&vision_updater]() {
-//        vision_updater.run();
-//    });
-//    path.join();
-//    vision.join();
-//    path_updater.run();
-    vision_updater.run();
+    if(strcmp(argv[1], "path") == 0)
+    {
+        PlanningPathUpdater path_updater(client_id);
+        path_updater.run();
+    } else
+    {
+        PlanningVisionUpdater vision_updater(client_id);
+        vision_updater.run();
+    }
+    doSomethingAfterSimulation();
     return 0;
 }
 
