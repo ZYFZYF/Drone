@@ -27,7 +27,7 @@ void ThroughDoorTask::Execute(PlanningPathUpdater *t)
     {
         std::cout << "close rounds is " << m_close_rounds << std::endl;
     }
-    if (m_close_rounds >= CLOSE_ROUNDS_LIMIT)
+    if (m_close_rounds >= CLOSE_ROUNDS_LIMIT && (t->getDronePosition() - m_target_pos).norm() < CLOSE_THRESHOLD)
     {
         t->finishCurrentTask();
     }

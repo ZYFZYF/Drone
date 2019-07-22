@@ -1,7 +1,7 @@
 #include <iostream>
 #include "PlanningUpdater.h"
 #include "../../Common/utils/utils.h"
-
+bool use_vision = false;
 PlanningUpdater::PlanningUpdater(int time_step, int client_id) : Updater(time_step, client_id)
 {
     std::cout << "Try to get necessary handle" << std::endl;

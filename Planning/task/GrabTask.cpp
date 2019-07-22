@@ -24,11 +24,13 @@ GrabTask::GrabTask(Object *object) : m_object(object)
 {
 
 }
-
+extern bool use_vision;
 void GrabTask::Enter(PlanningPathUpdater *t)
 {
     Task::Enter(t);
     std::cout << "Prepare to grab cylinder on platform " << m_object->getName() << std::endl;
+    use_vision = true;
+    std::cout << "Open the eyes _(:з)∠)_" << std::endl;
 }
 
 void GrabTask::Exit(PlanningPathUpdater *t)

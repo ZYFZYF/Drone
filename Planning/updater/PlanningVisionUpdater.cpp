@@ -31,8 +31,13 @@ PlanningVisionUpdater::PlanningVisionUpdater(int client_id): PlanningUpdater(Con
     clientID=client_id;
     std::cout<<"VisionPlanner constructed"<<std::endl;
 }
-
+extern bool use_vision;
 void PlanningVisionUpdater::update() {
+    if(!use_vision)
+    {
+        //std::cout << "Not yet" << std::endl;
+        return;
+    }
     simxInt camera;
     simxInt target;
     simxGetObjectHandle(clientID, "zed_vision0", &camera, simx_opmode_blocking);

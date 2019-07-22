@@ -22,17 +22,15 @@ void clearSignals()
 
 void doSomethingBeforeSimulation()
 {
-    //simxFinish(-1);
+    simxFinish(-1);
     client_id = simxStart("127.0.0.1", 19997, 1, 1, 2000, 5);
     if (client_id == -1)
     {
         std::cout << "Failed to connect to remote API server" << std::endl;
-        std::cout << "So think the first script has been running, so use 0 as client_id" << std::endl;
-        client_id = 0;
-        return;
+        exit(0);
     }
     std::cout << "Connect to remote API server and cid is " << client_id << std::endl;
-    simxStartSimulation(client_id, simx_opmode_oneshot);
+    simxStartSimulation(client_id, simx_opmode_blocking);
     clearSignals();
 }
 
@@ -40,7 +38,7 @@ void doSomethingAfterSimulation()
 {
     clearSignals();
     // stop simulation
-    while(simxStopSimulation(client_id, simx_opmode_blocking) != simx_return_ok);
+    while (simxStopSimulation(client_id, simx_opmode_blocking) != simx_return_ok);
     // close connection
     simxFinish(-1);
     std::cout << "Close connection to V-REP" << std::endl;
@@ -52,6 +50,7 @@ void doSomethingAfterSimulationForLinux(int sig)
 }
 
 #ifdef __WIN32
+
 bool ctrlHandler(DWORD fdwctrltype)
 {
     switch (fdwctrltype)
@@ -67,15 +66,11 @@ bool ctrlHandler(DWORD fdwctrltype)
         }
     }
 }
+
 #endif
 
 int main(int argc, char const *argv[])
 {
-    if(argc < 2)
-    {
-        std::cout << "need a parameter to decide exec path or vision" << std::endl;
-        return 0;
-    }
 #ifdef __WIN32
     if (!SetConsoleCtrlHandler((PHANDLER_ROUTINE) ctrlHandler, true))
     {
@@ -87,15 +82,16 @@ int main(int argc, char const *argv[])
 #endif
     doSomethingBeforeSimulation();
 
-    if(strcmp(argv[1], "path") == 0)
-    {
-        PlanningPathUpdater path_updater(client_id);
-        path_updater.run();
-    } else
-    {
-        PlanningVisionUpdater vision_updater(client_id);
+    PlanningPathUpdater path_updater(client_id);
+    PlanningVisionUpdater vision_updater(client_id);
+    std::thread vision([&vision_updater]() {
         vision_updater.run();
-    }
+    });
+    std::thread path([&path_updater]() {
+        path_updater.run();
+    });
+    path.join();
+    vision.join();
     doSomethingAfterSimulation();
     return 0;
 }

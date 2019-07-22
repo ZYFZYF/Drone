@@ -3,7 +3,7 @@
 
 
 #include "../../Common/updater/Updater.h"
-
+extern bool use_vision;
 class PlanningUpdater: public Updater
 {
 public:
