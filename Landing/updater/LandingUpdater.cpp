@@ -3,7 +3,7 @@
 #include "LandingUpdater.h"
 #include "../../Common/utils/utils.h"
 
-
+Point QRCode_pos(-1.0f, -1.0f, -1.0f);
 LandingUpdater::LandingUpdater(int time_step, int client_id) : Updater(time_step, client_id)
 {
     simxGetObjectHandle(m_cid, "Quadricopter_base", &m_handle_drone, simx_opmode_blocking);

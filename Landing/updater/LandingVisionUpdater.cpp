@@ -26,7 +26,7 @@ simxInt target;
 simxUChar *image = 0;
 simxInt resolution[2];
 
-
+extern Point QRCode_pos;
 LandingVisionUpdater::LandingVisionUpdater(int client_id) : LandingUpdater(
         Config::Instance()->getIntParam("LandingVisionUpdater", "TIME_STEP"), client_id)
 {
@@ -83,6 +83,7 @@ void LandingVisionUpdater::update() {
         simxSetFloatSignal(clientID, "QRcode_x", p.x(), simx_opmode_blocking);
         simxSetFloatSignal(clientID, "QRcode_y", p.y(), simx_opmode_blocking);
         simxSetFloatSignal(clientID, "QRcode_z", p.z(), simx_opmode_blocking);
+        QRCode_pos = p;
     }
 }
 

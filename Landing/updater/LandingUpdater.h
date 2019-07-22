@@ -2,7 +2,7 @@
 #define LANDING_LANDINGUPDATER_H
 
 #include "../../Common/updater/Updater.h"
-
+extern Point QRCode_pos;
 class LandingUpdater: public Updater
 {
 public:
