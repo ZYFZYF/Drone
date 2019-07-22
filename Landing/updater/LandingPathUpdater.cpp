@@ -34,8 +34,5 @@ void LandingPathUpdater::setLandingFinished()
 
 Point LandingPathUpdater::getQRcodePosition()
 {
-    float x = utils::getFloatSignal("QRCode_x", m_cid);
-    float y = utils::getFloatSignal("QRCode_y", m_cid);
-    float z = utils::getFloatSignal("QRCode_z", m_cid);
-    return Point(x, y, z);
+    return QRCode_pos;
 }

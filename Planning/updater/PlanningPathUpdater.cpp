@@ -11,6 +11,7 @@
 #include "../object/Platform.h"
 #include "../task/MoveTask.h"
 #include "../task/Task.h"
+#include "../route/NaiveRouter.h"
 
 
 using namespace std;
@@ -134,6 +135,16 @@ PlanningPathUpdater::PlanningPathUpdater(int client_id) : PlanningUpdater(
     {
         cout << task->getName() << endl;
     }
+    //add router
+    if(ROUTE_ALGORITHM == "NAIVE")
+    {
+        m_router = new NaiveRouter();
+    }
+    for (const auto &object: m_objects)
+    {
+        m_router->addObstacle(Obstacle(object));
+    }
+    //start the first task
     startTasks();
 }
 
@@ -182,6 +193,7 @@ PlanningPathUpdater::~PlanningPathUpdater()
             m_object = nullptr;
         }
     }
+    delete m_router;
 }
 
 void PlanningPathUpdater::startTasks()
@@ -214,4 +226,9 @@ void PlanningPathUpdater::failCurrentTask()
     m_running_task_index = -1;
     cout << "失败了,已经不用再努力了" << endl;
     setFinished();
+}
+
+std::vector<Point> PlanningPathUpdater::getPathPoints(const Point &start_pos, const Point &end_pos)
+{
+    return m_router->route(start_pos, end_pos);
 }

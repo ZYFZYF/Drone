@@ -23,6 +23,8 @@ private:
     Object *m_source_object;
     Object *m_destination_object;
     Point m_start_pos, m_target_pos, m_previous_round_pos;
+    std::vector<Point> m_path_points;
+    int m_now_target_index;
     const simxFloat HOVER_HEIGHT_OVER_PLATFORM = Config::Instance()->getFloatParam("MoveTask", "HOVER_HEIGHT_OVER_PLATFORM");
     const simxFloat HOVER_HEIGHT_OVER_END = Config::Instance()->getFloatParam("MoveTask", "HOVER_HEIGHT_OVER_END");
     const simxFloat Y_DISTANCE_FROM_DOOR = Config::Instance()->getFloatParam("MoveTask", "Y_DISTANCE_FROM_DOOR");

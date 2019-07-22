@@ -7,7 +7,7 @@ extern "C" {
 #include "../vrep/extApi.h"
 }
 
-
+extern bool is_finished;
 class Updater
 {
 public:
@@ -24,7 +24,6 @@ protected:
 
 private:
     float m_time_step;
-    bool m_is_finished;
 };
 
 

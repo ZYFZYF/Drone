@@ -5,6 +5,7 @@
 #include <vector>
 #include "PlanningUpdater.h"
 #include "../../Common/config/Config.h"
+#include "../route/Router.h"
 
 class Object;
 class Task;
@@ -25,6 +26,9 @@ public:
 
     void failCurrentTask();
 
+    std::vector<Point> getPathPoints(const Point &start_pos, const Point &end_pos);
+
+
 private:
     std::vector<Object *> m_objects;
     std::vector<Task *> m_tasks;
@@ -32,6 +36,8 @@ private:
     int crash_rounds;
     const simxFloat CRASH_HEIGHT = Config::Instance()->getFloatParam("PlanningPathUpdater", "CRASH_HEIGHT");
     const int CRASH_ROUNDS_THRESHOLD = Config::Instance()->getIntParam("PlanningPathUpdater", "CRASH_ROUNDS_THRESHOLD");
+    Router *m_router;
+    const std::string ROUTE_ALGORITHM = Config::Instance()->getStringParam("PlanningPathUpdater", "ROUTE_ALGORITHM");
 };
 
 
