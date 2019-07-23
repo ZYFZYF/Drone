@@ -9,8 +9,15 @@ class Obstacle
 {
 public:
     explicit Obstacle(Object *object);
-    Obstacle(Point center_pos, Point size);
+
+    Obstacle(const Point &center_pos, const Point &size);
+
     const Point getSize() const;
+
+    const Point &getMinCorner() const;
+
+    const Point &getMaxCorner() const;
+
 private:
     Point m_min_corner, m_max_corner;
 };

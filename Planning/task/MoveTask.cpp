@@ -37,7 +37,7 @@ void MoveTask::Enter(PlanningPathUpdater *t)
     std::cout << "Have " << m_path_points.size() << " path points" << std::endl;
     for(const auto &point: m_path_points)
         std::cout << point << std::endl;
-    m_now_target_index = 0;
+    m_now_target_index = 1;
 }
 
 void MoveTask::Exit(PlanningPathUpdater *t)

@@ -9,6 +9,7 @@ class Router
 public:
     Router();
     void addObstacle(const Obstacle &obstacle);
+    //返回的点路径包含起点和终点
     virtual std::vector<Point> route(const Point &start_pos, const Point &end_pos) = 0;
 
 protected:

@@ -37,4 +37,5 @@ void GrabTask::Exit(PlanningPathUpdater *t)
 {
     std::cout << "Success to grab cylinder on platform " << m_object->getName() << "and go to next task" << std::endl;
     Task::Exit(t);
+    use_vision = false;
 }
