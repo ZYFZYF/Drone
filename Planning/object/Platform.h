@@ -10,6 +10,13 @@ public:
     Platform(const std::string &name, int client_id);
 
     bool isPlatform() override;
+
+    const Point getValidPosition() const override;
+
+private:
+    const simxFloat HOVER_HEIGHT_OVER_PLATFORM = Config::Instance()->getFloatParam("MoveTask",
+                                                                                   "HOVER_HEIGHT_OVER_PLATFORM");
+    const simxFloat HOVER_HEIGHT_OVER_END = Config::Instance()->getFloatParam("MoveTask", "HOVER_HEIGHT_OVER_END");
 };
 
 

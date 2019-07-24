@@ -9,6 +9,8 @@
 class Object
 {
 public:
+    Object();
+
     Object(const std::string &name, int client_id);
 
     virtual bool isDoor();
@@ -21,11 +23,15 @@ public:
 
     virtual bool isCylinder();
 
+    virtual bool isEntrance();
+
     Task *getTask();
 
-    const std::string &getName() const;
+    virtual const std::string &getName() const;
 
     const Point &getPosition() const;
+
+    virtual const Point getValidPosition() const;
 
     const Point &getSize() const;
 
@@ -33,10 +39,10 @@ public:
 
 protected:
     Task * m_task;
-private:
-    std::string m_name;
-    int m_cid;
     Point m_pos, m_size;
+    std::string m_name;
+private:
+    int m_cid;
     simxInt m_object_handle;
 };
 

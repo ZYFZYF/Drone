@@ -87,3 +87,18 @@ Task *Object::getTask()
 {
     return m_task;
 }
+
+Object::Object()
+{
+
+}
+
+const Point Object::getValidPosition() const
+{
+    return m_pos;
+}
+
+bool Object::isEntrance()
+{
+    return false;
+}

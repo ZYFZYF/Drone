@@ -4,6 +4,7 @@
 
 #include "Task.h"
 #include "../object/Object.h"
+#include "../route/Router.h"
 
 class MoveTask : public Task
 {
@@ -17,6 +18,8 @@ public:
     void Execute(PlanningPathUpdater *t) override;
 
     const std::string getName() override;
+
+    float getDistance(Router *router) const;
 
 private:
     int m_close_rounds;

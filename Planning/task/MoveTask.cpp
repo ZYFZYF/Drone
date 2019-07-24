@@ -9,31 +9,8 @@ void MoveTask::Enter(PlanningPathUpdater *t)
     std::cout << "Prepare to move from " << m_source_object->getName() << " to " << m_destination_object->getName()
               << std::endl;
     m_previous_round_pos = m_start_pos = t->getDronePosition();
-    if (m_destination_object->isPlatform())
-    {
-        m_target_pos = m_destination_object->getPosition();
-        if(m_destination_object->getName() == "End")
-        {
-            m_target_pos.setZ(HOVER_HEIGHT_OVER_END);
-        } else
-        {
-            m_target_pos.setZ(HOVER_HEIGHT_OVER_PLATFORM);
-        }
-
-    }
-    if (m_destination_object->isDoor())
-    {
-        //根据在门的哪边来确定将哪儿设为终点
-        if (m_start_pos.y() > m_destination_object->getPosition().y())
-        {
-            m_target_pos = m_destination_object->getPosition() + Point(0, Y_DISTANCE_FROM_DOOR, 0);
-        } else
-        {
-            m_target_pos = m_destination_object->getPosition() - Point(0, Y_DISTANCE_FROM_DOOR, 0);
-        }
-    }
     m_path_points = t->getPathPoints(m_start_pos, m_target_pos);
-    assert(!m_path_points.empty());
+    assert(m_path_points.size() >= 2);
     std::cout << "Have " << m_path_points.size() << " path points" << std::endl;
     for(const auto &point: m_path_points)
         std::cout << point << std::endl;
@@ -54,7 +31,8 @@ const std::string MoveTask::getName()
 MoveTask::MoveTask(Object *source, Object *destination) : m_source_object(source), m_destination_object(destination),
                                                           m_close_rounds(0)
 {
-
+    m_start_pos = m_source_object->getValidPosition();
+    m_target_pos = m_destination_object->getValidPosition();
 }
 
 void MoveTask::Execute(PlanningPathUpdater *t)
@@ -89,4 +67,15 @@ void MoveTask::Execute(PlanningPathUpdater *t)
         std::cout << "close rounds is " << m_close_rounds << std::endl;
     }
     m_previous_round_pos = t->getDronePosition();
+}
+
+float MoveTask::getDistance(Router *router) const
+{
+    std::vector<Point> path = router->route(m_start_pos, m_target_pos);
+    float dist = 0;
+    for(auto i = 1; i < path.size(); i ++)
+    {
+        dist += distance(path[i-1], path[i]);
+    }
+    return dist;
 }
