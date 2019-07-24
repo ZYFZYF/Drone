@@ -56,7 +56,9 @@ Point RRT::getRandomPoint()
 
 double RRT::randomDouble(double l, double r)
 {
-    return l + (r - l) / RAND_MAX * rand();
+    static long randomNum = 0;
+    randomNum = 25214903917 * randomNum + 11;
+    return l + (r - l) / RAND_MAX * randomNum;
 }
 
 Point
