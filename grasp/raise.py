@@ -45,11 +45,7 @@ if clientID != -1:
     vrep.simxStartSimulation(clientID, vrep.simx_opmode_blocking)
     res, target_position = vrep.simxGetObjectPosition(
         clientID, target, -1, vrep.simx_opmode_blocking)
-    path = []
-    path.append([0,0,-0.65])
-    path.append([0,0,-0.1])
-    path.append([0,0,-0.015])
-    run(path)
+
     # input("回车键继续")
     vrep.simxSetBooleanParameter(clientID,0,True,vrep.simx_opmode_blocking)
     time.sleep(3)
