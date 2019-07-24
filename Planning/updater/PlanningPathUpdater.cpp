@@ -111,10 +111,11 @@ PlanningPathUpdater::PlanningPathUpdater(int client_id) : PlanningUpdater(
                 }
                 MoveTask task(nodes[x], nodes[y]);
                 float new_distance = dp[x][c] + task.getDistance(m_router);
-                if (nodes[y]->getTask() != nullptr)
+                //abandon nooblearning
+/*                if (nodes[y]->getTask() != nullptr)
                 {
                     new_distance += nodes[y]->getTask()->evalTimeCost(1000000);
-                }
+                }*/
                 if (new_distance < dp[yy][cc])
                 {
                     dp[yy][cc] = new_distance;
