@@ -12,6 +12,7 @@
 #include "../task/MoveTask.h"
 #include "../task/Task.h"
 #include "../route/NaiveRouter.h"
+#include "../route/RRTRouter.h"
 
 
 using namespace std;
@@ -139,6 +140,9 @@ PlanningPathUpdater::PlanningPathUpdater(int client_id) : PlanningUpdater(
     if(ROUTE_ALGORITHM == "NAIVE")
     {
         m_router = new NaiveRouter();
+    } else if (ROUTE_ALGORITHM=="RRT")
+    {
+        m_router = new RRTRouter();
     }
     for (const auto &object: m_objects)
     {
