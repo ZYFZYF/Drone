@@ -41,6 +41,7 @@ RRT::generateRoute(const Point source, const Point destination,
         if ((extendedPoint - destination).length() < maxError)
         {
             route = tracebackRoute(tree.size() - 1, tree);
+            route.push_back(destination);
             return true;
         }
     }
@@ -58,7 +59,7 @@ double RRT::randomDouble(double l, double r)
 {
     static long randomNum = 0;
     randomNum = 25214903917 * randomNum + 11;
-    return l + (r - l) / RAND_MAX * randomNum;
+    return l + (r - l) / RAND_MAX * rand();
 }
 
 Point
