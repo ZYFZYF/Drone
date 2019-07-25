@@ -39,16 +39,6 @@ MoveTask::MoveTask(Object *source, Object *destination) : m_source_object(source
 
 void MoveTask::Execute(PlanningPathUpdater *t)
 {
-    //  Point now_pos = t->getTargetPosition();
-    //std::cout << now_pos << ' ' << m_target_pos << std::endl;
-//    Point error = m_path_points[m_now_target_index] - now_pos;
-//    if (error.norm() > CLOSE_THRESHOLD)
-//    {
-//        now_pos = now_pos + error.normalize() * std::min(MOVE_STEP_LENGTH, error.length());
-//        t->setTargetPosition(now_pos);
-//    }
-    //std::cout << error << ' ' << error.norm() << std::endl;
-    //std::cout << (t->getDronePosition() - m_target_pos).norm() << std::endl;
     if ((t->getDronePosition() - m_path_points[m_now_target_index]).norm() < CLOSE_THRESHOLD)
     {
         m_close_rounds++;

@@ -12,5 +12,3 @@ add_subdirectory(Common)
 link_libraries(common)
 add_subdirectory(Landing)
 add_subdirectory(Planning)
-add_subdirectory(Following)
-

@@ -3,18 +3,18 @@
 #include <algorithm>
 #include "PlanningPathUpdater.h"
 #include "../../Common/config/Config.h"
-#include "../object/Object.h"
-#include "../object/Door.h"
-#include "../object/Tree.h"
-#include "../object/Cylinder.h"
-#include "../object/Joint.h"
-#include "../object/Platform.h"
+#include "../../Common/object/Object.h"
+#include "../../Common/object/Door.h"
+#include "../../Common/object/Tree.h"
+#include "../../Common/object/Cylinder.h"
+#include "../../Common/object/Joint.h"
+#include "../../Common/object/Platform.h"
+#include "../../Common/object/Entrance.h"
+#include "../../Common/route/NaiveRouter.h"
 #include "../task/MoveTask.h"
 #include "../task/Task.h"
-#include "../object/Entrance.h"
-#include "../../Common/route/NaiveRouter.h"
-#include "../route/RRTRouter.h"
-#include "../route/RRTRpcRouter.h"
+#include "../../Common/route/RRTRouter.h"
+#include "../../Common/route/RRTRpcRouter.h"
 
 const simxFloat Y_DISTANCE_FROM_DOOR = Config::Instance()->getFloatParam("MoveTask", "Y_DISTANCE_FROM_DOOR");
 using namespace std;

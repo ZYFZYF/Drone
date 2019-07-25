@@ -3,7 +3,7 @@
 
 
 #include "Task.h"
-#include "../object/Object.h"
+#include "../../Common/object/Object.h"
 
 class ThroughDoorTask : public Task
 {
