@@ -17,7 +17,6 @@ bool RRTClient::setObstacles(std::vector<double> obstacles)
     ClientContext context;
     Obstacles response;
 
-
     for  (auto &v:obstacles)
     {
         points.add_coordinate(v);
@@ -40,7 +39,7 @@ RRTClient::getRoute(Point source, Point destination, std::vector<Point> &route)
     points.add_coordinate(destination.y());
     points.add_coordinate(destination.z());
     auto status = m_stub->GetRrtRoute(&context, points, &response);
-    printf("DEBUG: response size(double number)=%d\n", response.coordinate_size());
+//    printf("DEBUG: response size(double number)=%d\n", response.coordinate_size());
     for (int i = 0; i < response.coordinate_size(); i += 3)
     {
         route.emplace_back(response.coordinate(i), response.coordinate(i + 1),

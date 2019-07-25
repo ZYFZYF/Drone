@@ -24,7 +24,7 @@ std::vector<Point> RRTRpcRouter::route(const Point &start_pos, const Point &end_
         // DEBUG: output obstacles
 //        printf("%lf %lf %lf %lf %lf %lf\n", a.x(), a.y(), a.z(), b.x(), b.y(), b.z());
     }
-    std::cout <<"DEBUG: start_pos "<< start_pos << " end_pos" << end_pos << std::endl;
+    std::cout <<"DEBUG: start_pos "<< start_pos << " end_pos " << end_pos << std::endl;
     bool isOk = false;
     while (!isOk)
     {
