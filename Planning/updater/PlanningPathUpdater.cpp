@@ -11,15 +11,16 @@
 #include "../object/Platform.h"
 #include "../task/MoveTask.h"
 #include "../task/Task.h"
-#include "../route/NaiveRouter.h"
 #include "../object/Entrance.h"
+#include "../../Common/route/NaiveRouter.h"
 
-
+const simxFloat Y_DISTANCE_FROM_DOOR = Config::Instance()->getFloatParam("MoveTask", "Y_DISTANCE_FROM_DOOR");
 using namespace std;
 queue<pair<int, int> > q;
 const int NODES_NUM = 18;
 float dp[NODES_NUM][1 << NODES_NUM];
 bool v[NODES_NUM][1 << NODES_NUM];
+float dist[NODES_NUM][NODES_NUM];
 pair<int, int> prevNode[NODES_NUM][1 << NODES_NUM];
 
 PlanningPathUpdater::PlanningPathUpdater(int client_id) : PlanningUpdater(
@@ -78,6 +79,12 @@ PlanningPathUpdater::PlanningPathUpdater(int client_id) : PlanningUpdater(
         if (nodes[i]->getName() == grab_pos) z = i;
         cout << i << ' ' << nodes[i]->getName() << endl;
     }
+    // calculate distances in advance
+    for (auto i = 0; i < n; i++)
+        for (auto j = 0; j < n; j++)
+        {
+            dist[i][j] = MoveTask(nodes[i], nodes[j]).getDistance(m_router);
+        }
     // next is dynamic planning to calculate the route and task lists
     for (int i = 0; i < n; i++)
         for (int j = 0; j < m; j++)
@@ -91,26 +98,30 @@ PlanningPathUpdater::PlanningPathUpdater(int client_id) : PlanningUpdater(
     {
         auto x = q.front().first, c = q.front().second;
         q.pop();
+        v[x][c] = false;
         for (int i = 0; i < n; i++)
             if (!(c >> i & 1))
             {
-                int y = i, cc = c + (1 << i), yy=y;
+                int y = i, cc = c + (1 << i), yy = y;
                 if (nodes[y]->isEntrance())
                 {
                     Object *next_entrance = dynamic_cast<Entrance *>(nodes[y])->getOtherEntrance();
-                    for (int i = 0; i < n; i++)
+                    for (int j = 0; j < n; j++)
                     {
-                        if (nodes[i] == next_entrance)
+                        if (nodes[j] == next_entrance)
                         {
-                            yy = i;
+                            yy = j;
                             break;
                         }
                     }
                     if (cc >> yy & 1)continue;
                     cc += 1 << yy;
                 }
-                MoveTask task(nodes[x], nodes[y]);
-                float new_distance = dp[x][c] + task.getDistance(m_router);
+                float new_distance = dp[x][c] + dist[x][y];
+                if (yy != y)
+                {
+                    new_distance += 2 * Y_DISTANCE_FROM_DOOR;
+                }
                 //abandon nooblearning
 /*                if (nodes[y]->getTask() != nullptr)
                 {
@@ -131,13 +142,12 @@ PlanningPathUpdater::PlanningPathUpdater(int client_id) : PlanningUpdater(
     auto min_y = m - 1;
     for (auto i = 0; i < m; i++)
     {
-        //条件改为通过3个门口,前面的3个门可以推出来
+        //条件改为通过6个门口
         auto cnt = 0;
         for (auto j = 0; j < n; j++)
             if ((i >> j & 1) && nodes[j]->isEntrance())
                 cnt++;
-        if (cnt < 3 || !(i >> z & 1)) continue;
-
+        if (cnt < 6 || !(i >> z & 1)) continue;
         if (dp[t][i] < dp[t][min_y])
         {
             min_y = i;
@@ -146,12 +156,15 @@ PlanningPathUpdater::PlanningPathUpdater(int client_id) : PlanningUpdater(
 
     vector<int> path;
     pair<int, int> now = make_pair(t, min_y);
+    cout << now.first << ' ' << now.second << ' ' << dp[now.first][now.second] << ' ' << nodes[now.first]->getName()
+         << endl;
     while (true)
     {
         path.push_back(now.first);
         if (now.first == s)break;
         now = prevNode[now.first][now.second];
-        cout << now.first << ' ' << now.second << ' ' << dp[now.first][now.second] << endl;
+        cout << now.first << ' ' << now.second << ' ' << dp[now.first][now.second] << ' ' << nodes[now.first]->getName()
+             << endl;
     }
     reverse(path.begin(), path.end());
     for (auto i: path)
@@ -162,7 +175,8 @@ PlanningPathUpdater::PlanningPathUpdater(int client_id) : PlanningUpdater(
     {
         if (nodes[path[i]]->isEntrance())
         {
-            m_tasks.push_back(new MoveTask(nodes[path[i - 1]], dynamic_cast<Entrance *>(nodes[path[i]])->getOtherEntrance()));
+            m_tasks.push_back(
+                    new MoveTask(nodes[path[i - 1]], dynamic_cast<Entrance *>(nodes[path[i]])->getOtherEntrance()));
             m_tasks.push_back(dynamic_cast<Entrance *>(nodes[path[i]])->getParent()->getTask());
         } else
         {

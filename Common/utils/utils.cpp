@@ -3,6 +3,8 @@
 #include "utils.h"
 #include "../vrep/extApiPlatform.h"
 
+const Point DRONE_SIZE = Point(0.4f, 0.4f, 0.3f);
+
 const std::string utils::getNowTime()
 {
     time_t sys_time;
@@ -105,5 +107,87 @@ float utils::getFloatSignal(const std::string &signal, simxInt client_id)
     }
     while (simxGetFloatSignal(client_id, signal.c_str(), &value, simx_opmode_buffer) == simx_return_novalue_flag);
     return value;
+}
+
+bool utils::existCollision(const Point &p, const Obstacle &obstacle)
+{
+    const Point &min_p = obstacle.getMinCorner();
+    const Point &max_p = obstacle.getMaxCorner();
+    return min_p.x() <= p.x() && p.x() <= max_p.x() &&
+           min_p.y() <= p.y() && p.y() <= max_p.y() &&
+           min_p.z() <= p.z() && p.z() <= max_p.z();
+}
+
+bool utils::existCollisionBetweenBaseAndObstacle(const Point &base_pos, const Obstacle &obstacle)
+{
+    const Obstacle drone = getDroneBoxWithBasePos(base_pos);
+    for (int i = 0; i < 2; i++)
+        for (int j = 0; j < 2; j++)
+            for (int k = 0; k < 2; k++)
+            {
+                Point node = drone.getNode(i, j, k);
+                if (existCollision(node, obstacle))return true;
+                node = obstacle.getNode(i, j, k);
+                if (existCollision(node, drone))return true;
+            }
+    return false;
+}
+
+bool
+utils::existCollisionBetweenBaselineAndObstacle(const Point &start_pos, const Point &end_pos, const Obstacle &obstacle)
+{
+    Point error = end_pos - start_pos;
+    for (int i = 0; i <= 100; i++)
+    {
+        Point base_pos = start_pos + error * i / 100;
+        if (existCollisionBetweenBaseAndObstacle(base_pos, obstacle))
+        {
+            //std::cout << "collide with " << obstacle.getName() << std::endl;
+            return true;
+        }
+    }
+    return false;
+}
+
+const Obstacle utils::getDroneBoxWithBasePos(const Point &base_pos)
+{
+    return Obstacle(Point(base_pos.x(), base_pos.y(), base_pos.z() - DRONE_SIZE.z() / 2), DRONE_SIZE);
+}
+
+bool utils::existCollisionWithObstacles(const Point &p, const std::vector<Obstacle> &obstacles)
+{
+    for (const auto &obstacle: obstacles)
+    {
+        if (existCollision(p, obstacle))
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool utils::existCollisionBetweenBaseAndObstacles(const Point &base_pos, const std::vector<Obstacle> &obstacles)
+{
+    for (const auto &obstacle: obstacles)
+    {
+        if (existCollisionBetweenBaseAndObstacle(base_pos, obstacle))
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool utils::existCollisionBetweenBaselineAndObstacles(const Point &start_pos, const Point &end_pos,
+                                                      const std::vector<Obstacle> &obstacles)
+{
+    for (const auto &obstacle: obstacles)
+    {
+        if (existCollisionBetweenBaselineAndObstacle(start_pos, end_pos, obstacle))
+        {
+            return true;
+        }
+    }
+    return false;
 }
 

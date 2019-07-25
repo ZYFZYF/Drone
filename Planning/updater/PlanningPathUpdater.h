@@ -5,7 +5,7 @@
 #include <vector>
 #include "PlanningUpdater.h"
 #include "../../Common/config/Config.h"
-#include "../route/Router.h"
+#include "../../Common/route/Router.h"
 
 class Object;
 class Task;

@@ -27,7 +27,7 @@ Object::Object(const std::string &name, int client_id) : m_name(name), m_cid(cli
     //std::cout << name << " 'size is " << m_size << std::endl;
     if(name == "GateFrame_80cmX190cm" || name == "GateFrame_80cmX190cm#1")
     {
-        m_size.setY(0.5f);
+        m_size.setY(0.25f);
     }
     if(name == "UR3" || name == "UR3#0")
     {

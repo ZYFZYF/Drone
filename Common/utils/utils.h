@@ -6,6 +6,8 @@
 #include <regex>
 #include <ctime>
 #include "Point.h"
+#include "../route/Obstacle.h"
+
 #ifdef _WIN32
 #include <windows.h>
 #elif defined (__linux) || defined (__APPLE__)
@@ -20,6 +22,13 @@ namespace utils
     void transformUTCtoBJC(int &year, int &month, int &day, int &hour, int &minute, int &second);
     Point getObjectPosition(simxInt handle, simxInt client_id);
     float getFloatSignal(const std::string &signal, simxInt client_id);
+    const Obstacle getDroneBoxWithBasePos(const Point &base_pos);
+    bool existCollision(const Point &p, const Obstacle &obstacle);
+    bool existCollisionBetweenBaseAndObstacle(const Point &base_pos, const Obstacle &obstacle);
+    bool existCollisionBetweenBaselineAndObstacle(const Point &start_pos, const Point &end_pos, const Obstacle &obstacle);
+    bool existCollisionWithObstacles(const Point &p, const std::vector<Obstacle> &obstacles);
+    bool existCollisionBetweenBaseAndObstacles(const Point &base_pos, const std::vector<Obstacle> &obstacles);
+    bool existCollisionBetweenBaselineAndObstacles(const Point &start_pos, const Point &end_pos, const std::vector<Obstacle> &obstacles);
 };
 
 

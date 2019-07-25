@@ -2,8 +2,8 @@
 #define DRONE_OBSTACLE_H
 
 
-#include "../../Common/utils/Point.h"
-#include "../object/Object.h"
+#include "../utils/Point.h"
+#include "../../Planning/object/Object.h"
 
 class Obstacle
 {
@@ -18,8 +18,13 @@ public:
 
     const Point &getMaxCorner() const;
 
+    Point getNode(bool min_x, bool min_y, bool min_z) const;
+
+    const std::string &getName() const;
+
 private:
     Point m_min_corner, m_max_corner;
+    std::string m_name;
 };
 
 

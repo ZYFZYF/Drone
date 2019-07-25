@@ -11,7 +11,7 @@ public:
     Point();
     Point(const Point &p);
     Point(simxFloat x, simxFloat y, simxFloat z);
-    Point(simxFloat p[3]);
+    explicit Point(simxFloat p[3]);
     simxFloat operator[](int index) const;
     simxFloat x() const;
     simxFloat y() const;
