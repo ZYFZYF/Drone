@@ -29,6 +29,7 @@ namespace utils
     bool existCollisionWithObstacles(const Point &p, const std::vector<Obstacle> &obstacles);
     bool existCollisionBetweenBaseAndObstacles(const Point &base_pos, const std::vector<Obstacle> &obstacles);
     bool existCollisionBetweenBaselineAndObstacles(const Point &start_pos, const Point &end_pos, const std::vector<Obstacle> &obstacles);
+    const Point generateRandomPointBetween(const Point &start_pos, const Point &end_pos);
 };
 
 

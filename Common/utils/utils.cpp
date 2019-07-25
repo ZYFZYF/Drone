@@ -2,6 +2,7 @@
 #include <set>
 #include "utils.h"
 #include "../vrep/extApiPlatform.h"
+#include <random>
 
 const Point DRONE_SIZE = Point(0.4f, 0.4f, 0.3f);
 
@@ -189,5 +190,10 @@ bool utils::existCollisionBetweenBaselineAndObstacles(const Point &start_pos, co
         }
     }
     return false;
+}
+
+const Point utils::generateRandomPointBetween(const Point &start_pos, const Point &end_pos)
+{
+    return Point();
 }
 
