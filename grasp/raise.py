@@ -51,8 +51,6 @@ if clientID != -1:
     time.sleep(3)
     # input("回车键继续")
     path = []
-    # path.append([0,0,0.015])
-    # path.append([0,0,0.1])
     path.append([0,0,0.65])
     run(path)
     input("回车键结束")
