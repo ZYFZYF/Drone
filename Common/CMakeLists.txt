@@ -1,19 +1,36 @@
 file(GLOB_RECURSE SRC *.cpp *.cc *.h *.hpp *.c)
 
+message(AUTHOR_WARNING SRC ${SRC})
+
 if (NOT BUILD_RRTRPC)
-    list(REMOVE_ITEM SRC RRT/route_guide.grpc.pb.cc
-            RRT/route_guide.pb.cc
-            RRT/route_guide.grpc.pb.h
-            RRT/route_guide.pb.h
-            RRT/RRTClient.cpp
-            RRT/RRTClient.h
-            route/RRTRpcRouter.cpp
-            route/RRTRpcRouter.h
-            )
+    list(FILTER SRC EXCLUDE REGEX ".*RRT/route_guide.grpc.pb.cc$")
+    list(FILTER SRC EXCLUDE REGEX ".*route_guide.pb.cc$")
+    list(FILTER SRC EXCLUDE REGEX ".*RRT/route_guide.grpc.pb.h$")
+    list(FILTER SRC EXCLUDE REGEX ".*RRT/route_guide.pb.h$")
+    list(FILTER SRC EXCLUDE REGEX ".*RRT/RRTClient.cpp$")
+    list(FILTER SRC EXCLUDE REGEX ".*RRT/RRTClient.h$")
+    list(FILTER SRC EXCLUDE REGEX ".*route/RRTRpcRouter.cpp$")
+    list(FILTER SRC EXCLUDE REGEX ".*route/RRTRpcRouter.h$")
+#
+#    list(REMOVE_ITEM SRC RRT/route_guide.grpc.pb.cc
+#            RRT/route_guide.pb.cc
+#            RRT/route_guide.grpc.pb.h
+#            RRT/route_guide.pb.h
+#            RRT/RRTClient.cpp
+#            RRT/RRTClient.h
+#            route/RRTRpcRouter.cpp
+#            route/RRTRpcRouter.h
+#            )
 endif(NOT BUILD_RRTRPC)
 
 add_library(common ${SRC})
-#message(AUTHOR_WARNING ${SRC})
+if (NOT BUILD_RRTRPC)
+    message(AUTHOR_WARNING NOT ${BUILD_RRTRPC})
+else(NOT BUILD_RRTRPC)
+    message(AUTHOR_WARNING ON ${BUILD_RRTRPC})
+endif(NOT BUILD_RRTRPC)
+
+message(AUTHOR_WARNING ${SRC})
 
 #set(PYTHON_EXECUTABLE:FILEPATH /home/eric/App/anaconda3/bin/python)
 #set(PYTHON_INCLUDE_DIR:PATH /home/eric/App/anaconda3/include)
