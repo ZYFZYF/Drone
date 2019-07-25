@@ -4,7 +4,7 @@
 #include "../vrep/extApiPlatform.h"
 #include <random>
 std::default_random_engine e;
-std::uniform_int_distribution<unsigned> u(0, 1);
+std::uniform_real_distribution<double> u(0, 1);
 
 const Point DRONE_SIZE = Point(0.4f, 0.4f, 0.3f);
 

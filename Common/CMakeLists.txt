@@ -1,7 +1,7 @@
 file(GLOB_RECURSE SRC *.cpp *.cc *.h *.hpp *.c)
 
 message(AUTHOR_WARNING SRC ${SRC})
-
+list(FILTER SRC EXCLUDE REGEX ".*RRT/main.cpp$")
 if (NOT BUILD_RRTRPC)
     list(FILTER SRC EXCLUDE REGEX ".*RRT/route_guide.grpc.pb.cc$")
     list(FILTER SRC EXCLUDE REGEX ".*route_guide.pb.cc$")

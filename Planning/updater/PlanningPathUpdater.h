@@ -36,8 +36,9 @@ private:
     int crash_rounds;
     const simxFloat CRASH_HEIGHT = Config::Instance()->getFloatParam("PlanningPathUpdater", "CRASH_HEIGHT");
     const int CRASH_ROUNDS_THRESHOLD = Config::Instance()->getIntParam("PlanningPathUpdater", "CRASH_ROUNDS_THRESHOLD");
-    Router *m_router;
+    Router *m_router, *m_distance_evaluation_router;
     const std::string ROUTE_ALGORITHM = Config::Instance()->getStringParam("PlanningPathUpdater", "ROUTE_ALGORITHM");
+    const std::string DISTANCE_EVALUATION_ALGORITHM = Config::Instance()->getStringParam("PlanningPathUpdater", "DISTANCE_EVALUATION_ALGORITHM");
 };
 
 

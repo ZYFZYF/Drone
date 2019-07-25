@@ -14,6 +14,8 @@
 #include "../task/MoveTask.h"
 #include "../task/Task.h"
 #include "../../Common/route/RRTRouter.h"
+#include "../../Common/route/PRMRouter.h"
+
 #ifdef BUILD_RRTRPC
 #include "../../Common/route/RRTRpcRouter.h"
 #endif
@@ -51,12 +53,10 @@ PlanningPathUpdater::PlanningPathUpdater(int client_id) : PlanningUpdater(
     if (ROUTE_ALGORITHM == "NAIVE")
     {
         m_router = new NaiveRouter();
-    }
-    else if (ROUTE_ALGORITHM=="RRT")
+    } else if (ROUTE_ALGORITHM == "RRT")
     {
         m_router = new RRTRouter();
-    }
-    else if (ROUTE_ALGORITHM=="RRTRPC")
+    } else if (ROUTE_ALGORITHM == "RRTRPC")
     {
 #ifdef BUILD_RRTRPC
         m_router = new RRTRpcRouter();
@@ -64,10 +64,30 @@ PlanningPathUpdater::PlanningPathUpdater(int client_id) : PlanningUpdater(
         cerr << "ERROR: Unsupported route algorithm" << endl;
         exit(0);
 #endif
+    } else if (ROUTE_ALGORITHM == "PRM")
+    {
+        m_router = new PRMRouter();
+    } else
+    {
+        cerr << "ERROR: Unsupported route algorithm" << endl;
+        exit(0);
+    }
+    // add distance-evaluation router
+    if (DISTANCE_EVALUATION_ALGORITHM == "NAIVE")
+    {
+        m_distance_evaluation_router = new NaiveRouter();
+    } else if (DISTANCE_EVALUATION_ALGORITHM == "PRM")
+    {
+        m_distance_evaluation_router = new PRMRouter();
+    } else
+    {
+        cerr << "ERROR: Unsupported distance evaluation algorithm" << endl;
+        exit(0);
     }
     for (const auto &object: m_objects)
     {
         m_router->addObstacle(Obstacle(object));
+        m_distance_evaluation_router->addObstacle(Obstacle(object));
     }
     //construct
     vector<Object *> nodes;
@@ -98,12 +118,13 @@ PlanningPathUpdater::PlanningPathUpdater(int client_id) : PlanningUpdater(
     }
     // calculate distances in advance
     for (auto i = 0; i < n; i++)
-        for (auto j = i+1; j < n; j++)
+        for (auto j = i + 1; j < n; j++)
         {
-            dist[j][i] =dist[i][j] = MoveTask(nodes[i], nodes[j]).getDistance(m_router);
-            if(dist[i][j] < 1000)
+            dist[j][i] = dist[i][j] = MoveTask(nodes[i], nodes[j]).getDistance(m_distance_evaluation_router);
+            if (dist[i][j] < 1000)
             {
-                cout << i << ' ' << j << ' ' << nodes[i]->getName() << ' ' << nodes[j]->getName() << ' ' << dist[i][j] << endl;
+                cout << i << ' ' << j << ' ' << nodes[i]->getName() << ' ' << nodes[j]->getName() << ' ' << dist[i][j]
+                     << endl;
             }
         }
     // next is dynamic planning to calculate the route and task lists
