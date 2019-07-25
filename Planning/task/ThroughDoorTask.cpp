@@ -7,13 +7,6 @@ void ThroughDoorTask::Execute(PlanningPathUpdater *t)
     Point now_pos = t->getTargetPosition();
     //根据在门的哪边来确定将哪儿设为终点
 
-    //std::cout << now_pos << ' ' << m_target_pos << std::endl;
-    Point error = m_target_pos - now_pos;
-    if (error.norm() > CLOSE_THRESHOLD)
-    {
-        now_pos = now_pos + error.normalize() * std::min(MOVE_STEP_LENGTH, error.length());
-        t->setTargetPosition(now_pos);
-    }
     //std::cout << error << ' ' << error.norm() << std::endl;
     //std::cout << (t->getDronePosition() - m_target_pos).norm() << std::endl;
     if ((t->getDronePosition() - m_previous_round_pos).norm() < CLOSE_THRESHOLD)
@@ -51,6 +44,7 @@ void ThroughDoorTask::Enter(PlanningPathUpdater *t)
     {
         m_target_pos = m_object->getPosition() + Point(0, Y_DISTANCE_FROM_DOOR, 0);
     }
+    t->setTargetPosition(m_target_pos);
 }
 
 void ThroughDoorTask::Exit(PlanningPathUpdater *t)
