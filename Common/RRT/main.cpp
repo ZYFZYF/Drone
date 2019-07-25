@@ -10,9 +10,10 @@
 #else
 #include "route_guide.grpc.pb.h"
 #endif
+#include "RRTClient.h"
 using namespace std;
 
-const double obstacles[]={1.900000,-9.500062,0.000019,3.100000,-9.399932,0.899974,
+const vector< double> obstacles={1.900000,-9.500062,0.000019,3.100000,-9.399932,0.899974,
                     1.675000,4.574937,0.000019,2.875001,4.675068,0.899974,
                     -8.099999,-8.050064,0.000019,-6.899999,-7.949934,0.899974,
                     6.175003,0.799998,0.000009,7.075003,1.299998,1.949987,
@@ -31,7 +32,17 @@ const double obstacles[]={1.900000,-9.500062,0.000019,3.100000,-9.399932,0.89997
 
 int main()
 {
+    RRTClient client;
+    vector<Point> route;
 
+    cout << client.setObstacles(obstacles) << endl;
+    cout << client.getRoute(Point(10.7016, 0.472867, 0.813236),
+                            Point(-5, 0, 1), route) << endl;
+    std::cout << "size=" << route.size() << endl;
+    for (const auto &p : route)
+    {
+        printf("%lf %lf %lf\n", p.x(), p.y(), p.z());
+    }
 }
 
 int main_python_embedded()

@@ -8,3 +8,6 @@ if(UNIX)
 else()
     target_link_libraries(Planning winmm ws2_32 ${OpenCV_LIBS})
 endif()
+
+target_link_libraries(Planning -lprotobuf -pthread -lpthread)
+target_link_libraries(Planning grpc++ grpc++_reflection)

@@ -1,2 +1,25 @@
-file(GLOB_RECURSE SRC *.cpp *.h *.hpp *.c)
+file(GLOB_RECURSE SRC *.cpp *.cc *.h *.hpp *.c)
 add_library(common ${SRC})
+message(AUTHOR_WARNING ${SRC})
+
+#set(PYTHON_EXECUTABLE:FILEPATH /home/eric/App/anaconda3/bin/python)
+#set(PYTHON_INCLUDE_DIR:PATH /home/eric/App/anaconda3/include)
+#set(PYTHON_LIBRARY:FILEPATH /home/eric/App/anaconda3/lib/libpython3.6m.a)
+#set(PYTHON_LIBRARIES /home/eric/App/anaconda3/lib/libpython3.6m.a)
+#find_package(PythonLibs REQUIRED)
+#find_package(PythonLibs 3.6 REQUIRED)
+#find_package(PythonLibs 3.6 REQUIRED PATHS /home/eric/App/anaconda3)
+#message(AUTHOR_WARNING ${PYTHON_INCLUDE_DIRS})
+#message(AUTHOR_WARNING ${PYTHON_LIBRARIES})
+#include_directories(${PYTHON_INCLUDE_DIRS})
+
+include_directories(/home/eric/.local/include)
+file(GLOB RRT_source RRT/*)
+add_executable(rrt ${RRT_source})
+
+target_link_libraries(rrt common)
+target_link_libraries(rrt -lprotobuf -pthread -lpthread)
+target_link_libraries(rrt grpc++ grpc++_reflection)
+
+link_libraries(common -lprotobuf -pthread -lpthread)
+link_libraries(common  grpc++ grpc++_reflection)

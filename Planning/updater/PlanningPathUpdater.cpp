@@ -13,6 +13,7 @@
 #include "../task/Task.h"
 #include "../route/NaiveRouter.h"
 #include "../route/RRTRouter.h"
+#include "../route/RRTRpcRouter.h"
 
 
 using namespace std;
@@ -143,6 +144,10 @@ PlanningPathUpdater::PlanningPathUpdater(int client_id) : PlanningUpdater(
     } else if (ROUTE_ALGORITHM=="RRT")
     {
         m_router = new RRTRouter();
+    }
+    else if (ROUTE_ALGORITHM=="RRTRPC")
+    {
+        m_router = new RRTRpcRouter();
     }
     for (const auto &object: m_objects)
     {
