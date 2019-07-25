@@ -8,9 +8,9 @@ void MoveTask::Enter(PlanningPathUpdater *t)
     Task::Enter(t);
     std::cout << "Prepare to move from " << m_source_object->getName() << " to " << m_destination_object->getName()
               << std::endl;
-    m_previous_round_pos = m_start_pos = t->getDronePosition();
+    m_previous_round_pos  = t->getDronePosition();
     m_path_points = t->getPathPoints(m_start_pos, m_target_pos);
-    assert(m_path_points.size() >= 2);
+    //assert(m_path_points.size() >= 2);
     std::cout << "Have " << m_path_points.size() << " path points" << std::endl;
     for (const auto &point: m_path_points)
         std::cout << point << std::endl;
