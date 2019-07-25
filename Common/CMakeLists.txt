@@ -1,4 +1,17 @@
 file(GLOB_RECURSE SRC *.cpp *.cc *.h *.hpp *.c)
+
+if (NOT BUILD_RRTRPC)
+    list(REMOVE_ITEM SRC RRT/route_guide.grpc.pb.cc
+            RRT/route_guide.pb.cc
+            RRT/route_guide.grpc.pb.h
+            RRT/route_guide.pb.h
+            RRT/RRTClient.cpp
+            RRT/RRTClient.h
+            route/RRTRpcRouter.cpp
+            route/RRTRpcRouter.h
+            )
+endif(NOT BUILD_RRTRPC)
+
 add_library(common ${SRC})
 #message(AUTHOR_WARNING ${SRC})
 
@@ -21,5 +34,7 @@ target_link_libraries(rrt common)
 target_link_libraries(rrt -lprotobuf -pthread -lpthread)
 target_link_libraries(rrt grpc++ grpc++_reflection)
 
-link_libraries(common -lprotobuf -pthread -lpthread)
-link_libraries(common  grpc++ grpc++_reflection)
+if (BUILD_RRTRPC)
+    link_libraries(common -lprotobuf -pthread -lpthread)
+    link_libraries(common  grpc++ grpc++_reflection)
+endif(BUILD_RRTRPC)
