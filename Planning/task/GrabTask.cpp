@@ -5,8 +5,9 @@
 
 void GrabTask::Execute(PlanningPathUpdater *t)
 {
+    //simxSetIntegerSignal(clientID,"close_hand",1,simx_opmode_blocking);
     //fake implement, TODO
-    static auto remain_rounds = 200;
+    static auto remain_rounds = 50;
     remain_rounds--;
     std::cout << "remain " << remain_rounds << " rounds" << std::endl;
     if (!remain_rounds)

@@ -1,5 +1,7 @@
 .idea/*
+.tags*
 cmake-build-debug/*
+build/
 **/*.exe
 **/*.a
 **/*.o
