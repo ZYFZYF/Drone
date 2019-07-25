@@ -17,10 +17,7 @@ def run(path,raising = False):
         print(point2)
         res, d_pos = vrep.simxGetObjectPosition(
             clientID, base, q_target, vrep.simx_opmode_blocking)
-        if raising:
-            threshold = 0.05
-        else:
-            threshold = 0.01
+        threshold = 0.01
         while np.linalg.norm(d_pos) > threshold:
             print(np.linalg.norm(d_pos))
             time.sleep(0.5)
@@ -46,18 +43,11 @@ if clientID != -1:
     res, target_position = vrep.simxGetObjectPosition(
         clientID, target, -1, vrep.simx_opmode_blocking)
     path = []
-    path.append([0,0,-0.65])
-    path.append([0,0,-0.1])
-    path.append([0,0,-0.015])
-    run(path)
-    # input("回车键继续")
-    vrep.simxSetBooleanParameter(clientID,0,True,vrep.simx_opmode_blocking)
-    time.sleep(3)
+    vrep.simxSetIntegerSignal(clientID,"close_hand",1,vrep.simx_opmode_blocking)
+    time.sleep(2)
     # input("回车键继续")
     path = []
-    # path.append([0,0,0.015])
-    # path.append([0,0,0.1])
-    path.append([0,0,0.65])
+    path.append([0,0,0.5])
     run(path)
     input("回车键结束")
     vrep.simxStopSimulation(clientID, vrep.simx_opmode_blocking)
