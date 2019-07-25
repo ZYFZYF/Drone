@@ -3,8 +3,8 @@
 
 
 #include <string>
-#include "../../Common/utils/Point.h"
-#include "../task/Task.h"
+#include "../utils/Point.h"
+#include "../../Planning/task/Task.h"
 
 class Object
 {

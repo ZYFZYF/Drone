@@ -1,5 +1,5 @@
 #include "Door.h"
-#include "../task/ThroughDoorTask.h"
+#include "../../Planning/task/ThroughDoorTask.h"
 #include "Entrance.h"
 
 bool Door::isDoor()

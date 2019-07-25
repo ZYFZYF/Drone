@@ -13,6 +13,8 @@
 #include "../task/Task.h"
 #include "../object/Entrance.h"
 #include "../../Common/route/NaiveRouter.h"
+#include "../route/RRTRouter.h"
+#include "../route/RRTRpcRouter.h"
 
 const simxFloat Y_DISTANCE_FROM_DOOR = Config::Instance()->getFloatParam("MoveTask", "Y_DISTANCE_FROM_DOOR");
 using namespace std;
@@ -47,6 +49,14 @@ PlanningPathUpdater::PlanningPathUpdater(int client_id) : PlanningUpdater(
     if (ROUTE_ALGORITHM == "NAIVE")
     {
         m_router = new NaiveRouter();
+    }
+    else if (ROUTE_ALGORITHM=="RRT")
+    {
+        m_router = new RRTRouter();
+    }
+    else if (ROUTE_ALGORITHM=="RRTRPC")
+    {
+        m_router = new RRTRpcRouter();
     }
     for (const auto &object: m_objects)
     {

@@ -3,7 +3,7 @@
 
 
 #include "../utils/Point.h"
-#include "../../Planning/object/Object.h"
+#include "../object/Object.h"
 
 class Obstacle
 {
