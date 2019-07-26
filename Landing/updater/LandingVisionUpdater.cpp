@@ -35,7 +35,7 @@ LandingVisionUpdater::LandingVisionUpdater(int client_id) : LandingUpdater(
     simxGetObjectHandle(clientID, "land_plane", &target, simx_opmode_blocking);
     std::cout << camera << ' ' << target << std::endl;
     simxGetObjectOrientation(clientID, camera, -1, angle, simx_opmode_streaming);
-    simxGetVisionSensorImage(clientID, camera, resolution, &image, 0, simx_opmode_streaming);
+    //simxGetVisionSensorImage(clientID, camera, resolution, &image, 0, simx_opmode_streaming);
 }
 
 void LandingVisionUpdater::update() {
@@ -52,7 +52,7 @@ void LandingVisionUpdater::update() {
     int RightDown = -1;
     int DownLeft = -1;
     int DownRight = -1;
-    int ret = simxGetVisionSensorImage(clientID, camera, resolution, &image, 0, simx_opmode_buffer);
+    int ret = simxGetVisionSensorImage(clientID, camera, resolution, &image, 0, simx_opmode_blocking);
     if (ret != simx_return_ok) {
         return;
     }
@@ -60,7 +60,7 @@ void LandingVisionUpdater::update() {
     float length = 0.8 * 1280 / rate / (position[2] - height);
     simxGetObjectOrientation(clientID, camera, -1, angle, simx_opmode_buffer);
     cv::Mat channel(resolution[1], resolution[0], CV_8UC3, image);
-    //璇诲洖鏉ョ殑鍥惧儚鏁版嵁鏄瀭鐩寸炕杞殑,闂搴旇鏄湪cvMat 鍜?v-rep 鍨傜洿鍧愭爣杞寸殑鏂瑰悜鐩稿弽,flip涓€涓嬪氨姝ｅ父浜?
+    //鐠囪娲栭弶銉ф畱閸ユ儳鍎氶弫鐗堝祦閺勵垰鐎惄瀵哥倳鏉烆剛娈?闂傤噣顣芥惔鏃囶嚉閺勵垰婀猚vMat 閸?v-rep 閸ㄥ倻娲块崸鎰垼鏉炲娈戦弬鐟版倻閻╃寮?flip娑撯偓娑撳姘ㄥ锝呯埗娴?
     flip(channel, channel, 0);
     cv::threshold(channel, channel, 230, 255, CV_THRESH_TOZERO_INV);
 //    cv::imshow("img",channel);
@@ -112,9 +112,9 @@ void LandingVisionUpdater::update() {
         p.setY(position[1]);
         p.setZ(height);
         QRCode_pos = p;
-        simxSetFloatSignal(clientID, "QRcode_x", p.x(), simx_opmode_blocking);
-        simxSetFloatSignal(clientID, "QRcode_y", p.y(), simx_opmode_blocking);
-        simxSetFloatSignal(clientID, "QRcode_z", p.z(), simx_opmode_blocking);
+        simxSetFloatSignal(clientID, "QRcode_x", p.x(), simx_opmode_oneshot);
+        simxSetFloatSignal(clientID, "QRcode_y", p.y(), simx_opmode_oneshot);
+        simxSetFloatSignal(clientID, "QRcode_z", p.z(), simx_opmode_oneshot);
         return;
     } else if (Up + Down + Left + Right == 3) {
         if (Up == 0) {
@@ -377,183 +377,184 @@ void LandingVisionUpdater::update() {
                     midx = (rightx + upx + righty - upy) / 2;
                     midy = (upx - rightx + righty + upy) / 2;
                 }
+
             }
-        } else if (Up + Down + Left + Right == 1) {
-            if (Up == 1) {
-                int leftx = -1, lefty = 1280;
-                int rightx = -1, righty = -1;
-                int downx = -1, downy = -1;
-                for (int i = 0; i < channel.rows; i++) {
-                    for (int j = 0; j < channel.cols; j++)
-                        if (channel.at<cv::Vec3b>(i, j)[0] < 30 && channel.at<cv::Vec3b>(i, j)[1] < 30 &&
-                            channel.at<cv::Vec3b>(i, j)[2] < 30) {
-                            if (j < UpLeft && j < lefty) {
-                                leftx = i;
-                                lefty = j;
-                            }
-                            if (j > UpRight && j > righty) {
-                                rightx = i;
-                                righty = j;
-                            }
-                            downx = i;
-                            downy = j;
-                        }
-                }
-                if (leftx == -1) {
-                    if (rightx == -1) {
-
-                    } else {
-
-                    }
-                } else {
-                    if (rightx == -1) {
-
-                    } else {
-
-                    }
-                }
-            } else if (Down == 1) {
-                int leftx = -1, lefty = 1280;
-                int rightx = -1, righty = -1;
-                int downx = -1, downy = -1;
-                for (int i = 0; i < channel.rows; i++) {
-                    for (int j = 0; j < channel.cols; j++)
-                        if (channel.at<cv::Vec3b>(i, j)[0] < 30 && channel.at<cv::Vec3b>(i, j)[1] < 30 &&
-                            channel.at<cv::Vec3b>(i, j)[2] < 30) {
-                            if (j < UpLeft && j < lefty) {
-                                leftx = i;
-                                lefty = j;
-                            }
-                            if (j > UpRight && j > righty) {
-                                rightx = i;
-                                righty = j;
-                            }
-                            downx = i;
-                            downy = j;
-                        }
-                }
-                if (leftx == -1) {
-                    if (rightx == -1) {
-
-                    } else {
-
-                    }
-                } else {
-                    if (rightx == -1) {
-
-                    } else {
-
-                    }
-                }
-            } else if (Left == 1) {
-                int leftx = -1, lefty = 1280;
-                int rightx = -1, righty = -1;
-                int downx = -1, downy = -1;
-                for (int i = 0; i < channel.rows; i++) {
-                    for (int j = 0; j < channel.cols; j++)
-                        if (channel.at<cv::Vec3b>(i, j)[0] < 30 && channel.at<cv::Vec3b>(i, j)[1] < 30 &&
-                            channel.at<cv::Vec3b>(i, j)[2] < 30) {
-                            if (j < UpLeft && j < lefty) {
-                                leftx = i;
-                                lefty = j;
-                            }
-                            if (j > UpRight && j > righty) {
-                                rightx = i;
-                                righty = j;
-                            }
-                            downx = i;
-                            downy = j;
-                        }
-                }
-                if (leftx == -1) {
-                    if (rightx == -1) {
-
-                    } else {
-
-                    }
-                } else {
-                    if (rightx == -1) {
-
-                    } else {
-
-                    }
-                }
-            } else {
-                int leftx = -1, lefty = 1280;
-                int rightx = -1, righty = -1;
-                int downx = -1, downy = -1;
-                for (int i = 0; i < channel.rows; i++) {
-                    for (int j = 0; j < channel.cols; j++)
-                        if (channel.at<cv::Vec3b>(i, j)[0] < 30 && channel.at<cv::Vec3b>(i, j)[1] < 30 &&
-                            channel.at<cv::Vec3b>(i, j)[2] < 30) {
-                            if (j < UpLeft && j < lefty) {
-                                leftx = i;
-                                lefty = j;
-                            }
-                            if (j > UpRight && j > righty) {
-                                rightx = i;
-                                righty = j;
-                            }
-                            downx = i;
-                            downy = j;
-                        }
-                }
-                if (leftx == -1) {
-                    if (rightx == -1) {
-
-                    } else {
-
-                    }
-                } else {
-                    if (rightx == -1) {
-
-                    } else {
-
-                    }
-                }
-            }
-            midx = position[0];
-            midy = position[1];
-        } else {
-            int startx = -1, starty = -1;
-            int finishx = 0, finishy = 0;
-            for (int i = 0; i < channel.rows; i++)
+        }
+    } else if (Up + Down + Left + Right == 1) {
+        if (Up == 1) {
+            int leftx = -1, lefty = 1280;
+            int rightx = -1, righty = -1;
+            int downx = -1, downy = -1;
+            for (int i = 0; i < channel.rows; i++) {
                 for (int j = 0; j < channel.cols; j++)
                     if (channel.at<cv::Vec3b>(i, j)[0] < 30 && channel.at<cv::Vec3b>(i, j)[1] < 30 &&
                         channel.at<cv::Vec3b>(i, j)[2] < 30) {
-                        if (startx == -1) {
-                            startx = i;
-                            starty = j;
+                        if (j < UpLeft && j < lefty) {
+                            leftx = i;
+                            lefty = j;
                         }
-                        finishx = i;
-                        finishy = j;
+                        if (j > UpRight && j > righty) {
+                            rightx = i;
+                            righty = j;
+                        }
+                        downx = i;
+                        downy = j;
                     }
-            if (startx == -1) {
-                cout << "鏈彂鐜颁簩缁寸爜" << endl;
-                p.setX(-1);
-                p.setY(-1);
-                p.setZ(-1);
-                QRCode_pos = p;
-                simxSetFloatSignal(clientID, "QRcode_x", p.x(), simx_opmode_blocking);
-                simxSetFloatSignal(clientID, "QRcode_y", p.y(), simx_opmode_blocking);
-                simxSetFloatSignal(clientID, "QRcode_z", p.z(), simx_opmode_blocking);
-                return;
+            }
+            if (leftx == -1) {
+                if (rightx == -1) {
+
+                } else {
+
+                }
             } else {
-                midx = (startx + finishx) / 2;
-                midy = (starty + finishy) / 2;
+                if (rightx == -1) {
+
+                } else {
+
+                }
+            }
+        } else if (Down == 1) {
+            int leftx = -1, lefty = 1280;
+            int rightx = -1, righty = -1;
+            int downx = -1, downy = -1;
+            for (int i = 0; i < channel.rows; i++) {
+                for (int j = 0; j < channel.cols; j++)
+                    if (channel.at<cv::Vec3b>(i, j)[0] < 30 && channel.at<cv::Vec3b>(i, j)[1] < 30 &&
+                        channel.at<cv::Vec3b>(i, j)[2] < 30) {
+                        if (j < UpLeft && j < lefty) {
+                            leftx = i;
+                            lefty = j;
+                        }
+                        if (j > UpRight && j > righty) {
+                            rightx = i;
+                            righty = j;
+                        }
+                        downx = i;
+                        downy = j;
+                    }
+            }
+            if (leftx == -1) {
+                if (rightx == -1) {
+
+                } else {
+
+                }
+            } else {
+                if (rightx == -1) {
+
+                } else {
+
+                }
+            }
+        } else if (Left == 1) {
+            int leftx = -1, lefty = 1280;
+            int rightx = -1, righty = -1;
+            int downx = -1, downy = -1;
+            for (int i = 0; i < channel.rows; i++) {
+                for (int j = 0; j < channel.cols; j++)
+                    if (channel.at<cv::Vec3b>(i, j)[0] < 30 && channel.at<cv::Vec3b>(i, j)[1] < 30 &&
+                        channel.at<cv::Vec3b>(i, j)[2] < 30) {
+                        if (j < UpLeft && j < lefty) {
+                            leftx = i;
+                            lefty = j;
+                        }
+                        if (j > UpRight && j > righty) {
+                            rightx = i;
+                            righty = j;
+                        }
+                        downx = i;
+                        downy = j;
+                    }
+            }
+            if (leftx == -1) {
+                if (rightx == -1) {
+
+                } else {
+
+                }
+            } else {
+                if (rightx == -1) {
+
+                } else {
+
+                }
+            }
+        } else {
+            int leftx = -1, lefty = 1280;
+            int rightx = -1, righty = -1;
+            int downx = -1, downy = -1;
+            for (int i = 0; i < channel.rows; i++) {
+                for (int j = 0; j < channel.cols; j++)
+                    if (channel.at<cv::Vec3b>(i, j)[0] < 30 && channel.at<cv::Vec3b>(i, j)[1] < 30 &&
+                        channel.at<cv::Vec3b>(i, j)[2] < 30) {
+                        if (j < UpLeft && j < lefty) {
+                            leftx = i;
+                            lefty = j;
+                        }
+                        if (j > UpRight && j > righty) {
+                            rightx = i;
+                            righty = j;
+                        }
+                        downx = i;
+                        downy = j;
+                    }
+            }
+            if (leftx == -1) {
+                if (rightx == -1) {
+
+                } else {
+
+                }
+            } else {
+                if (rightx == -1) {
+
+                } else {
+
+                }
             }
         }
-        offsetx = (position[2] - height) * rate / 1280 * (640 - midy);
-        offsety = (position[2] - height) * rate / 1280 * (midx - 360);
-        p.setX(position[0] + offsetx * cos(angle[2]) + offsety * sin(angle[2]));
-        p.setY(position[1] + offsety * cos(angle[2]) - offsetx * sin(angle[2]));
-        p.setZ(height);
-        tar_position = utils::getObjectPosition(target, m_cid);
-        cout << p.x() << " " << p.y() << " " << p.z() << "  " << tar_position[0] << " " << tar_position[1] << " "
-             << tar_position[2] << ' ' << angle[1] << ' ' << angle[2] << ' ' << angle[3] << endl;
-        QRCode_pos = p;
-        simxSetFloatSignal(clientID, "QRcode_x", p.x(), simx_opmode_blocking);
-        simxSetFloatSignal(clientID, "QRcode_y", p.y(), simx_opmode_blocking);
-        simxSetFloatSignal(clientID, "QRcode_z", p.z(), simx_opmode_blocking);
+        midx = position[0];
+        midy = position[1];
+    } else {
+        int startx = -1, starty = -1;
+        int finishx = 0, finishy = 0;
+        for (int i = 0; i < channel.rows; i++)
+            for (int j = 0; j < channel.cols; j++)
+                if (channel.at<cv::Vec3b>(i, j)[0] < 30 && channel.at<cv::Vec3b>(i, j)[1] < 30 &&
+                    channel.at<cv::Vec3b>(i, j)[2] < 30) {
+                    if (startx == -1) {
+                        startx = i;
+                        starty = j;
+                    }
+                    finishx = i;
+                    finishy = j;
+                }
+        if (startx == -1) {
+            cout << "鏈彂鐜颁簩缁寸爜" << endl;
+            p.setX(-1);
+            p.setY(-1);
+            p.setZ(-1);
+            QRCode_pos = p;
+            simxSetFloatSignal(clientID, "QRcode_x", p.x(), simx_opmode_oneshot);
+            simxSetFloatSignal(clientID, "QRcode_y", p.y(), simx_opmode_oneshot);
+            simxSetFloatSignal(clientID, "QRcode_z", p.z(), simx_opmode_oneshot);
+            return;
+        } else {
+            midx = (startx + finishx) / 2;
+            midy = (starty + finishy) / 2;
+        }
     }
+    offsetx = (position[2] - height) * rate / 1280 * (640 - midy);
+    offsety = (position[2] - height) * rate / 1280 * (midx - 360);
+    p.setX(position[0] + offsetx * cos(angle[2]) + offsety * sin(angle[2]));
+    p.setY(position[1] + offsety * cos(angle[2]) - offsetx * sin(angle[2]));
+    p.setZ(height);
+    tar_position = utils::getObjectPosition(target, m_cid);
+    cout << p.x() << " " << p.y() << " " << p.z() << "  " << tar_position[0] << " " << tar_position[1] << " "
+         << tar_position[2] << ' ' << angle[1] << ' ' << angle[2] << ' ' << angle[3] << endl;
+    QRCode_pos = p;
+    simxSetFloatSignal(clientID, "QRcode_x", p.x(), simx_opmode_oneshot);
+    simxSetFloatSignal(clientID, "QRcode_y", p.y(), simx_opmode_oneshot);
+    simxSetFloatSignal(clientID, "QRcode_z", p.z(), simx_opmode_oneshot);
 }
