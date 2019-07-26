@@ -20,6 +20,7 @@ void GrabTask::Execute(PlanningPathUpdater *t)
         {
             t->setHand();
             utils::sleep(3000);
+            use_vision = false;
         }
         if (m_now_target_index < m_path_points.size())
             t->setTargetPosition(m_path_points[m_now_target_index]);
@@ -50,9 +51,10 @@ void GrabTask::Enter(PlanningPathUpdater *t)
     std::cout << "Prepare to grab cylinder on platform " << m_object->getName() << std::endl;
     use_vision = true;
     std::cout << "Open the eyes _(:з)∠)_" << std::endl;
-    Point target_pos = t->getTargetPosition();
-    m_path_points.emplace_back(Point(target_pos.x(), target_pos.y(), target_pos.z() - 0.78f));
-    m_path_points.emplace_back(target_pos.x(), target_pos.y(), target_pos.z() - 0.82f);
+    Point target_pos = t->getHotTargetPosition();
+    target_pos.setZ(target_pos.z() + 0.5f);
+    m_path_points.emplace_back(Point(target_pos.x(), target_pos.y(), target_pos.z() - 0.28f));
+    m_path_points.emplace_back(target_pos.x(), target_pos.y(), target_pos.z() - 0.32f);
     m_path_points.emplace_back(target_pos.x(), target_pos.y(), target_pos.z());
     m_now_target_index = 0;
     if (m_now_target_index < m_path_points.size())
@@ -63,5 +65,4 @@ void GrabTask::Exit(PlanningPathUpdater *t)
 {
     std::cout << "Success to grab cylinder on platform " << m_object->getName() << "and go to next task" << std::endl;
     Task::Exit(t);
-    use_vision = false;
 }

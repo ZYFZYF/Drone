@@ -17,8 +17,10 @@ public:
 
     void setHand() const;
 
+    const Point getHotTargetPosition();
+
 private:
-    simxInt m_handle_drone, m_handle_target;
+    simxInt m_handle_drone, m_handle_target, m_handle_hot_target;
 };
 
 

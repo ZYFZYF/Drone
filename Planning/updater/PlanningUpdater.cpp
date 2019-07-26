@@ -7,6 +7,7 @@ PlanningUpdater::PlanningUpdater(int time_step, int client_id) : Updater(time_st
     std::cout << "Try to get necessary handle" << std::endl;
     simxGetObjectHandle(m_cid, "Quadricopter_base", &m_handle_drone, simx_opmode_blocking);
     simxGetObjectHandle(m_cid, "Quadricopter_target", &m_handle_target, simx_opmode_blocking);
+    simxGetObjectHandle(m_cid, "Target", &m_handle_hot_target, simx_opmode_blocking);
     std::cout << "Get drone's handle is " << m_handle_drone << " and target's handle is " << m_handle_target << std::endl;
 }
 
@@ -32,4 +33,9 @@ void PlanningUpdater::setTargetPosition(Point p)
 void PlanningUpdater::setHand() const
 {
     simxSetIntegerSignal(m_cid, "close_hand", 1, simx_opmode_blocking);
+}
+
+const Point PlanningUpdater::getHotTargetPosition()
+{
+    return utils::getObjectPosition(m_handle_hot_target, m_cid);
 }

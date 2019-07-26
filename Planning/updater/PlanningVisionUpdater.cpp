@@ -44,7 +44,7 @@ void PlanningVisionUpdater::update() {
     simxGetObjectHandle(clientID, "Target", &target, simx_opmode_blocking);
     simxInt resolution[2];
     simxUChar *image = 0;
-    cv::namedWindow("opencv test", CV_WINDOW_AUTOSIZE);
+    //cv::namedWindow("opencv test", CV_WINDOW_AUTOSIZE);
     int ret = simxGetVisionSensorImage(clientID, camera, resolution, &image, 0, simx_opmode_blocking);
     if (ret != simx_return_ok) {
         return;
