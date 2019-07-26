@@ -1,6 +1,8 @@
 #include <iostream>
 #include "PlanningVisionUpdater.h"
 #include "../../Common/config/Config.h"
+#include "../../Common/utils/utils.h"
+
 using namespace std;
 #include <time.h>
 #include <opencv2/core/core.hpp>
@@ -22,30 +24,32 @@ float target_offsetx;
 float target_offsety;
 float circlex;
 float circley;
-simxFloat position[3];
+Point position;
 simxFloat angle[3];
-simxFloat tar_position[3];
+Point tar_position;
 Point p;
+simxInt camera;
+simxInt target;
+simxInt resolution[2];
+simxUChar *image = 0;
 PlanningVisionUpdater::PlanningVisionUpdater(int client_id): PlanningUpdater(Config::Instance()->getIntParam("PlanningVisionUpdater", "TIME_STEP"), client_id)
 {
     clientID=client_id;
     std::cout<<"VisionPlanner constructed"<<std::endl;
-}
-extern bool use_vision;
+    simxGetObjectHandle(clientID, "zed_vision0", &camera, simx_opmode_blocking);
+    simxGetObjectHandle(clientID, "Target", &target, simx_opmode_blocking);
+    simxGetVisionSensorImage(clientID, camera, resolution, &image, 0, simx_opmode_streaming);
+};
 void PlanningVisionUpdater::update() {
     if(!use_vision)
     {
         //std::cout << "Not yet" << std::endl;
         return;
     }
-    simxInt camera;
-    simxInt target;
-    simxGetObjectHandle(clientID, "zed_vision0", &camera, simx_opmode_blocking);
-    simxGetObjectHandle(clientID, "Target", &target, simx_opmode_blocking);
-    simxInt resolution[2];
-    simxUChar *image = 0;
+
+
     //cv::namedWindow("opencv test", CV_WINDOW_AUTOSIZE);
-    int ret = simxGetVisionSensorImage(clientID, camera, resolution, &image, 0, simx_opmode_blocking);
+    int ret = simxGetVisionSensorImage(clientID, camera, resolution, &image, 0, simx_opmode_buffer);
     if (ret != simx_return_ok) {
         return;
     }
@@ -74,7 +78,7 @@ void PlanningVisionUpdater::update() {
         p.setZ(-1);
         platform_height = end_platform;
     } else {
-        simxGetObjectPosition(clientID, camera, -1, position, simx_opmode_blocking);
+        position = utils::getObjectPosition(camera, m_cid);
         targetx = (startx + finishx) / 2;
         targety = (starty + finishy) / 2;
         target_offsetx = (position[2] - target_height) * rate / 1280 * (640 - targety);
@@ -82,7 +86,7 @@ void PlanningVisionUpdater::update() {
         p.setX(position[0] + target_offsetx * cos(angle[2]) + target_offsety * sin(angle[2]));
         p.setY(position[1] + target_offsety * cos(angle[2]) - target_offsetx * sin(angle[2]));
         p.setZ(plane);
-        simxGetObjectPosition(clientID, target, -1, tar_position, simx_opmode_blocking);
+        tar_position = utils::getObjectPosition(target, m_cid);
         cout << p.x() << " " << p.y() << " " << p.z() << "  " << tar_position[0] << " " << tar_position[1] << " "
              << tar_position[2] << endl;
         platform_height = target_platform;
@@ -108,6 +112,7 @@ void PlanningVisionUpdater::update() {
         p.setX(position[0] + circle_offsetx * cos(angle[2]) + circle_offsety * sin(angle[2]));
         p.setY(position[1] + circle_offsety * cos(angle[2]) - circle_offsetx * sin(angle[2]));
         p.setZ(platform_height);
+        cylinder_pos = p;
     } else {
         cout << "没找到圆" << endl;
         p.setX(-1);
