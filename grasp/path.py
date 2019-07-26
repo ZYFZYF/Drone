@@ -43,11 +43,14 @@ if clientID != -1:
     res, target_position = vrep.simxGetObjectPosition(
         clientID, target, -1, vrep.simx_opmode_blocking)
     path = []
+    path.append([0,0,-0.28])
+    path.append([0,0,-0.04])
+    run(path)
     vrep.simxSetIntegerSignal(clientID,"close_hand",1,vrep.simx_opmode_blocking)
     time.sleep(2)
     # input("回车键继续")
     path = []
-    path.append([0,0,0.5])
+    path.append([0,0,0.8])
     run(path)
     input("回车键结束")
     vrep.simxStopSimulation(clientID, vrep.simx_opmode_blocking)
