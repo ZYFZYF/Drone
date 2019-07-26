@@ -22,6 +22,11 @@ public:
 
 private:
     Object *m_object;
+    std::vector<Point> m_path_points;
+    int m_now_target_index;
+    int m_close_rounds;
+    const simxFloat CLOSE_THRESHOLD = Config::Instance()->getFloatParam("MoveTask", "CLOSE_THRESHOLD");
+    const simxInt CLOSE_ROUNDS_LIMIT = Config::Instance()->getIntParam("MoveTask", "CLOSE_ROUNDS_LIMIT");
 };
 
 

@@ -21,7 +21,7 @@ std::vector<Point> PRMRouter::route(const Point &start_pos, const Point &end_pos
     for (int i = 0; i < n; i++)
     {
         d[i] = 1000000000;
-        std::cout << i << ' ' << nodes[i] << std::endl;
+        //std::cout << i << ' ' << nodes[i] << std::endl;
     }
     std::priority_queue<std::pair<float, int> > q;
     d[s] = 0;

@@ -15,6 +15,8 @@ public:
 
     void setTargetPosition(Point p);
 
+    void setHand() const;
+
 private:
     simxInt m_handle_drone, m_handle_target;
 };

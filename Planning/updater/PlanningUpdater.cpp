@@ -28,3 +28,8 @@ void PlanningUpdater::setTargetPosition(Point p)
     pos[2] = p[2];
     simxSetObjectPosition(m_cid, m_handle_target, -1, pos, simx_opmode_oneshot);
 }
+
+void PlanningUpdater::setHand() const
+{
+    simxSetIntegerSignal(m_cid, "close_hand", 1, simx_opmode_blocking);
+}
