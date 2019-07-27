@@ -63,47 +63,60 @@ void LandingVisionUpdater::update() {
     //鐠囪娲栭弶銉ф畱閸ユ儳鍎氶弫鐗堝祦閺勵垰鐎惄瀵哥倳鏉烆剛娈?闂傤噣顣芥惔鏃囶嚉閺勵垰婀猚vMat 閸?v-rep 閸ㄥ倻娲块崸鎰垼鏉炲娈戦弬鐟版倻閻╃寮?flip娑撯偓娑撳姘ㄥ锝呯埗娴?
     flip(channel, channel, 0);
     cv::threshold(channel, channel, 220, 255, CV_THRESH_TOZERO_INV);
-//    cv::imshow("img",channel);
-//    cv::waitKey(10);
+    cv::imshow("img", channel);
+    cv::waitKey(10);
 
+    int count = 0;
     for (int j = 0; j < 1280; j++) {
         if (channel.at<cv::Vec3b>(0, j)[0] < 30 && channel.at<cv::Vec3b>(0, j)[1] < 30 &&
             channel.at<cv::Vec3b>(0, j)[2] < 30) {
             if (UpLeft == -1)
                 UpLeft = j;
             UpRight = j;
-            Up = 1;
+            count++;
+            if (count >= 3)
+                Up = 1;
         }
     }
+    count = 0;
     for (int j = 0; j < 1280; j++) {
         if (channel.at<cv::Vec3b>(719, j)[0] < 30 && channel.at<cv::Vec3b>(719, j)[1] < 30 &&
             channel.at<cv::Vec3b>(719, j)[2] < 30) {
             if (DownLeft == -1)
                 DownLeft = j;
             DownRight = j;
-            Down = 1;
+            count++;
+            if (count >= 3)
+                Down = 1;
         }
     }
+    count = 0;
     for (int i = 0; i < 720; i++) {
         if (channel.at<cv::Vec3b>(i, 0)[0] < 30 && channel.at<cv::Vec3b>(i, 0)[1] < 30 &&
             channel.at<cv::Vec3b>(i, 0)[2] < 30) {
             if (LeftUp == -1)
                 LeftUp = i;
             LeftDown = i;
-            Left = 1;
+            count++;
+            if (count >= 3)
+                Left = 1;
         }
     }
+    count = 0;
     for (int i = 0; i < 720; i++) {
         if (channel.at<cv::Vec3b>(i, 1279)[0] < 30 && channel.at<cv::Vec3b>(i, 1279)[1] < 30 &&
             channel.at<cv::Vec3b>(i, 1279)[2] < 30) {
             if (RightUp == -1)
                 RightUp = i;
             RightDown = i;
-            Right = 1;
+            count++;
+            if (count >= 3)
+                Right = 1;
         }
     }
     cout << Up + Down + Left + Right << endl;
-    cout<<UpLeft<<" "<<UpRight<<" "<<RightUp<<" "<<RightDown<<" "<<DownRight<<" "<<DownLeft<<" "<<LeftDown<<" "<<LeftUp<<endl;
+    cout << UpLeft << " " << UpRight << " " << RightUp << " " << RightDown << " " << DownRight << " " << DownLeft << " "
+         << LeftDown << " " << LeftUp << endl;
     if (Up + Down + Left + Right == 4) {
         p.setX(position[0]);
         p.setY(position[1]);
@@ -117,10 +130,18 @@ void LandingVisionUpdater::update() {
         if (Up == 0) {
             int startx = -1, starty = -1;
             bool Break = false;
-            for (int i = 0; i < channel.rows; i++) {
-                for (int j = 0; j < channel.cols; j++)
+            for (int i = 10; i < channel.rows - 10; i++) {
+                for (int j = 10; j < channel.cols - 10; j++)
                     if (channel.at<cv::Vec3b>(i, j)[0] < 30 && channel.at<cv::Vec3b>(i, j)[1] < 30 &&
-                        channel.at<cv::Vec3b>(i, j)[2] < 30) {
+                        channel.at<cv::Vec3b>(i, j)[2] < 30 && channel.at<cv::Vec3b>(i - 1, j)[0] < 30 &&
+                        channel.at<cv::Vec3b>(i - 1, j)[1] < 30 &&
+                        channel.at<cv::Vec3b>(i - 1, j)[2] < 30 && channel.at<cv::Vec3b>(i - 2, j)[0] < 30 &&
+                        channel.at<cv::Vec3b>(i - 2, j)[1] < 30 &&
+                        channel.at<cv::Vec3b>(i - 2, j)[2] < 30 && channel.at<cv::Vec3b>(i, j - 1)[0] < 30 &&
+                        channel.at<cv::Vec3b>(i, j - 1)[1] < 30 && channel.at<cv::Vec3b>(i, j - 1)[2] < 30 &&
+                        channel.at<cv::Vec3b>(i - 1, j - 1)[0] < 30 && channel.at<cv::Vec3b>(i - 1, j - 1)[1] < 30 &&
+                        channel.at<cv::Vec3b>(i - 1, j - 1)[2] < 30 && channel.at<cv::Vec3b>(i - 2, j - 1)[0] < 30 &&
+                        channel.at<cv::Vec3b>(i - 2, j - 1)[1] < 30 && channel.at<cv::Vec3b>(i - 2, j - 1)[2] < 30) {
                         startx = i;
                         starty = j;
                         Break = true;
@@ -129,8 +150,8 @@ void LandingVisionUpdater::update() {
                 if (Break)
                     break;
             }
-            cout<<"upx: "<<startx<<"  upy: "<<starty<<endl;
-            if (starty < 10 || starty > 1270) {
+            cout << "upx: " << startx << "  upy: " << starty << endl;
+            if (starty < 15 || starty > 1265) {
                 midx = (LeftUp + RightUp +
                         1280 * length / sqrt(1280 * 1280 + (LeftUp - RightUp) * (LeftUp - RightUp))) / 2;
                 midy = (1280 +
@@ -143,20 +164,29 @@ void LandingVisionUpdater::update() {
             }
         } else if (Down == 0) {
             int startx = -1, starty = -1;
-            for (int i = 0; i < channel.rows; i++) {
-                for (int j = 0; j < channel.cols; j++)
+            for (int i = 10; i < channel.rows - 10; i++) {
+                for (int j = 10; j < channel.cols - 10; j++)
                     if (channel.at<cv::Vec3b>(i, j)[0] < 30 && channel.at<cv::Vec3b>(i, j)[1] < 30 &&
-                        channel.at<cv::Vec3b>(i, j)[2] < 30) {
+                        channel.at<cv::Vec3b>(i, j)[2] < 30 && channel.at<cv::Vec3b>(i - 1, j)[0] < 30 &&
+                        channel.at<cv::Vec3b>(i - 1, j)[1] < 30 &&
+                        channel.at<cv::Vec3b>(i - 1, j)[2] < 30 && channel.at<cv::Vec3b>(i - 2, j)[0] < 30 &&
+                        channel.at<cv::Vec3b>(i - 2, j)[1] < 30 &&
+                        channel.at<cv::Vec3b>(i - 2, j)[2] < 30 && channel.at<cv::Vec3b>(i, j - 1)[0] < 30 &&
+                        channel.at<cv::Vec3b>(i, j - 1)[1] < 30 && channel.at<cv::Vec3b>(i, j - 1)[2] < 30 &&
+                        channel.at<cv::Vec3b>(i - 1, j - 1)[0] < 30 && channel.at<cv::Vec3b>(i - 1, j - 1)[1] < 30 &&
+                        channel.at<cv::Vec3b>(i - 1, j - 1)[2] < 30 && channel.at<cv::Vec3b>(i - 2, j - 1)[0] < 30 &&
+                        channel.at<cv::Vec3b>(i - 2, j - 1)[1] < 30 && channel.at<cv::Vec3b>(i - 2, j - 1)[2] < 30) {
                         startx = i;
                         starty = j;
                     }
             }
-            cout<<"downx: "<<startx<<"  downy: "<<starty<<endl;
-            if (starty < 10 || starty > 1270) {
+            cout << "downx: " << startx << "  downy: " << starty << endl;
+            if (starty < 15 || starty > 1265) {
                 midx = (LeftDown + RightDown -
                         1280 * length / sqrt(1280 * 1280 + (LeftDown - RightDown) * (LeftDown - RightDown))) / 2;
                 midy = (1280 +
-                        (RightDown - LeftDown) * length / sqrt(1280 * 1280 + (LeftDown - RightDown) * (LeftDown - RightDown))) / 2;
+                        (RightDown - LeftDown) * length /
+                        sqrt(1280 * 1280 + (LeftDown - RightDown) * (LeftDown - RightDown))) / 2;
             } else {
                 float left = sqrt(starty * starty + (startx - LeftDown) * (startx - LeftDown));
                 float right = sqrt((1280 - starty) * (1280 - starty) + (startx - RightDown) * (startx - RightDown));
@@ -166,10 +196,18 @@ void LandingVisionUpdater::update() {
         } else if (Left == 0) {
             int startx = -1, starty = -1;
             bool Break = false;
-            for (int j = 0; j < channel.cols; j++) {
-                for (int i = 0; i < channel.rows; i++)
+            for (int j = 10; j < channel.cols - 10; j++) {
+                for (int i = 10; i < channel.rows - 10; i++)
                     if (channel.at<cv::Vec3b>(i, j)[0] < 30 && channel.at<cv::Vec3b>(i, j)[1] < 30 &&
-                        channel.at<cv::Vec3b>(i, j)[2] < 30) {
+                        channel.at<cv::Vec3b>(i, j)[2] < 30 && channel.at<cv::Vec3b>(i - 1, j)[0] < 30 &&
+                        channel.at<cv::Vec3b>(i - 1, j)[1] < 30 &&
+                        channel.at<cv::Vec3b>(i - 1, j)[2] < 30 && channel.at<cv::Vec3b>(i - 2, j)[0] < 30 &&
+                        channel.at<cv::Vec3b>(i - 2, j)[1] < 30 &&
+                        channel.at<cv::Vec3b>(i - 2, j)[2] < 30 && channel.at<cv::Vec3b>(i, j - 1)[0] < 30 &&
+                        channel.at<cv::Vec3b>(i, j - 1)[1] < 30 && channel.at<cv::Vec3b>(i, j - 1)[2] < 30 &&
+                        channel.at<cv::Vec3b>(i - 1, j - 1)[0] < 30 && channel.at<cv::Vec3b>(i - 1, j - 1)[1] < 30 &&
+                        channel.at<cv::Vec3b>(i - 1, j - 1)[2] < 30 && channel.at<cv::Vec3b>(i - 2, j - 1)[0] < 30 &&
+                        channel.at<cv::Vec3b>(i - 2, j - 1)[1] < 30 && channel.at<cv::Vec3b>(i - 2, j - 1)[2] < 30) {
                         startx = i;
                         starty = j;
                         Break = true;
@@ -178,8 +216,8 @@ void LandingVisionUpdater::update() {
                 if (Break)
                     break;
             }
-            cout<<"leftx: "<<startx<<"  lefty: "<<starty<<endl;
-            if (startx < 10 || startx > 710) {
+            cout << "leftx: " << startx << "  lefty: " << starty << endl;
+            if (startx < 15 || startx > 705) {
                 midx = (720 +
                         (UpLeft - DownLeft) * length / sqrt(720 * 720 + (UpLeft - DownLeft) * (UpLeft - DownLeft))) / 2;
                 midy = (DownLeft + UpLeft +
@@ -192,18 +230,27 @@ void LandingVisionUpdater::update() {
             }
         } else if (Right == 0) {
             int startx = -1, starty = -1;
-            for (int j = 0; j < channel.cols; j++) {
-                for (int i = 0; i < channel.rows; i++)
+            for (int j = 10; j < channel.cols - 10; j++) {
+                for (int i = 10; i < channel.rows - 10; i++)
                     if (channel.at<cv::Vec3b>(i, j)[0] < 30 && channel.at<cv::Vec3b>(i, j)[1] < 30 &&
-                        channel.at<cv::Vec3b>(i, j)[2] < 30) {
+                        channel.at<cv::Vec3b>(i, j)[2] < 30 && channel.at<cv::Vec3b>(i - 1, j)[0] < 30 &&
+                        channel.at<cv::Vec3b>(i - 1, j)[1] < 30 &&
+                        channel.at<cv::Vec3b>(i - 1, j)[2] < 30 && channel.at<cv::Vec3b>(i - 2, j)[0] < 30 &&
+                        channel.at<cv::Vec3b>(i - 2, j)[1] < 30 &&
+                        channel.at<cv::Vec3b>(i - 2, j)[2] < 30 && channel.at<cv::Vec3b>(i, j - 1)[0] < 30 &&
+                        channel.at<cv::Vec3b>(i, j - 1)[1] < 30 && channel.at<cv::Vec3b>(i, j - 1)[2] < 30 &&
+                        channel.at<cv::Vec3b>(i - 1, j - 1)[0] < 30 && channel.at<cv::Vec3b>(i - 1, j - 1)[1] < 30 &&
+                        channel.at<cv::Vec3b>(i - 1, j - 1)[2] < 30 && channel.at<cv::Vec3b>(i - 2, j - 1)[0] < 30 &&
+                        channel.at<cv::Vec3b>(i - 2, j - 1)[1] < 30 && channel.at<cv::Vec3b>(i - 2, j - 1)[2] < 30) {
                         startx = i;
                         starty = j;
                     }
             }
-            cout<<"rightx: "<<startx<<"  righty: "<<starty<<endl;
-            if (startx > 10 || startx < 710) {
+            cout << "rightx: " << startx << "  righty: " << starty << endl;
+            if (startx > 15 || startx < 705) {
                 midx = (720 +
-                        (DownRight - UpRight) * length / sqrt(720 * 720 + (UpRight - DownRight) * (UpRight - DownRight))) /
+                        (DownRight - UpRight) * length /
+                        sqrt(720 * 720 + (UpRight - DownRight) * (UpRight - DownRight))) /
                        2;
                 midy = (DownRight + UpRight -
                         720 * length / sqrt(720 * 720 + (UpRight - DownRight) * (UpRight - DownRight))) / 2;
@@ -221,10 +268,18 @@ void LandingVisionUpdater::update() {
         } else if (Up == 1 && Right == 1) {
             int leftx = -1, lefty = 1280;
             int downx = -1, downy = -1;
-            for (int i = 10; i < channel.rows-10; i++)
-                for (int j = 10; j < channel.cols-10; j++)
+            for (int i = 10; i < channel.rows - 10; i++)
+                for (int j = 10; j < channel.cols - 10; j++)
                     if (channel.at<cv::Vec3b>(i, j)[0] < 30 && channel.at<cv::Vec3b>(i, j)[1] < 30 &&
-                        channel.at<cv::Vec3b>(i, j)[2] < 30) {
+                        channel.at<cv::Vec3b>(i, j)[2] < 30 && channel.at<cv::Vec3b>(i - 1, j)[0] < 30 &&
+                        channel.at<cv::Vec3b>(i - 1, j)[1] < 30 &&
+                        channel.at<cv::Vec3b>(i - 1, j)[2] < 30 && channel.at<cv::Vec3b>(i - 2, j)[0] < 30 &&
+                        channel.at<cv::Vec3b>(i - 2, j)[1] < 30 &&
+                        channel.at<cv::Vec3b>(i - 2, j)[2] < 30 && channel.at<cv::Vec3b>(i, j - 1)[0] < 30 &&
+                        channel.at<cv::Vec3b>(i, j - 1)[1] < 30 && channel.at<cv::Vec3b>(i, j - 1)[2] < 30 &&
+                        channel.at<cv::Vec3b>(i - 1, j - 1)[0] < 30 && channel.at<cv::Vec3b>(i - 1, j - 1)[1] < 30 &&
+                        channel.at<cv::Vec3b>(i - 1, j - 1)[2] < 30 && channel.at<cv::Vec3b>(i - 2, j - 1)[0] < 30 &&
+                        channel.at<cv::Vec3b>(i - 2, j - 1)[1] < 30 && channel.at<cv::Vec3b>(i - 2, j - 1)[2] < 30) {
                         if (i > RightDown) {
                             downx = i;
                             downy = j;
@@ -236,7 +291,7 @@ void LandingVisionUpdater::update() {
                             }
                         }
                     }
-            cout<<"leftx: "<<leftx<<"  lefty: "<<lefty<<"  downx: "<<downx<<"  downy: "<<downy<<endl;
+            cout << "leftx: " << leftx << "  lefty: " << lefty << "  downx: " << downx << "  downy: " << downy << endl;
             if (leftx == -1) {
                 if (downx == -1) {
                     midx = (RightDown + (UpLeft - 1280) * length /
@@ -263,10 +318,18 @@ void LandingVisionUpdater::update() {
         } else if (Up == 1 && Left == 1) {
             int rightx = -1, righty = -1;
             int downx = -1, downy = -1;
-            for (int i = 10; i < channel.rows-10; i++)
-                for (int j = 10; j < channel.cols-10; j++)
+            for (int i = 10; i < channel.rows - 10; i++)
+                for (int j = 10; j < channel.cols - 10; j++)
                     if (channel.at<cv::Vec3b>(i, j)[0] < 30 && channel.at<cv::Vec3b>(i, j)[1] < 30 &&
-                        channel.at<cv::Vec3b>(i, j)[2] < 30) {
+                        channel.at<cv::Vec3b>(i, j)[2] < 30 && channel.at<cv::Vec3b>(i - 1, j)[0] < 30 &&
+                        channel.at<cv::Vec3b>(i - 1, j)[1] < 30 &&
+                        channel.at<cv::Vec3b>(i - 1, j)[2] < 30 && channel.at<cv::Vec3b>(i - 2, j)[0] < 30 &&
+                        channel.at<cv::Vec3b>(i - 2, j)[1] < 30 &&
+                        channel.at<cv::Vec3b>(i - 2, j)[2] < 30 && channel.at<cv::Vec3b>(i, j - 1)[0] < 30 &&
+                        channel.at<cv::Vec3b>(i, j - 1)[1] < 30 && channel.at<cv::Vec3b>(i, j - 1)[2] < 30 &&
+                        channel.at<cv::Vec3b>(i - 1, j - 1)[0] < 30 && channel.at<cv::Vec3b>(i - 1, j - 1)[1] < 30 &&
+                        channel.at<cv::Vec3b>(i - 1, j - 1)[2] < 30 && channel.at<cv::Vec3b>(i - 2, j - 1)[0] < 30 &&
+                        channel.at<cv::Vec3b>(i - 2, j - 1)[1] < 30 && channel.at<cv::Vec3b>(i - 2, j - 1)[2] < 30) {
                         if (i > LeftDown) {
                             downx = i;
                             downy = j;
@@ -278,7 +341,8 @@ void LandingVisionUpdater::update() {
                             }
                         }
                     }
-            cout<<"rightx: "<<rightx<<"  righty: "<<righty<<"  downx: "<<downx<<"  downy: "<<downy<<endl;
+            cout << "rightx: " << rightx << "  righty: " << righty << "  downx: " << downx << "  downy: " << downy
+                 << endl;
             if (rightx == -1) {
                 if (downx == -1) {
                     midx = (LeftDown - UpRight * length / sqrt(LeftDown * LeftDown + UpRight * UpRight)) / 2;
@@ -303,10 +367,18 @@ void LandingVisionUpdater::update() {
         } else if (Down == 1 && Right == 1) {
             int leftx = -1, lefty = 1280;
             int upx = -1, upy = -1;
-            for (int i = 10; i < channel.rows-10; i++)
-                for (int j = 10; j < channel.cols-10; j++)
+            for (int i = 10; i < channel.rows - 10; i++)
+                for (int j = 10; j < channel.cols - 10; j++)
                     if (channel.at<cv::Vec3b>(i, j)[0] < 30 && channel.at<cv::Vec3b>(i, j)[1] < 30 &&
-                        channel.at<cv::Vec3b>(i, j)[2] < 30) {
+                        channel.at<cv::Vec3b>(i, j)[2] < 30 && channel.at<cv::Vec3b>(i - 1, j)[0] < 30 &&
+                        channel.at<cv::Vec3b>(i - 1, j)[1] < 30 &&
+                        channel.at<cv::Vec3b>(i - 1, j)[2] < 30 && channel.at<cv::Vec3b>(i - 2, j)[0] < 30 &&
+                        channel.at<cv::Vec3b>(i - 2, j)[1] < 30 &&
+                        channel.at<cv::Vec3b>(i - 2, j)[2] < 30 && channel.at<cv::Vec3b>(i, j - 1)[0] < 30 &&
+                        channel.at<cv::Vec3b>(i, j - 1)[1] < 30 && channel.at<cv::Vec3b>(i, j - 1)[2] < 30 &&
+                        channel.at<cv::Vec3b>(i - 1, j - 1)[0] < 30 && channel.at<cv::Vec3b>(i - 1, j - 1)[1] < 30 &&
+                        channel.at<cv::Vec3b>(i - 1, j - 1)[2] < 30 && channel.at<cv::Vec3b>(i - 2, j - 1)[0] < 30 &&
+                        channel.at<cv::Vec3b>(i - 2, j - 1)[1] < 30 && channel.at<cv::Vec3b>(i - 2, j - 1)[2] < 30) {
                         if (i < RightUp && upx == -1) {
                             upx = i;
                             upy = j;
@@ -316,7 +388,7 @@ void LandingVisionUpdater::update() {
                             lefty = j;
                         }
                     }
-            cout<<"leftx: "<<leftx<<"  lefty: "<<lefty<<"  upx: "<<upx<<"  upy: "<<upy<<endl;
+            cout << "leftx: " << leftx << "  lefty: " << lefty << "  upx: " << upx << "  upy: " << upy << endl;
             if (leftx == -1) {
                 if (upx == -1) {
                     midx = (RightUp + 720 + (1280 - DownLeft) * length / sqrt((720 - RightUp) * (720 - RightUp) +
@@ -345,10 +417,18 @@ void LandingVisionUpdater::update() {
         } else if (Down == 1 && Left == 1) {
             int rightx = -1, righty = -1;
             int upx = -1, upy = -1;
-            for (int i = 10; i < channel.rows-10; i++)
-                for (int j = 10; j < channel.cols-10; j++)
+            for (int i = 10; i < channel.rows - 10; i++)
+                for (int j = 10; j < channel.cols - 10; j++)
                     if (channel.at<cv::Vec3b>(i, j)[0] < 30 && channel.at<cv::Vec3b>(i, j)[1] < 30 &&
-                        channel.at<cv::Vec3b>(i, j)[2] < 30) {
+                        channel.at<cv::Vec3b>(i, j)[2] < 30 && channel.at<cv::Vec3b>(i - 1, j)[0] < 30 &&
+                        channel.at<cv::Vec3b>(i - 1, j)[1] < 30 &&
+                        channel.at<cv::Vec3b>(i - 1, j)[2] < 30 && channel.at<cv::Vec3b>(i - 2, j)[0] < 30 &&
+                        channel.at<cv::Vec3b>(i - 2, j)[1] < 30 &&
+                        channel.at<cv::Vec3b>(i - 2, j)[2] < 30 && channel.at<cv::Vec3b>(i, j - 1)[0] < 30 &&
+                        channel.at<cv::Vec3b>(i, j - 1)[1] < 30 && channel.at<cv::Vec3b>(i, j - 1)[2] < 30 &&
+                        channel.at<cv::Vec3b>(i - 1, j - 1)[0] < 30 && channel.at<cv::Vec3b>(i - 1, j - 1)[1] < 30 &&
+                        channel.at<cv::Vec3b>(i - 1, j - 1)[2] < 30 && channel.at<cv::Vec3b>(i - 2, j - 1)[0] < 30 &&
+                        channel.at<cv::Vec3b>(i - 2, j - 1)[1] < 30 && channel.at<cv::Vec3b>(i - 2, j - 1)[2] < 30) {
                         if (i < LeftUp && upx == -1) {
                             upx = i;
                             upy = j;
@@ -358,7 +438,7 @@ void LandingVisionUpdater::update() {
                             righty = j;
                         }
                     }
-            cout<<"rightx: "<<rightx<<"  righty: "<<righty<<"  upx: "<<upx<<"  upy: "<<upy<<endl;
+            cout << "rightx: " << rightx << "  righty: " << righty << "  upx: " << upx << "  upy: " << upy << endl;
             if (rightx == -1) {
                 if (upx == -1) {
                     midx = (LeftUp + 720 +
@@ -393,7 +473,15 @@ void LandingVisionUpdater::update() {
             for (int i = 0; i < channel.rows; i++) {
                 for (int j = 0; j < channel.cols; j++)
                     if (channel.at<cv::Vec3b>(i, j)[0] < 30 && channel.at<cv::Vec3b>(i, j)[1] < 30 &&
-                        channel.at<cv::Vec3b>(i, j)[2] < 30) {
+                        channel.at<cv::Vec3b>(i, j)[2] < 30 && channel.at<cv::Vec3b>(i - 1, j)[0] < 30 &&
+                        channel.at<cv::Vec3b>(i - 1, j)[1] < 30 &&
+                        channel.at<cv::Vec3b>(i - 1, j)[2] < 30 && channel.at<cv::Vec3b>(i - 2, j)[0] < 30 &&
+                        channel.at<cv::Vec3b>(i - 2, j)[1] < 30 &&
+                        channel.at<cv::Vec3b>(i - 2, j)[2] < 30 && channel.at<cv::Vec3b>(i, j - 1)[0] < 30 &&
+                        channel.at<cv::Vec3b>(i, j - 1)[1] < 30 && channel.at<cv::Vec3b>(i, j - 1)[2] < 30 &&
+                        channel.at<cv::Vec3b>(i - 1, j - 1)[0] < 30 && channel.at<cv::Vec3b>(i - 1, j - 1)[1] < 30 &&
+                        channel.at<cv::Vec3b>(i - 1, j - 1)[2] < 30 && channel.at<cv::Vec3b>(i - 2, j - 1)[0] < 30 &&
+                        channel.at<cv::Vec3b>(i - 2, j - 1)[1] < 30 && channel.at<cv::Vec3b>(i - 2, j - 1)[2] < 30) {
                         if (j < UpLeft && j < lefty) {
                             leftx = i;
                             lefty = j;
@@ -406,24 +494,25 @@ void LandingVisionUpdater::update() {
                         downy = j;
                     }
             }
-            cout<<"leftx: "<<leftx<<"  lefty: "<<lefty<<"  downx: "<<downx<<"  downy: "<<downy<<" rightx: "<<rightx<<"  righty: "<<righty<<endl;
+            cout << "leftx: " << leftx << "  lefty: " << lefty << "  downx: " << downx << "  downy: " << downy
+                 << " rightx: " << rightx << "  righty: " << righty << endl;
             if (leftx < 10) {
-                if (rightx <10) {
-                    float left=sqrt(downx*downx+(downy-UpLeft)*(downy-UpLeft));
-                    float right=sqrt(downx*downx+(downy-UpRight)*(downy-UpRight));
-                    midx=downx-downx*length/2*(1/left+1/right);
-                    midy=downy+((UpRight-downy)/right-(downy-UpLeft)/left)*length/2;
+                if (rightx < 10) {
+                    float left = sqrt(downx * downx + (downy - UpLeft) * (downy - UpLeft));
+                    float right = sqrt(downx * downx + (downy - UpRight) * (downy - UpRight));
+                    midx = downx - downx * length / 2 * (1 / left + 1 / right);
+                    midy = downy + ((UpRight - downy) / right - (downy - UpLeft) / left) * length / 2;
                 } else {
-                    midx=(downx+rightx+downy-righty)/2;
-                    midy=(downy+righty+rightx-downx)/2;
+                    midx = (downx + rightx + downy - righty) / 2;
+                    midy = (downy + righty + rightx - downx) / 2;
                 }
             } else {
-                if (rightx <10) {
-                    midx=(leftx+downx+lefty-downy)/2;
-                    midy=(lefty+downy+downx-leftx)/2;
+                if (rightx < 10) {
+                    midx = (leftx + downx + lefty - downy) / 2;
+                    midy = (lefty + downy + downx - leftx) / 2;
                 } else {
-                    midx=(leftx+rightx)/2;
-                    midy=(lefty+righty)/2;
+                    midx = (leftx + rightx) / 2;
+                    midy = (lefty + righty) / 2;
                 }
             }
         } else if (Down == 1) {
@@ -433,7 +522,15 @@ void LandingVisionUpdater::update() {
             for (int i = 0; i < channel.rows; i++) {
                 for (int j = 0; j < channel.cols; j++)
                     if (channel.at<cv::Vec3b>(i, j)[0] < 30 && channel.at<cv::Vec3b>(i, j)[1] < 30 &&
-                        channel.at<cv::Vec3b>(i, j)[2] < 30) {
+                        channel.at<cv::Vec3b>(i, j)[2] < 30 && channel.at<cv::Vec3b>(i - 1, j)[0] < 30 &&
+                        channel.at<cv::Vec3b>(i - 1, j)[1] < 30 &&
+                        channel.at<cv::Vec3b>(i - 1, j)[2] < 30 && channel.at<cv::Vec3b>(i - 2, j)[0] < 30 &&
+                        channel.at<cv::Vec3b>(i - 2, j)[1] < 30 &&
+                        channel.at<cv::Vec3b>(i - 2, j)[2] < 30 && channel.at<cv::Vec3b>(i, j - 1)[0] < 30 &&
+                        channel.at<cv::Vec3b>(i, j - 1)[1] < 30 && channel.at<cv::Vec3b>(i, j - 1)[2] < 30 &&
+                        channel.at<cv::Vec3b>(i - 1, j - 1)[0] < 30 && channel.at<cv::Vec3b>(i - 1, j - 1)[1] < 30 &&
+                        channel.at<cv::Vec3b>(i - 1, j - 1)[2] < 30 && channel.at<cv::Vec3b>(i - 2, j - 1)[0] < 30 &&
+                        channel.at<cv::Vec3b>(i - 2, j - 1)[1] < 30 && channel.at<cv::Vec3b>(i - 2, j - 1)[2] < 30) {
                         if (j < UpLeft && j < lefty) {
                             leftx = i;
                             lefty = j;
@@ -442,30 +539,31 @@ void LandingVisionUpdater::update() {
                             rightx = i;
                             righty = j;
                         }
-                        if(upx==-1){
-                            upx=i;
-                            upy=j;
+                        if (upx == -1) {
+                            upx = i;
+                            upy = j;
                         }
                     }
             }
-            cout<<"leftx: "<<leftx<<"  lefty: "<<lefty<<"  upx: "<<upx<<"  upy: "<<upy<<" rightx: "<<rightx<<"  righty: "<<righty<<endl;
-            if (leftx <10) {
-                if (rightx <10) {
-                    float left=sqrt((720-upx)*(720-upx)+(upy-DownLeft)*(upy-DownLeft));
-                    float right=sqrt((720-upx)*(720-upx)+(upy-DownRight)*(upy-DownRight));
-                    midx=upx+(720-upx)*length/2*(1/left+1/right);
-                    midy=upy+((DownRight-upy)/right-(upy-DownLeft)/left)*length/2;
+            cout << "leftx: " << leftx << "  lefty: " << lefty << "  upx: " << upx << "  upy: " << upy << " rightx: "
+                 << rightx << "  righty: " << righty << endl;
+            if (leftx < 10) {
+                if (rightx < 10) {
+                    float left = sqrt((720 - upx) * (720 - upx) + (upy - DownLeft) * (upy - DownLeft));
+                    float right = sqrt((720 - upx) * (720 - upx) + (upy - DownRight) * (upy - DownRight));
+                    midx = upx + (720 - upx) * length / 2 * (1 / left + 1 / right);
+                    midy = upy + ((DownRight - upy) / right - (upy - DownLeft) / left) * length / 2;
                 } else {
-                    midx=(upx+rightx+righty-upy)/2;
-                    midy=(upy+righty-rightx+upx)/2;
+                    midx = (upx + rightx + righty - upy) / 2;
+                    midy = (upy + righty - rightx + upx) / 2;
                 }
             } else {
-                if (rightx <10) {
-                    midx=(leftx+upx+upy-lefty)/2;
-                    midy=(lefty+upy+leftx-upx)/2;
+                if (rightx < 10) {
+                    midx = (leftx + upx + upy - lefty) / 2;
+                    midy = (lefty + upy + leftx - upx) / 2;
                 } else {
-                    midx=(leftx+rightx)/2;
-                    midy=(lefty+righty)/2;
+                    midx = (leftx + rightx) / 2;
+                    midy = (lefty + righty) / 2;
                 }
             }
         } else if (Left == 1) {
@@ -475,39 +573,48 @@ void LandingVisionUpdater::update() {
             for (int i = 0; i < channel.rows; i++) {
                 for (int j = 0; j < channel.cols; j++)
                     if (channel.at<cv::Vec3b>(i, j)[0] < 30 && channel.at<cv::Vec3b>(i, j)[1] < 30 &&
-                        channel.at<cv::Vec3b>(i, j)[2] < 30) {
-                        if(i<LeftUp && upx==-1){
-                            upx=i;
-                            upy=j;
+                        channel.at<cv::Vec3b>(i, j)[2] < 30 && channel.at<cv::Vec3b>(i - 1, j)[0] < 30 &&
+                        channel.at<cv::Vec3b>(i - 1, j)[1] < 30 &&
+                        channel.at<cv::Vec3b>(i - 1, j)[2] < 30 && channel.at<cv::Vec3b>(i - 2, j)[0] < 30 &&
+                        channel.at<cv::Vec3b>(i - 2, j)[1] < 30 &&
+                        channel.at<cv::Vec3b>(i - 2, j)[2] < 30 && channel.at<cv::Vec3b>(i, j - 1)[0] < 30 &&
+                        channel.at<cv::Vec3b>(i, j - 1)[1] < 30 && channel.at<cv::Vec3b>(i, j - 1)[2] < 30 &&
+                        channel.at<cv::Vec3b>(i - 1, j - 1)[0] < 30 && channel.at<cv::Vec3b>(i - 1, j - 1)[1] < 30 &&
+                        channel.at<cv::Vec3b>(i - 1, j - 1)[2] < 30 && channel.at<cv::Vec3b>(i - 2, j - 1)[0] < 30 &&
+                        channel.at<cv::Vec3b>(i - 2, j - 1)[1] < 30 && channel.at<cv::Vec3b>(i - 2, j - 1)[2] < 30) {
+                        if (i < LeftUp && upx == -1) {
+                            upx = i;
+                            upy = j;
                         }
-                        if(i>LeftDown){
-                            downx=i;
-                            downy=j;
+                        if (i > LeftDown) {
+                            downx = i;
+                            downy = j;
                         }
-                        if(j>righty){
-                            rightx=i;
-                            righty=j;
+                        if (j > righty) {
+                            rightx = i;
+                            righty = j;
                         }
                     }
             }
-            cout<<"upx: "<<upx<<"  upy: "<<upy<<"  downx: "<<downx<<"  downy: "<<downy<<" rightx: "<<rightx<<"  righty: "<<righty<<endl;
-            if (upx <10) {
-                if (downx <10) {
-                    float up=sqrt(righty*righty+(rightx-LeftUp)*(rightx-LeftUp));
-                    float down=sqrt(righty*righty+(rightx-LeftDown)*(rightx-LeftDown));
-                    midx=rightx+((LeftDown-rightx)/down-(rightx-LeftUp)/up)*length/2;
-                    midy=righty-righty*length/2*(1/up+1/down);
+            cout << "upx: " << upx << "  upy: " << upy << "  downx: " << downx << "  downy: " << downy << " rightx: "
+                 << rightx << "  righty: " << righty << endl;
+            if (upx < 10) {
+                if (downx < 10) {
+                    float up = sqrt(righty * righty + (rightx - LeftUp) * (rightx - LeftUp));
+                    float down = sqrt(righty * righty + (rightx - LeftDown) * (rightx - LeftDown));
+                    midx = rightx + ((LeftDown - rightx) / down - (rightx - LeftUp) / up) * length / 2;
+                    midy = righty - righty * length / 2 * (1 / up + 1 / down);
                 } else {
-                    midx=(downx+rightx-righty+downy)/2;
-                    midy=(downy+righty+rightx-downx)/2;
+                    midx = (downx + rightx - righty + downy) / 2;
+                    midy = (downy + righty + rightx - downx) / 2;
                 }
             } else {
-                if (downx <10) {
-                    midx=(upx+rightx+righty-upy)/2;
-                    midy=(upy+righty-rightx+upx)/2;
+                if (downx < 10) {
+                    midx = (upx + rightx + righty - upy) / 2;
+                    midy = (upy + righty - rightx + upx) / 2;
                 } else {
-                    midx=(upx+downx)/2;
-                    midy=(upy+downy)/2;
+                    midx = (upx + downx) / 2;
+                    midy = (upy + downy) / 2;
                 }
             }
         } else {
@@ -517,7 +624,15 @@ void LandingVisionUpdater::update() {
             for (int i = 0; i < channel.rows; i++) {
                 for (int j = 0; j < channel.cols; j++)
                     if (channel.at<cv::Vec3b>(i, j)[0] < 30 && channel.at<cv::Vec3b>(i, j)[1] < 30 &&
-                        channel.at<cv::Vec3b>(i, j)[2] < 30) {
+                        channel.at<cv::Vec3b>(i, j)[2] < 30 && channel.at<cv::Vec3b>(i - 1, j)[0] < 30 &&
+                        channel.at<cv::Vec3b>(i - 1, j)[1] < 30 &&
+                        channel.at<cv::Vec3b>(i - 1, j)[2] < 30 && channel.at<cv::Vec3b>(i - 2, j)[0] < 30 &&
+                        channel.at<cv::Vec3b>(i - 2, j)[1] < 30 &&
+                        channel.at<cv::Vec3b>(i - 2, j)[2] < 30 && channel.at<cv::Vec3b>(i, j - 1)[0] < 30 &&
+                        channel.at<cv::Vec3b>(i, j - 1)[1] < 30 && channel.at<cv::Vec3b>(i, j - 1)[2] < 30 &&
+                        channel.at<cv::Vec3b>(i - 1, j - 1)[0] < 30 && channel.at<cv::Vec3b>(i - 1, j - 1)[1] < 30 &&
+                        channel.at<cv::Vec3b>(i - 1, j - 1)[2] < 30 && channel.at<cv::Vec3b>(i - 2, j - 1)[0] < 30 &&
+                        channel.at<cv::Vec3b>(i - 2, j - 1)[1] < 30 && channel.at<cv::Vec3b>(i - 2, j - 1)[2] < 30) {
                         if (i < LeftUp && upx == -1) {
                             upx = i;
                             upy = j;
@@ -532,9 +647,10 @@ void LandingVisionUpdater::update() {
                         }
                     }
             }
-            cout<<"leftx: "<<leftx<<"  lefty: "<<lefty<<"  downx: "<<downx<<"  downy: "<<downy<<" upx: "<<upx<<"  upy: "<<upy<<endl;
-            if (upx <10) {
-                if (downx <10) {
+            cout << "leftx: " << leftx << "  lefty: " << lefty << "  downx: " << downx << "  downy: " << downy
+                 << " upx: " << upx << "  upy: " << upy << endl;
+            if (upx < 10) {
+                if (downx < 10) {
                     float up = sqrt((1280 - lefty) * (1280 - lefty) + (leftx - RightUp) * (leftx - RightUp));
                     float down = sqrt((1280 - lefty) * (1280 - lefty) + (leftx - RightDown) * (leftx - RightDown));
                     midx = leftx + ((RightDown - leftx) / down - (leftx - RightUp) / up) * length / 2;
@@ -544,7 +660,7 @@ void LandingVisionUpdater::update() {
                     midy = (downy + lefty + downx - leftx) / 2;
                 }
             } else {
-                if (downx <10) {
+                if (downx < 10) {
                     midx = (upx + leftx + upy - lefty) / 2;
                     midy = (upy + lefty + leftx - upx) / 2;
                 } else {
@@ -559,7 +675,15 @@ void LandingVisionUpdater::update() {
         for (int i = 0; i < channel.rows; i++)
             for (int j = 0; j < channel.cols; j++)
                 if (channel.at<cv::Vec3b>(i, j)[0] < 30 && channel.at<cv::Vec3b>(i, j)[1] < 30 &&
-                    channel.at<cv::Vec3b>(i, j)[2] < 30) {
+                    channel.at<cv::Vec3b>(i, j)[2] < 30 && channel.at<cv::Vec3b>(i - 1, j)[0] < 30 &&
+                    channel.at<cv::Vec3b>(i - 1, j)[1] < 30 &&
+                    channel.at<cv::Vec3b>(i - 1, j)[2] < 30 && channel.at<cv::Vec3b>(i - 2, j)[0] < 30 &&
+                    channel.at<cv::Vec3b>(i - 2, j)[1] < 30 &&
+                    channel.at<cv::Vec3b>(i - 2, j)[2] < 30 && channel.at<cv::Vec3b>(i, j - 1)[0] < 30 &&
+                    channel.at<cv::Vec3b>(i, j - 1)[1] < 30 && channel.at<cv::Vec3b>(i, j - 1)[2] < 30 &&
+                    channel.at<cv::Vec3b>(i - 1, j - 1)[0] < 30 && channel.at<cv::Vec3b>(i - 1, j - 1)[1] < 30 &&
+                    channel.at<cv::Vec3b>(i - 1, j - 1)[2] < 30 && channel.at<cv::Vec3b>(i - 2, j - 1)[0] < 30 &&
+                    channel.at<cv::Vec3b>(i - 2, j - 1)[1] < 30 && channel.at<cv::Vec3b>(i - 2, j - 1)[2] < 30) {
                     if (startx == -1) {
                         startx = i;
                         starty = j;
@@ -582,14 +706,14 @@ void LandingVisionUpdater::update() {
             midy = (starty + finishy) / 2;
         }
     }
-    cout<<midx<<" "<<midy<<endl;
+    cout << midx << " " << midy << endl;
     offsetx = (position[2] - height) * rate / 1280 * (640 - midy);
     offsety = (position[2] - height) * rate / 1280 * (midx - 360);
     p.setX(position[0] + offsetx * cos(angle[2]) + offsety * sin(angle[2]));
     p.setY(position[1] + offsety * cos(angle[2]) - offsetx * sin(angle[2]));
     p.setZ(height);
     tar_position = utils::getObjectPosition(target, m_cid);
-    cout << p.x() << " " << p.y() <<"  " << tar_position[0] << " " << tar_position[1] << endl;
+    cout << p.x() << " " << p.y() << "  " << tar_position[0] << " " << tar_position[1] << endl;
     QRCode_pos = p;
     simxSetFloatSignal(clientID, "QRcode_x", p.x(), simx_opmode_oneshot);
     simxSetFloatSignal(clientID, "QRcode_y", p.y(), simx_opmode_oneshot);
