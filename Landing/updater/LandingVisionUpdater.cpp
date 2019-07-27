@@ -62,7 +62,7 @@ void LandingVisionUpdater::update() {
     cv::Mat channel(resolution[1], resolution[0], CV_8UC3, image);
     //鐠囪娲栭弶銉ф畱閸ユ儳鍎氶弫鐗堝祦閺勵垰鐎惄瀵哥倳鏉烆剛娈?闂傤噣顣芥惔鏃囶嚉閺勵垰婀猚vMat 閸?v-rep 閸ㄥ倻娲块崸鎰垼鏉炲娈戦弬鐟版倻閻╃寮?flip娑撯偓娑撳姘ㄥ锝呯埗娴?
     flip(channel, channel, 0);
-    cv::threshold(channel, channel, 230, 255, CV_THRESH_TOZERO_INV);
+    cv::threshold(channel, channel, 220, 255, CV_THRESH_TOZERO_INV);
 //    cv::imshow("img",channel);
 //    cv::waitKey(10);
 
@@ -129,6 +129,7 @@ void LandingVisionUpdater::update() {
                 if (Break)
                     break;
             }
+            cout<<"upx: "<<startx<<"  upy: "<<starty<<endl;
             if (starty < 10 || starty > 1270) {
                 midx = (LeftUp + RightUp +
                         1280 * length / sqrt(1280 * 1280 + (LeftUp - RightUp) * (LeftUp - RightUp))) / 2;
@@ -150,7 +151,7 @@ void LandingVisionUpdater::update() {
                         starty = j;
                     }
             }
-            cout<<startx<<" "<<starty<<endl;
+            cout<<"downx: "<<startx<<"  downy: "<<starty<<endl;
             if (starty < 10 || starty > 1270) {
                 midx = (LeftDown + RightDown -
                         1280 * length / sqrt(1280 * 1280 + (LeftDown - RightDown) * (LeftDown - RightDown))) / 2;
@@ -177,6 +178,7 @@ void LandingVisionUpdater::update() {
                 if (Break)
                     break;
             }
+            cout<<"leftx: "<<startx<<"  lefty: "<<starty<<endl;
             if (startx < 10 || startx > 710) {
                 midx = (720 +
                         (UpLeft - DownLeft) * length / sqrt(720 * 720 + (UpLeft - DownLeft) * (UpLeft - DownLeft))) / 2;
@@ -198,6 +200,7 @@ void LandingVisionUpdater::update() {
                         starty = j;
                     }
             }
+            cout<<"rightx: "<<startx<<"  righty: "<<starty<<endl;
             if (startx > 10 || startx < 710) {
                 midx = (720 +
                         (DownRight - UpRight) * length / sqrt(720 * 720 + (UpRight - DownRight) * (UpRight - DownRight))) /
@@ -233,6 +236,7 @@ void LandingVisionUpdater::update() {
                             }
                         }
                     }
+            cout<<"leftx: "<<leftx<<"  lefty: "<<lefty<<"  downx: "<<downx<<"  downy: "<<downy<<endl;
             if (leftx == -1) {
                 if (downx == -1) {
                     midx = (RightDown + (UpLeft - 1280) * length /
@@ -274,6 +278,7 @@ void LandingVisionUpdater::update() {
                             }
                         }
                     }
+            cout<<"rightx: "<<rightx<<"  righty: "<<righty<<"  downx: "<<downx<<"  downy: "<<downy<<endl;
             if (rightx == -1) {
                 if (downx == -1) {
                     midx = (LeftDown - UpRight * length / sqrt(LeftDown * LeftDown + UpRight * UpRight)) / 2;
@@ -311,6 +316,7 @@ void LandingVisionUpdater::update() {
                             lefty = j;
                         }
                     }
+            cout<<"leftx: "<<leftx<<"  lefty: "<<lefty<<"  upx: "<<upx<<"  upy: "<<upy<<endl;
             if (leftx == -1) {
                 if (upx == -1) {
                     midx = (RightUp + 720 + (1280 - DownLeft) * length / sqrt((720 - RightUp) * (720 - RightUp) +
@@ -352,6 +358,7 @@ void LandingVisionUpdater::update() {
                             righty = j;
                         }
                     }
+            cout<<"rightx: "<<rightx<<"  righty: "<<righty<<"  upx: "<<upx<<"  upy: "<<upy<<endl;
             if (rightx == -1) {
                 if (upx == -1) {
                     midx = (LeftUp + 720 +
@@ -399,7 +406,7 @@ void LandingVisionUpdater::update() {
                         downy = j;
                     }
             }
-            cout<<leftx<<" "<<lefty<<" "<<downx<<" "<<downy<<" "<<rightx<<" "<<righty<<endl;
+            cout<<"leftx: "<<leftx<<"  lefty: "<<lefty<<"  downx: "<<downx<<"  downy: "<<downy<<" rightx: "<<rightx<<"  righty: "<<righty<<endl;
             if (leftx < 10) {
                 if (rightx <10) {
                     float left=sqrt(downx*downx+(downy-UpLeft)*(downy-UpLeft));
@@ -441,6 +448,7 @@ void LandingVisionUpdater::update() {
                         }
                     }
             }
+            cout<<"leftx: "<<leftx<<"  lefty: "<<lefty<<"  upx: "<<upx<<"  upy: "<<upy<<" rightx: "<<rightx<<"  righty: "<<righty<<endl;
             if (leftx <10) {
                 if (rightx <10) {
                     float left=sqrt((720-upx)*(720-upx)+(upy-DownLeft)*(upy-DownLeft));
@@ -482,6 +490,7 @@ void LandingVisionUpdater::update() {
                         }
                     }
             }
+            cout<<"upx: "<<upx<<"  upy: "<<upy<<"  downx: "<<downx<<"  downy: "<<downy<<" rightx: "<<rightx<<"  righty: "<<righty<<endl;
             if (upx <10) {
                 if (downx <10) {
                     float up=sqrt(righty*righty+(rightx-LeftUp)*(rightx-LeftUp));
@@ -523,7 +532,7 @@ void LandingVisionUpdater::update() {
                         }
                     }
             }
-            cout<<upx<<" "<<upy<<" "<<leftx<<" "<<lefty<<" "<<downx<<" "<<downy<<endl;
+            cout<<"leftx: "<<leftx<<"  lefty: "<<lefty<<"  downx: "<<downx<<"  downy: "<<downy<<" upx: "<<upx<<"  upy: "<<upy<<endl;
             if (upx <10) {
                 if (downx <10) {
                     float up = sqrt((1280 - lefty) * (1280 - lefty) + (leftx - RightUp) * (leftx - RightUp));
@@ -559,7 +568,7 @@ void LandingVisionUpdater::update() {
                     finishy = j;
                 }
         if (startx == -1) {
-            cout << "鏈彂鐜颁簩缁寸爜" << endl;
+            cout << "未发现无人机" << endl;
             p.setX(-1);
             p.setY(-1);
             p.setZ(-1);
