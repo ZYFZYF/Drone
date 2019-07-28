@@ -1,0 +1,48 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+LANDING_LANDINGUPDATER_H	.\LandingUpdater.h	2;"	d
+LANDING_PATHPLANER_H	.\LandingPathUpdater.h	2;"	d
+LANDING_VISIONPLANNER_H	.\LandingVisionUpdater.h	2;"	d
+LandingPathUpdater	.\LandingPathUpdater.cpp	/^LandingPathUpdater::LandingPathUpdater(int client_id) : LandingUpdater(Config::Instance()->getIntParam("LandingPathUpdater", "TIME_STEP"), client_id)$/;"	f	class:LandingPathUpdater
+LandingPathUpdater	.\LandingPathUpdater.h	/^class LandingPathUpdater : public LandingUpdater$/;"	c
+LandingUpdater	.\LandingUpdater.cpp	/^LandingUpdater::LandingUpdater(int time_step, int client_id) : Updater(time_step, client_id)$/;"	f	class:LandingUpdater
+LandingUpdater	.\LandingUpdater.h	/^class LandingUpdater: public Updater$/;"	c
+LandingVisionUpdater	.\LandingVisionUpdater.cpp	/^LandingVisionUpdater::LandingVisionUpdater(int client_id) : LandingUpdater($/;"	f	class:LandingVisionUpdater
+LandingVisionUpdater	.\LandingVisionUpdater.h	/^class LandingVisionUpdater : public LandingUpdater$/;"	c
+angle	.\LandingVisionUpdater.cpp	/^simxFloat angle[3];$/;"	v
+camera	.\LandingVisionUpdater.cpp	/^simxInt camera;$/;"	v
+changeState	.\LandingPathUpdater.cpp	/^void LandingPathUpdater::changeState(State<LandingPathUpdater> *p_new_state)$/;"	f	class:LandingPathUpdater
+clientID	.\LandingVisionUpdater.cpp	/^int clientID;$/;"	v
+getCarPosition	.\LandingUpdater.cpp	/^const Point LandingUpdater::getCarPosition()$/;"	f	class:LandingUpdater
+getDronePosition	.\LandingUpdater.cpp	/^const Point LandingUpdater::getDronePosition()$/;"	f	class:LandingUpdater
+getPlanePosition	.\LandingUpdater.cpp	/^const Point LandingUpdater::getPlanePosition()$/;"	f	class:LandingUpdater
+getQRcodePosition	.\LandingPathUpdater.cpp	/^Point LandingPathUpdater::getQRcodePosition()$/;"	f	class:LandingPathUpdater
+getTargetPosition	.\LandingUpdater.cpp	/^const Point LandingUpdater::getTargetPosition()$/;"	f	class:LandingUpdater
+height	.\LandingVisionUpdater.cpp	/^float height = 0.282;$/;"	v
+image	.\LandingVisionUpdater.cpp	/^simxUChar *image = 0;$/;"	v
+m_current_state	.\LandingPathUpdater.h	/^    State<LandingPathUpdater> *m_current_state;$/;"	m	class:LandingPathUpdater
+m_handle_car	.\LandingUpdater.h	/^    simxInt m_handle_drone, m_handle_target, m_handle_car, m_handle_plane;$/;"	m	class:LandingUpdater
+m_handle_drone	.\LandingUpdater.h	/^    simxInt m_handle_drone, m_handle_target, m_handle_car, m_handle_plane;$/;"	m	class:LandingUpdater
+m_handle_plane	.\LandingUpdater.h	/^    simxInt m_handle_drone, m_handle_target, m_handle_car, m_handle_plane;$/;"	m	class:LandingUpdater
+m_handle_target	.\LandingUpdater.h	/^    simxInt m_handle_drone, m_handle_target, m_handle_car, m_handle_plane;$/;"	m	class:LandingUpdater
+midx	.\LandingVisionUpdater.cpp	/^float midx, midy;$/;"	v
+midy	.\LandingVisionUpdater.cpp	/^float midx, midy;$/;"	v
+offsetx	.\LandingVisionUpdater.cpp	/^float offsetx;$/;"	v
+offsety	.\LandingVisionUpdater.cpp	/^float offsety;$/;"	v
+override	.\LandingPathUpdater.h	/^    void update() override;$/;"	m	class:LandingPathUpdater
+override	.\LandingVisionUpdater.h	/^    void update() override;$/;"	m	class:LandingVisionUpdater
+p	.\LandingVisionUpdater.cpp	/^Point p;$/;"	v
+position	.\LandingVisionUpdater.cpp	/^Point position;$/;"	v
+rate	.\LandingVisionUpdater.cpp	/^float rate = 1.75;$/;"	v
+resolution	.\LandingVisionUpdater.cpp	/^simxInt resolution[2];$/;"	v
+setLandingFinished	.\LandingPathUpdater.cpp	/^void LandingPathUpdater::setLandingFinished()$/;"	f	class:LandingPathUpdater
+setLandingSignal	.\LandingUpdater.cpp	/^LandingUpdater::setLandingSignal(simxFloat landing_begin_height, simxFloat landing_end_height)$/;"	f	class:LandingUpdater
+setTargetPosition	.\LandingUpdater.cpp	/^void LandingUpdater::setTargetPosition(Point p)$/;"	f	class:LandingUpdater
+tar_position	.\LandingVisionUpdater.cpp	/^Point tar_position;$/;"	v
+target	.\LandingVisionUpdater.cpp	/^simxInt target;$/;"	v
+update	.\LandingPathUpdater.cpp	/^void LandingPathUpdater::update()$/;"	f	class:LandingPathUpdater
+update	.\LandingVisionUpdater.cpp	/^void LandingVisionUpdater::update() {$/;"	f	class:LandingVisionUpdater

@@ -1,0 +1,48 @@
+LandingPathUpdater	LandingPathUpdater.cpp	/^LandingPathUpdater::LandingPathUpdater(int client_id) : LandingUpdater(Config::Instance()->getIntParam("LandingPathUpdater", "TIME_STEP"), client_id)$/;"	f	class:LandingPathUpdater
+changeState	LandingPathUpdater.cpp	/^void LandingPathUpdater::changeState(State<LandingPathUpdater> *p_new_state)$/;"	f	class:LandingPathUpdater
+getQRcodePosition	LandingPathUpdater.cpp	/^Point LandingPathUpdater::getQRcodePosition()$/;"	f	class:LandingPathUpdater
+setLandingFinished	LandingPathUpdater.cpp	/^void LandingPathUpdater::setLandingFinished()$/;"	f	class:LandingPathUpdater
+update	LandingPathUpdater.cpp	/^void LandingPathUpdater::update()$/;"	f	class:LandingPathUpdater
+LANDING_PATHPLANER_H	LandingPathUpdater.h	2;"	d
+LandingPathUpdater	LandingPathUpdater.h	/^class LandingPathUpdater : public LandingUpdater$/;"	c
+m_current_state	LandingPathUpdater.h	/^    State<LandingPathUpdater> *m_current_state;$/;"	m	class:LandingPathUpdater
+override	LandingPathUpdater.h	/^    void update() override;$/;"	m	class:LandingPathUpdater
+LandingUpdater	LandingUpdater.cpp	/^LandingUpdater::LandingUpdater(int time_step, int client_id) : Updater(time_step, client_id)$/;"	f	class:LandingUpdater
+getCarPosition	LandingUpdater.cpp	/^const Point LandingUpdater::getCarPosition()$/;"	f	class:LandingUpdater
+getDronePosition	LandingUpdater.cpp	/^const Point LandingUpdater::getDronePosition()$/;"	f	class:LandingUpdater
+getPlanePosition	LandingUpdater.cpp	/^const Point LandingUpdater::getPlanePosition()$/;"	f	class:LandingUpdater
+getTargetPosition	LandingUpdater.cpp	/^const Point LandingUpdater::getTargetPosition()$/;"	f	class:LandingUpdater
+setLandingSignal	LandingUpdater.cpp	/^LandingUpdater::setLandingSignal(simxFloat landing_begin_height, simxFloat landing_end_height)$/;"	f	class:LandingUpdater
+setTargetPosition	LandingUpdater.cpp	/^void LandingUpdater::setTargetPosition(Point p)$/;"	f	class:LandingUpdater
+LANDING_LANDINGUPDATER_H	LandingUpdater.h	2;"	d
+LandingUpdater	LandingUpdater.h	/^class LandingUpdater: public Updater$/;"	c
+m_handle_car	LandingUpdater.h	/^    simxInt m_handle_drone, m_handle_target, m_handle_car, m_handle_plane;$/;"	m	class:LandingUpdater
+m_handle_drone	LandingUpdater.h	/^    simxInt m_handle_drone, m_handle_target, m_handle_car, m_handle_plane;$/;"	m	class:LandingUpdater
+m_handle_plane	LandingUpdater.h	/^    simxInt m_handle_drone, m_handle_target, m_handle_car, m_handle_plane;$/;"	m	class:LandingUpdater
+m_handle_target	LandingUpdater.h	/^    simxInt m_handle_drone, m_handle_target, m_handle_car, m_handle_plane;$/;"	m	class:LandingUpdater
+LandingVisionUpdater	LandingVisionUpdater.cpp	/^LandingVisionUpdater::LandingVisionUpdater(int client_id) : LandingUpdater($/;"	f	class:LandingVisionUpdater
+angle	LandingVisionUpdater.cpp	/^simxFloat angle[3];$/;"	v
+camera	LandingVisionUpdater.cpp	/^simxInt camera;$/;"	v
+clientID	LandingVisionUpdater.cpp	/^int clientID;$/;"	v
+height	LandingVisionUpdater.cpp	/^float height = 0.282;$/;"	v
+image	LandingVisionUpdater.cpp	/^simxUChar *image = 0;$/;"	v
+midx	LandingVisionUpdater.cpp	/^float midx, midy;$/;"	v
+midy	LandingVisionUpdater.cpp	/^float midx, midy;$/;"	v
+offsetx	LandingVisionUpdater.cpp	/^float offsetx;$/;"	v
+offsety	LandingVisionUpdater.cpp	/^float offsety;$/;"	v
+p	LandingVisionUpdater.cpp	/^Point p;$/;"	v
+position	LandingVisionUpdater.cpp	/^Point position;$/;"	v
+rate	LandingVisionUpdater.cpp	/^float rate = 1.75;$/;"	v
+resolution	LandingVisionUpdater.cpp	/^simxInt resolution[2];$/;"	v
+tar_position	LandingVisionUpdater.cpp	/^Point tar_position;$/;"	v
+target	LandingVisionUpdater.cpp	/^simxInt target;$/;"	v
+update	LandingVisionUpdater.cpp	/^void LandingVisionUpdater::update() {$/;"	f	class:LandingVisionUpdater
+LANDING_VISIONPLANNER_H	LandingVisionUpdater.h	2;"	d
+LandingVisionUpdater	LandingVisionUpdater.h	/^class LandingVisionUpdater : public LandingUpdater$/;"	c
+override	LandingVisionUpdater.h	/^    void update() override;$/;"	m	class:LandingVisionUpdater
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_PROGRAM_VERSION	5.8	//
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
