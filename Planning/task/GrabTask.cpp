@@ -6,6 +6,16 @@
 
 void GrabTask::Execute(PlanningPathUpdater *t)
 {
+    Point target_pos = t->getTargetPosition();
+    if ((cylinder_pos.x() - target_pos.x()) * (cylinder_pos.x() - target_pos.x()) +
+        (cylinder_pos.y() - target_pos.y()) * (cylinder_pos.y() - target_pos.y()) < 0.5 * 0.5)
+    {
+        std::cout << "adjust target position" << std::endl;
+        target_pos.setX(cylinder_pos.x());
+        target_pos.setY(cylinder_pos.y());
+        t->setTargetPosition(target_pos);
+    }
+
     if ((t->getDronePosition() - m_path_points[m_now_target_index]).norm() < CLOSE_THRESHOLD)
     {
         m_close_rounds++;
@@ -16,7 +26,7 @@ void GrabTask::Execute(PlanningPathUpdater *t)
     if (m_close_rounds >= CLOSE_ROUNDS_LIMIT)
     {
         m_now_target_index++;
-        if(m_now_target_index == 2)
+        if (m_now_target_index == 2)
         {
             t->setHand();
             utils::sleep(3000);
@@ -44,7 +54,7 @@ GrabTask::GrabTask(Object *object) : m_object(object)
 {
 
 }
-extern bool use_vision;
+
 void GrabTask::Enter(PlanningPathUpdater *t)
 {
     utils::sleep(1000);
