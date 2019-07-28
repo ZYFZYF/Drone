@@ -26,7 +26,7 @@ void GrabTask::Execute(PlanningPathUpdater *t)
     if (m_close_rounds >= CLOSE_ROUNDS_LIMIT)
     {
         m_now_target_index++;
-        if (m_now_target_index == 2)
+        if (m_now_target_index == 3)
         {
             t->setHand();
             utils::sleep(3000);
@@ -60,12 +60,14 @@ void GrabTask::Enter(PlanningPathUpdater *t)
     utils::sleep(1000);
     Task::Enter(t);
     std::cout << "Prepare to grab cylinder on platform " << m_object->getName() << std::endl;
-    use_vision = false;
+    use_vision = true;
     std::cout << "Open the eyes _(:з)∠)_" << std::endl;
     Point drone_pos = t->getTargetPosition();
-    m_path_points.emplace_back(drone_pos.x(), drone_pos.y(), drone_pos.z() - 0.3f);
-    m_path_points.emplace_back(drone_pos.x(), drone_pos.y(), drone_pos.z() - 0.325f);
-    m_path_points.emplace_back(drone_pos.x(), drone_pos.y(), drone_pos.z() );
+    float grasp_height = t->getHotTargetPosition().z();
+    m_path_points.emplace_back(drone_pos.x(), drone_pos.y(), grasp_height + 0.5f);
+    m_path_points.emplace_back(drone_pos.x(), drone_pos.y(), grasp_height + 0.5f - 0.3f);
+    m_path_points.emplace_back(drone_pos.x(), drone_pos.y(), grasp_height + 0.5f - 0.325f);
+    m_path_points.emplace_back(drone_pos.x(), drone_pos.y(), grasp_height + 0.5f);
     m_now_target_index = 0;
     if (m_now_target_index < m_path_points.size())
         t->setTargetPosition(m_path_points[m_now_target_index]);
