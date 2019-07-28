@@ -1,3 +1,0 @@
-"D:\CLion 2019.2\bin\cmake\win\bin\cmake.exe" -E remove -f CMakeFiles\Landing.dir/objects.a
-D:\Dev-Cpp\MinGW64\bin\ar.exe cr CMakeFiles\Landing.dir/objects.a @CMakeFiles\Landing.dir\objects1.rsp
-D:\Dev-Cpp\MinGW64\bin\g++.exe  -std=c++11 -O3 -DNDEBUG   -Wl,--whole-archive CMakeFiles\Landing.dir/objects.a -Wl,--no-whole-archive  -o ..\..\Landing\Landing.exe -Wl,--out-implib,..\..\Landing\libLanding.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\Landing.dir\linklibs.rsp
