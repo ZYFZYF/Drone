@@ -47,15 +47,15 @@ GrabTask::GrabTask(Object *object) : m_object(object)
 extern bool use_vision;
 void GrabTask::Enter(PlanningPathUpdater *t)
 {
+    utils::sleep(1000);
     Task::Enter(t);
     std::cout << "Prepare to grab cylinder on platform " << m_object->getName() << std::endl;
-    use_vision = true;
+    use_vision = false;
     std::cout << "Open the eyes _(:з)∠)_" << std::endl;
-    Point target_pos = t->getHotTargetPosition();
-    target_pos.setZ(target_pos.z() + 0.5f);
-    m_path_points.emplace_back(Point(target_pos.x(), target_pos.y(), target_pos.z() - 0.28f));
-    m_path_points.emplace_back(target_pos.x(), target_pos.y(), target_pos.z() - 0.32f);
-    m_path_points.emplace_back(target_pos.x(), target_pos.y(), target_pos.z());
+    Point drone_pos = t->getTargetPosition();
+    m_path_points.emplace_back(drone_pos.x(), drone_pos.y(), drone_pos.z() - 0.3f);
+    m_path_points.emplace_back(drone_pos.x(), drone_pos.y(), drone_pos.z() - 0.325f);
+    m_path_points.emplace_back(drone_pos.x(), drone_pos.y(), drone_pos.z() );
     m_now_target_index = 0;
     if (m_now_target_index < m_path_points.size())
         t->setTargetPosition(m_path_points[m_now_target_index]);

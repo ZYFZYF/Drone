@@ -92,6 +92,9 @@ int main(int argc, char const *argv[])
     });
     path.join();
     vision.join();
+    int tmp;
+    std::cout<<"回车结束"<<std::endl;
+    std::cin>>tmp;
     doSomethingAfterSimulation();
     return 0;
 }

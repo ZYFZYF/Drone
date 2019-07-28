@@ -1,40 +1,39 @@
-# Make sure to have the server side running in V-REP:
-# in a child script of a V-REP scene, add following command
-# to be executed just once, at simulation start:
-#
-# simRemoteApi.start(19999)
-#
-# then start simulation, and run this program.
-#
-# IMPORTANT: for each successful call to simxStart, there
-# should be a corresponding call to simxFinish at the end!
 import numpy as np
 import vrep
 import time
 from math import *
 
 
-def run(path):
+def run(path,raising = False):
     index = 0
-    for p in ps:
+    for p in path:
         index += 1
         vrep.simxSetObjectPosition(
-            clientID, q_target, -1, p, vrep.simx_opmode_blocking)
-        res, end_pos = vrep.simxGetObjectPosition(
-            clientID, base, -1, vrep.simx_opmode_blocking)
-        d_pos = [end_pos[i] - target_position[i] for i in range(3)]
-        while np.linalg.norm(d_pos) > 0.1:
-            print(np.linalg.norm(d_pos))
-            time.sleep(0.5)
-            res, end_pos = vrep.simxGetObjectPosition(
+            clientID, q_target, q_target, p, vrep.simx_opmode_blocking)
+        print(p)
+        point1 = vrep.simxGetObjectPosition(clientID,q_target,-1,vrep.simx_opmode_blocking)
+        point2 = vrep.simxGetObjectPosition(clientID,target,-1,vrep.simx_opmode_blocking)
+        print(point1)
+        print(point2)
+        res, d_pos = vrep.simxGetObjectPosition(
+            clientID, base, q_target, vrep.simx_opmode_blocking)
+        threshold = 0.02
+        while np.linalg.norm(d_pos) > threshold:
+            res, d_pos = vrep.simxGetObjectPosition(
+                clientID, base, q_target, vrep.simx_opmode_blocking)
+            res, t_pos = vrep.simxGetObjectPosition(
+                clientID,  q_target, -1, vrep.simx_opmode_blocking)
+            res, q_pos = vrep.simxGetObjectPosition(
                 clientID, base, -1, vrep.simx_opmode_blocking)
-            d_pos = [end_pos[i] - target_position[i] for i in range(3)]
-        print("到达目标点", index, p)
+            t_pos[2] = q_pos[2]
+            vrep.simxSetObjectPosition(clientID, base,-1,t_pos, vrep.simx_opmode_blocking)
+        print("到达目标点", index, point1)
 
 
 vrep.simxFinish(-1)  # just in case, close all opened connections
 clientID = vrep.simxStart('127.0.0.1', 19997, True,
                           True, 5000, 5)  # Connect to V-REP
+vrep.simxSetIntegerSignal(clientID,'close_hand',0,vrep.simx_opmode_blocking)
 res, target = vrep.simxGetObjectHandle(
     clientID, "Target", vrep.simx_opmode_blocking)
 res, q_target = vrep.simxGetObjectHandle(
@@ -47,14 +46,16 @@ if clientID != -1:
     res, target_position = vrep.simxGetObjectPosition(
         clientID, target, -1, vrep.simx_opmode_blocking)
     path = []
-    point = target_position
-    point[3] += 0.5
-    path.append(point)
-    point = target_position
-    point[3] += 0.21
-    path.append(point)
+    path.append([0,0,-0.35])
+    path.append([0,0,-0.04])
     run(path)
-
+    vrep.simxSetIntegerSignal(clientID,"close_hand",1,vrep.simx_opmode_blocking)
+    time.sleep(1)
+    # input("回车键继续")
+    path = []
+    path.append([0,0,0.8])
+    run(path)
+    input("回车键结束")
     vrep.simxStopSimulation(clientID, vrep.simx_opmode_blocking)
     vrep.simxFinish(clientID)
 else:

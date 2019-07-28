@@ -8,7 +8,6 @@ class PlanningVisionUpdater: public PlanningUpdater
 {
 public:
     explicit PlanningVisionUpdater(int client_id);
-
     void update() override;
 };
 
