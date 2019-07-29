@@ -7,16 +7,14 @@ import time
 from matplotlib import pyplot as plt
 
 def rec_image(img_rgb):
-    mask=color_mask(img)
+    mask=color_mask(img_rgb)
     contours=find_contours(mask)
-    faces=perspective_transformation(img, contours)
+    faces, boxes=perspective_transformation(img, contours)
     for i, face in enumerate(faces):
         # plt.imshow(face)
         # plt.savefig('output/%d.png'%i)
         print(recogize_portrait(face))
-
-# img=read_rgb_img('/home/eric/Work/Drone/Following/facerecognition/45dgrees-a1.png')
-# rec_image(img)
+        print(get_person_color(img, boxes[i]))
 
 if __name__ == '__main__':
     assert drone != 0
@@ -35,3 +33,6 @@ if __name__ == '__main__':
     finally:
         vrep.simxStopSimulation(clientID, vrep.simx_opmode_blocking)
         vrep.simxFinish(clientID)
+
+# img=read_rgb_img('/home/eric/Work/Drone/Following/facerecognition/45dgrees-a1.png')
+# rec_image(img)
