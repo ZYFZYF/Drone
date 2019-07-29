@@ -79,18 +79,18 @@ void PlanningVisionUpdater::update() {
         platform_height = end_platform;
     } else {
         position = utils::getObjectPosition(camera, m_cid);
-        targetx = (startx + finishx) / 2;
-        targety = (starty + finishy) / 2;
-        target_offsetx = (position[2] - target_height) * rate / 1280 * (640 - targety);
-        target_offsety = (position[2] - target_height) * rate / 1280 * (targetx - 360);
-        p.setX(position[0] + target_offsetx * cos(angle[2]) + target_offsety * sin(angle[2]));
-        p.setY(position[1] + target_offsety * cos(angle[2]) - target_offsetx * sin(angle[2]));
-        p.setZ(plane);
-        tar_position = utils::getObjectPosition(target, m_cid);
-        cout << p.x() << " " << p.y() << " " << p.z() << "  " << tar_position[0] << " " << tar_position[1] << " "
-             << tar_position[2] << endl;
-        platform_height = target_platform;
-    }
+    targetx = (startx + finishx) / 2;
+    targety = (starty + finishy) / 2;
+    target_offsetx = (position[2] - target_height) * rate / 1280 * (640 - targety);
+    target_offsety = (position[2] - target_height) * rate / 1280 * (targetx - 360);
+    p.setX(position[0] + target_offsetx * cos(angle[2]) + target_offsety * sin(angle[2]));
+    p.setY(position[1] + target_offsety * cos(angle[2]) - target_offsetx * sin(angle[2]));
+    p.setZ(plane);
+    tar_position = utils::getObjectPosition(target, m_cid);
+    cout << p.x() << " " << p.y() << " " << p.z() << "  " << tar_position[0] << " " << tar_position[1] << " "
+         << tar_position[2] << endl;
+    platform_height = target_platform;
+}
     simxSetFloatSignal(clientID, "target_x", p.x(), simx_opmode_oneshot);
     simxSetFloatSignal(clientID, "target_y", p.y(), simx_opmode_oneshot);
     simxSetFloatSignal(clientID, "target_z", p.z(), simx_opmode_oneshot);
