@@ -21,12 +21,14 @@ from matplotlib import pyplot as plt
 #         disconnect()
 
 def rec_image(img_rgb):
-    mask=color_mask(img)
+    mask=color_mask(img_rgb)
     contours=find_contours(mask)
-    faces=perspective_transformation(img, contours)
+    faces, boxes=perspective_transformation(img, contours)
     for i, face in enumerate(faces):
         # plt.imshow(face)
         # plt.savefig('output/%d.png'%i)
         print(recogize_portrait(face))
+        print(get_person_color(img, boxes[i]))
 
 img=read_rgb_img('/home/eric/Work/Drone/Following/facerecognition/45dgrees-a1.png')
+rec_image(img)
