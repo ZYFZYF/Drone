@@ -1,7 +1,22 @@
 # coding=utf-8
 from utils import *
 from path import path_update
+from facerecognition.contour_detection import *
+from facerecognition.recognition import *
 import time
+from matplotlib import pyplot as plt
+
+def rec_image(img_rgb):
+    mask=color_mask(img)
+    contours=find_contours(mask)
+    faces=perspective_transformation(img, contours)
+    for i, face in enumerate(faces):
+        # plt.imshow(face)
+        # plt.savefig('output/%d.png'%i)
+        print(recogize_portrait(face))
+
+# img=read_rgb_img('/home/eric/Work/Drone/Following/facerecognition/45dgrees-a1.png')
+# rec_image(img)
 
 if __name__ == '__main__':
     assert drone != 0
