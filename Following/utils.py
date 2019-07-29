@@ -8,7 +8,9 @@ import logging
 
 logging.getLogger().setLevel(logging.INFO)
 vrep.simxFinish(-1)
-clientID = vrep.simxStart('127.0.0.1', 19999, True, True, 5000, 5)
+# clientID = vrep.simxStart('127.0.0.1', 19999, True, True, 5000, 5)
+clientID = vrep.simxStart('127.0.0.1', 19997, True, True, 5000, 5)
+
 if clientID==-1:
     logging.error("Failed to connect to remote API Server")
     exit()
@@ -52,6 +54,8 @@ def set_target_position(pos):
     _, now_pos = vrep.simxGetObjectPosition(clientID, drone, -1, vrep.simx_opmode_blocking)
     delta_x = pos[0] - now_pos[0]
     delta_y = pos[1] - now_pos[1]
+    print('move target from ', now_pos[0], ',', now_pos[1], ',', now_pos[2], ' to ', pos[0], ',', pos[1], ',', pos[2],
+          ' and the target angel is ', calc_angle_by_xy(delta_x, delta_y))
     rotate_drone_to(calc_angle_by_xy(delta_x, delta_y))
     vrep.simxSetObjectPosition(clientID=clientID,
                                objectHandle=target,

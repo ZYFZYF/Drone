@@ -6,7 +6,7 @@ from facerecognition.recognition import *
 import time
 from matplotlib import pyplot as plt
 
-def rec_image(img_rgb):
+def rec_image(img):
     mask=color_mask(img)
     contours=find_contours(mask)
     faces=perspective_transformation(img, contours)
