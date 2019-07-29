@@ -8,7 +8,7 @@ import logging
 
 logging.getLogger().setLevel(logging.INFO)
 vrep.simxFinish(-1)
-clientID = vrep.simxStart('127.0.0.1', 19999, True, True, 5000, 5)
+clientID = vrep.simxStart('127.0.0.1', 19997, True, True, 5000, 5)
 if clientID==-1:
     logging.error("Failed to connect to remote API Server")
     exit()
@@ -17,7 +17,7 @@ else:
 
 _, drone = vrep.simxGetObjectHandle(clientID, 'drone_zed', vrep.simx_opmode_blocking)
 _, target = vrep.simxGetObjectHandle(clientID, 'Quadricopter_target', vrep.simx_opmode_blocking)
-_, v0 = vrep.simxGetObjectHandle(clientID, 'zed_vision0', vrep.simx_opmode_oneshot_wait)
+_, v0 = vrep.simxGetObjectHandle(clientID, 'zed_vision0', vrep.simx_opmode_blocking)
 # _, v1 = vrep.simxGetObjectHandle(clientID, 'zed_vision1', vrep.simx_opmode_oneshot_wait)
 # vrep.simxStartSimulation(clientID, vrep.simx_opmode_blocking)
 
