@@ -23,6 +23,7 @@ def arrive_now_target():
     return distance < 0.6 and vel_norm < 0.8
 
 
+
 def path_update():
     if arrive_now_target():
         global now_index, start_time

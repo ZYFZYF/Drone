@@ -9,13 +9,18 @@ import time
 
 logging.getLogger().setLevel(logging.INFO)
 vrep.simxFinish(-1)
-clientID = vrep.simxStart('127.0.0.1', 19997, True, True, 5000, 5)
+clientID = vrep.simxStart('127.0.0.1', 19997, True, True, 5000, 5)  # Connect to V-REP
+_, drone = vrep.simxGetObjectHandle(clientID, 'drone_zed', vrep.simx_opmode_blocking)
+_, target = vrep.simxGetObjectHandle(clientID, 'Quadricopter_target', vrep.simx_opmode_blocking)
+
+default_height = 3
 
 if clientID==-1:
     logging.error("Failed to connect to remote API Server")
     exit()
 else:
     logging.info('Connected to remote API server')
+
 
 _, drone = vrep.simxGetObjectHandle(clientID, 'drone_zed', vrep.simx_opmode_blocking)
 _, base = vrep.simxGetObjectHandle(clientID, 'Quadricopter_base', vrep.simx_opmode_blocking)
@@ -58,12 +63,13 @@ def set_target_position(pos):
     delta_y = pos[1] - now_pos[1]
     print('move target from ',round(now_pos[0],2), ',',round(now_pos[1],2), ',',round(now_pos[2],2), ' to ', pos[1], ',', pos[2], ',', pos[3],
           ' and the target angel is ', calc_angle_by_xy(delta_x, delta_y))
-    # rotate_drone_to(calc_angle_by_xy(delta_x, delta_y))
     vrep.simxSetObjectOrientation(clientID,target,base,[0,0,math.radians(pos[0])],vrep.simx_opmode_oneshot)
     vrep.simxSetObjectOrientation(clientID,sub_target,target,[0,0,0],vrep.simx_opmode_oneshot)
-    if pos[0] > 0 :
-      # time.sleep(3)
-      pass
+
+
+    print('move target from ', now_pos[0], ',', now_pos[1], ',', now_pos[2], ' to ', pos[0], ',', pos[1], ',', pos[2],
+          ' and the target angel is ', calc_angle_by_xy(delta_x, delta_y))
+
     vrep.simxSetObjectPosition(clientID=clientID,
                                objectHandle=target,
                                relativeToObjectHandle=-1,
@@ -120,3 +126,4 @@ if __name__ == '__main__':
   input("输入回车结束")
   vrep.simxStopSimulation(clientID, vrep.simx_opmode_blocking)
   vrep.simxFinish(clientID)
+
