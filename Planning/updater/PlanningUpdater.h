@@ -16,6 +16,8 @@ public:
 
     void setTargetPosition(Point p);
 
+    void setPosition(const Point &pos, simxInt handle, simxInt relative_handle);
+
     void setHand() const;
 
     const Point getHotTargetPosition();

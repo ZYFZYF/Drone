@@ -5,7 +5,7 @@
 #include "Task.h"
 #include "../../Common/object/Object.h"
 
-class GrabTask: public Task
+class GrabTask : public Task
 {
 public:
     //not a good implement, lead to shared ptr
@@ -25,8 +25,11 @@ private:
     std::vector<Point> m_path_points;
     int m_now_target_index;
     int m_close_rounds;
-    const simxFloat CLOSE_THRESHOLD = Config::Instance()->getFloatParam("MoveTask", "CLOSE_THRESHOLD");
-    const simxInt CLOSE_ROUNDS_LIMIT = Config::Instance()->getIntParam("MoveTask", "CLOSE_ROUNDS_LIMIT");
+    const simxFloat CLOSE_THRESHOLD = Config::Instance()->getFloatParam("GrabTask", "CLOSE_THRESHOLD");
+    const simxInt CLOSE_ROUNDS_LIMIT = Config::Instance()->getIntParam("GrabTask", "CLOSE_ROUNDS_LIMIT");
+    const simxFloat GRAB_START_HEIGHT = Config::Instance()->getFloatParam("GrabTask", "GRAB_START_HEIGHT");
+    const simxInt MICRO_SECONDS_FOR_DISCRIMINATE = Config::Instance()->getIntParam("GrabTask",
+                                                                                   "MICRO_SECONDS_FOR_DISCRIMINATE");
 };
 
 

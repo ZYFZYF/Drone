@@ -3,9 +3,19 @@
 #include "utils.h"
 #include "../vrep/extApiPlatform.h"
 #include <random>
+#include <cmath>
+
 std::default_random_engine e;
 std::uniform_real_distribution<double> u(0, 1);
 
+const float B = 0.14;
+const float PI = acosf(-1.0f);
+const float Alpha = 85 * PI / 180;
+const float Beta = atanf(tan(Alpha) * 9 / 16);
+//const float Beta = 85.0f * PI / 180;
+//const float Alpha = atanf(tanf(Beta) * 16 / 9);
+const float Px = 1280;
+const float Py = 720;
 const Point DRONE_SIZE = Point(0.4f, 0.4f, 0.3f);
 
 const std::string utils::getNowTime()
@@ -200,5 +210,18 @@ const Point utils::generateRandomPointBetween(const Point &start_pos, const Poin
     return Point(r_x * start_pos.x() + (1.0f - r_x) * end_pos.x(),
                  r_y * start_pos.y() + (1.0f - r_y) * end_pos.y(),
                  r_z * start_pos.z() + (1.0f - r_z) * end_pos.z());
+}
+
+Point utils::getCoordinateInLeftCamera(float x_p_left, float x_p_right, float y_p)
+{
+    float xc = B * x_p_left / (x_p_left - x_p_right);
+    float yc = B * Px * y_p * tanf(Beta / 2) / ((x_p_left - x_p_right) * Py * tanf(Alpha / 2));
+    float zc = B * Px / (2 * (x_p_left - x_p_right) * tanf(Alpha / 2));
+    return Point(xc, yc, zc);
+}
+
+Point utils::convertCoordinateSystem(simxInt handle, const Point &p)
+{
+    return Point(p.x(), p.y(), p.z());
 }
 

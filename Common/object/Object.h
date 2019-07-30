@@ -44,6 +44,9 @@ protected:
 private:
     int m_cid;
     simxInt m_object_handle;
+    const float HOVER_HEIGHT_OVER_PLATFORM = Config::Instance()->getFloatParam("Object", "HOVER_HEIGHT_OVER_PLATFORM");
+    const float HOVER_HEIGHT_OVER_END = Config::Instance()->getFloatParam("Object", "HOVER_HEIGHT_OVER_END");
+
 };
 
 

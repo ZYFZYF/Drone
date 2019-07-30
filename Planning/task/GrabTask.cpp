@@ -6,15 +6,15 @@
 
 void GrabTask::Execute(PlanningPathUpdater *t)
 {
-    Point target_pos = t->getTargetPosition();
-    if ((cylinder_pos.x() - target_pos.x()) * (cylinder_pos.x() - target_pos.x()) +
-        (cylinder_pos.y() - target_pos.y()) * (cylinder_pos.y() - target_pos.y()) < 0.5 * 0.5)
-    {
-        std::cout << "adjust target position" << std::endl;
-        target_pos.setX(cylinder_pos.x());
-        target_pos.setY(cylinder_pos.y());
-        t->setTargetPosition(target_pos);
-    }
+//    Point target_pos = t->getTargetPosition();
+//    if ((cylinder_pos.x() - target_pos.x()) * (cylinder_pos.x() - target_pos.x()) +
+//        (cylinder_pos.y() - target_pos.y()) * (cylinder_pos.y() - target_pos.y()) < 0.5 * 0.5)
+//    {
+//        std::cout << "adjust target position" << std::endl;
+//        target_pos.setX(cylinder_pos.x());
+//        target_pos.setY(cylinder_pos.y());
+//        t->setTargetPosition(target_pos);
+//    }
 
     if ((t->getDronePosition() - m_path_points[m_now_target_index]).norm() < CLOSE_THRESHOLD)
     {
@@ -26,11 +26,10 @@ void GrabTask::Execute(PlanningPathUpdater *t)
     if (m_close_rounds >= CLOSE_ROUNDS_LIMIT)
     {
         m_now_target_index++;
-        if (m_now_target_index == 2)
+        if (m_now_target_index == 3)
         {
             t->setHand();
             utils::sleep(3000);
-            use_vision = false;
         }
         if (m_now_target_index < m_path_points.size())
             t->setTargetPosition(m_path_points[m_now_target_index]);
@@ -57,15 +56,16 @@ GrabTask::GrabTask(Object *object) : m_object(object)
 
 void GrabTask::Enter(PlanningPathUpdater *t)
 {
-    utils::sleep(1000);
     Task::Enter(t);
     std::cout << "Prepare to grab cylinder on platform " << m_object->getName() << std::endl;
-    use_vision = false;
     std::cout << "Open the eyes _(:з)∠)_" << std::endl;
+    use_vision = true;
+    utils::sleep(MICRO_SECONDS_FOR_DISCRIMINATE);
+    use_vision = false;
     Point drone_pos = t->getTargetPosition();
-    m_path_points.emplace_back(drone_pos.x(), drone_pos.y(), drone_pos.z() - 0.3f);
-    m_path_points.emplace_back(drone_pos.x(), drone_pos.y(), drone_pos.z() - 0.325f);
-    m_path_points.emplace_back(drone_pos.x(), drone_pos.y(), drone_pos.z() );
+    m_path_points.emplace_back(drone_pos.x(), drone_pos.y(), GRAB_START_HEIGHT);
+    m_path_points.emplace_back(drone_pos.x(), drone_pos.y(), GRAB_START_HEIGHT - 0.3f);
+    m_path_points.emplace_back(drone_pos.x(), drone_pos.y(), GRAB_START_HEIGHT - 0.325f);
     m_now_target_index = 0;
     if (m_now_target_index < m_path_points.size())
         t->setTargetPosition(m_path_points[m_now_target_index]);

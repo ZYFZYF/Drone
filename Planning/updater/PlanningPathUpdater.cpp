@@ -121,11 +121,11 @@ PlanningPathUpdater::PlanningPathUpdater(int client_id) : PlanningUpdater(
         for (auto j = i + 1; j < n; j++)
         {
             dist[j][i] = dist[i][j] = MoveTask(nodes[i], nodes[j]).getDistance(m_distance_evaluation_router);
-            if (dist[i][j] < 1000)
-            {
-                cout << i << ' ' << j << ' ' << nodes[i]->getName() << ' ' << nodes[j]->getName() << ' ' << dist[i][j]
-                     << endl;
-            }
+//            if (dist[i][j] < 1000)
+//            {
+//                cout << i << ' ' << j << ' ' << nodes[i]->getName() << ' ' << nodes[j]->getName() << ' ' << dist[i][j]
+//                     << endl;
+//            }
         }
     // next is dynamic planning to calculate the route and task lists
     for (int i = 0; i < n; i++)
