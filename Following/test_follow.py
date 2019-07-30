@@ -30,7 +30,6 @@ if __name__ == '__main__':
     try:
         while True:
             img=get_sensor_image(v0)
-            print(len(img))
             _id,boxes,color=rec_image(img)
 
             # path_update()

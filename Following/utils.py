@@ -5,10 +5,19 @@ from PIL import Image as I
 import array
 import numpy as np
 import logging
+import time
 
 logging.getLogger().setLevel(logging.INFO)
 vrep.simxFinish(-1)
+<<<<<<< HEAD
 clientID = vrep.simxStart('127.0.0.1', 19997, True, True, 5000, 5)
+=======
+clientID = vrep.simxStart('127.0.0.1', 19997, True, True, 5000, 5)  # Connect to V-REP
+_, drone = vrep.simxGetObjectHandle(clientID, 'drone_zed', vrep.simx_opmode_blocking)
+_, target = vrep.simxGetObjectHandle(clientID, 'Quadricopter_target', vrep.simx_opmode_blocking)
+
+default_height = 3
+>>>>>>> 7b9daf1eaf7acc642c0c2e2f89e0e30b9b9af9ef
 
 if clientID==-1:
     logging.error("Failed to connect to remote API Server")
@@ -18,6 +27,7 @@ else:
 _, v0 = vrep.simxGetObjectHandle(clientID, 'zed_vision0', vrep.simx_opmode_blocking)
 err, resolution, image = vrep.simxGetVisionSensorImage(clientID, v0, 0, vrep.simx_opmode_streaming)
 _, drone = vrep.simxGetObjectHandle(clientID, 'drone_zed', vrep.simx_opmode_blocking)
+_, base = vrep.simxGetObjectHandle(clientID, 'Quadricopter_base', vrep.simx_opmode_blocking)
 _, target = vrep.simxGetObjectHandle(clientID, 'Quadricopter_target', vrep.simx_opmode_blocking)
 
 
@@ -50,7 +60,7 @@ def calc_angle_by_xy(x, y):
 
 
 def set_target_position(pos):
-    if len(pos) < 3:
+    if len(pos) < 4:
         pos.append(default_height)
     _, now_pos = vrep.simxGetObjectPosition(clientID, drone, -1, vrep.simx_opmode_blocking)
     delta_x = pos[0] - now_pos[0]
@@ -61,7 +71,7 @@ def set_target_position(pos):
     vrep.simxSetObjectPosition(clientID=clientID,
                                objectHandle=target,
                                relativeToObjectHandle=-1,
-                               position=pos,
+                               position=pos[1:],
                                operationMode=vrep.simx_opmode_oneshot)
 
 
@@ -76,7 +86,7 @@ def rotate_drone(angle):
 def rotate_drone_to(angle):
     vrep.simxSetObjectOrientation(clientID=clientID,
                                   objectHandle=target,
-                                  relativeToObjectHandle=-1,
+                                  relativeToObjectHandle=base,
                                   eulerAngles=[0, 0, math.radians(angle)],
                                   operationMode=vrep.simx_opmode_oneshot)
 
