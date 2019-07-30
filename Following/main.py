@@ -20,6 +20,8 @@ if __name__ == '__main__':
     assert drone != 0
     assert target != 0
     vrep.simxStartSimulation(clientID, vrep.simx_opmode_blocking)
+    # vrep.simxSetObjectOrientation(clientID,target,base,{0,0,math.radians(90)},vrep.simx_opmode_oneshot)
+    # vrep.simxSetObjectOrientation(clientID,sub_target,target,{0,0,0},vrep.simx_opmode_oneshot)
     try:
         # for i in range(9):
         #     rotate_drone(10)

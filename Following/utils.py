@@ -5,6 +5,7 @@ from PIL import Image as I
 import array
 import numpy as np
 import logging
+import time
 
 logging.getLogger().setLevel(logging.INFO)
 vrep.simxFinish(-1)
@@ -17,7 +18,9 @@ else:
     logging.info('Connected to remote API server')
 
 _, drone = vrep.simxGetObjectHandle(clientID, 'drone_zed', vrep.simx_opmode_blocking)
+_, base = vrep.simxGetObjectHandle(clientID, 'Quadricopter_base', vrep.simx_opmode_blocking)
 _, target = vrep.simxGetObjectHandle(clientID, 'Quadricopter_target', vrep.simx_opmode_blocking)
+_, sub_target = vrep.simxGetObjectHandle(clientID, 'sub_target', vrep.simx_opmode_blocking)
 _, v0 = vrep.simxGetObjectHandle(clientID, 'zed_vision0', vrep.simx_opmode_blocking)
 # _, v1 = vrep.simxGetObjectHandle(clientID, 'zed_vision1', vrep.simx_opmode_oneshot_wait)
 # vrep.simxStartSimulation(clientID, vrep.simx_opmode_blocking)
@@ -48,18 +51,23 @@ def calc_angle_by_xy(x, y):
 
 
 def set_target_position(pos):
-    if len(pos) < 3:
+    if len(pos) < 4:
         pos.append(default_height)
     _, now_pos = vrep.simxGetObjectPosition(clientID, drone, -1, vrep.simx_opmode_blocking)
     delta_x = pos[0] - now_pos[0]
     delta_y = pos[1] - now_pos[1]
-    print('move target from ', now_pos[0], ',', now_pos[1], ',', now_pos[2], ' to ', pos[0], ',', pos[1], ',', pos[2],
+    print('move target from ',round(now_pos[0],2), ',',round(now_pos[1],2), ',',round(now_pos[2],2), ' to ', pos[1], ',', pos[2], ',', pos[3],
           ' and the target angel is ', calc_angle_by_xy(delta_x, delta_y))
-    rotate_drone_to(calc_angle_by_xy(delta_x, delta_y))
+    # rotate_drone_to(calc_angle_by_xy(delta_x, delta_y))
+    vrep.simxSetObjectOrientation(clientID,target,base,[0,0,math.radians(pos[0])],vrep.simx_opmode_oneshot)
+    vrep.simxSetObjectOrientation(clientID,sub_target,target,[0,0,0],vrep.simx_opmode_oneshot)
+    if pos[0] > 0 :
+      # time.sleep(3)
+      pass
     vrep.simxSetObjectPosition(clientID=clientID,
                                objectHandle=target,
                                relativeToObjectHandle=-1,
-                               position=pos,
+                               position=pos[1:],
                                operationMode=vrep.simx_opmode_oneshot)
 
 
@@ -74,7 +82,7 @@ def rotate_drone(angle):
 def rotate_drone_to(angle):
     vrep.simxSetObjectOrientation(clientID=clientID,
                                   objectHandle=target,
-                                  relativeToObjectHandle=-1,
+                                  relativeToObjectHandle=base,
                                   eulerAngles=[0, 0, math.radians(angle)],
                                   operationMode=vrep.simx_opmode_oneshot)
 
@@ -100,13 +108,15 @@ def distance_between_drone_and_target():
     target_pos = get_target_position()
     return np.linalg.norm(np.array([d1-d2 for d1, d2 in zip(drone_pos, target_pos)]))
 
-if __name__ == '__main__':
-    print(calc_angle_by_xy(0.1, 0))
-    print(calc_angle_by_xy(0, 0.1))
-    print(calc_angle_by_xy(-0.1, 0))
-    print(calc_angle_by_xy(0, -0.1))
-    print(calc_angle_by_xy(0, 0))
 
 def disconnect():
     # vrep.simxStopSimulation(clientID, vrep.simx_opmode_blocking)
     vrep.simxFinish(clientID)
+
+if __name__ == '__main__':
+  vrep.simxStartSimulation(clientID, vrep.simx_opmode_blocking)
+  vrep.simxSetObjectOrientation(clientID,target,base,[0,0,math.radians(90)],vrep.simx_opmode_blocking)
+  vrep.simxSetObjectOrientation(clientID,sub_target,target,{0,0,0},vrep.simx_opmode_blocking)
+  input("输入回车结束")
+  vrep.simxStopSimulation(clientID, vrep.simx_opmode_blocking)
+  vrep.simxFinish(clientID)
