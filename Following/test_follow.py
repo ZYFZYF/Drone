@@ -16,11 +16,10 @@ def rec_image(img_rgb):
         # plt.imshow(face)
         # plt.savefig('output/%d.png'%i)
         people_id=recogize_portrait(face)
-        people_color = get_person_color(img, boxes[i])
-        plt.imshow(img[])
-        print('%d people=%d box=%s'%(i, people_id, boxes[i]))
-        if  people_id==target_people:
-            return people_id, boxes, people_color
+        people_color = get_person_color(img, boxes[i], i)
+        if people_id>0:
+            print('%d people=%d box=%s'%(i, people_id, boxes[i]))
+            # return people_id, boxes, people_color
         # TODO: 根据人脸识别结果和衣服颜色确定跟踪目标
     return -1,-1,-1
 
@@ -31,10 +30,9 @@ if __name__ == '__main__':
     try:
         while True:
             img = get_sensor_image(v0)
-            plt.imshow(img)
-            plt.savefig('a.png')
+            # img=read_rgb_img('/home/eric/Work/vregRobot/contour_detection/a4.png')
+            plt.imsave('a.png', img)
             _id,boxes,color=rec_image(img)
-
             # path_update()
     except KeyboardInterrupt:
         pass

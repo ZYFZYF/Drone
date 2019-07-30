@@ -23,13 +23,25 @@ id_to_color=('red','green','blue','deep grey','shadow grey')
 
 
 def color_mask(img):
-    # mask=np.zeros(img.shape[:2],dtype='uint8')
-    # for x,row in enumerate(img):
-    #     for y, p in enumerate(row):
-    #         if p[0]<70:
-    #             mask[x,y]=255
     flag, thresh = cv2.threshold(img[:,:,0], 70, 255, cv2.THRESH_BINARY_INV)
-    return thresh
+    # BLACK MAGIC
+    color_p=[]
+    color_p.append([np.asarray([19, 40, 123]), np.asarray([28, 60, 143])])
+    color_p.append([np.asarray([12, 35, 103]), np.asarray([18, 47, 127])])
+    color_p.append([np.asarray([11, 43, 53]), np.asarray([20, 82, 81])])
+    color_p.append([np.asarray([23, 24, 64]), np.asarray([35, 88, 128])])
+    color_p.append([np.asarray([2, 51, 40]), np.asarray([22, 83, 121])])
+    color_p.append([np.asarray([18, 58, 93]), np.asarray([24, 71, 155])])
+    color_p.append([np.asarray([28, 26, 107]), np.asarray([34, 50, 166])])
+    color_p.append([np.asarray([26, 42, 111]), np.asarray([31, 53, 133])])
+    img_hsv = cv2.cvtColor(img, cv2.COLOR_RGB2HSV)
+    final_mask=thresh
+    for i in range(len(color_p)):
+        mask = cv2.inRange(img_hsv, color_p[i][0], color_p[i][1])
+        final_mask=np.bitwise_or(final_mask, mask)
+    return final_mask
+    # flag, thresh = cv2.threshold(img[:,:,0], 70, 255, cv2.THRESH_BINARY_INV)
+    # return thresh
 
 
 def find_contours(mask):
@@ -100,7 +112,7 @@ def which_color(image_block_rgb):
     return color_id
 
 
-def get_person_color(img_rgb, bounding_parallelogram_box):
+def get_person_color(img_rgb, bounding_parallelogram_box, i):
     para=bounding_parallelogram_box.astype(int)
     x_min=max(0, para[:,0].min())
     x_max=min(img_rgb.shape[1], para[:,0].max())
@@ -110,10 +122,23 @@ def get_person_color(img_rgb, bounding_parallelogram_box):
     # print('img shape= ', img_rgb.shape)
     # print(bounding_parallelogram_box)
     # print(img_rgb.shape, x_min, x_max, y_min, y_max, y_offset)
+
+    # plt.imshow(img_rgb[y_min:y_max,x_min:x_max])
+    # plt.axis('off')
+    # plt.savefig('a%d.%s.png'%(i, bounding_parallelogram_box))
+
     color_id = which_color(img_rgb[y_min+y_offset:y_max+y_offset,x_min:x_max])
     return color_id
 
 
-# img=read_rgb_img('45dgrees-a1.png')
+# # from facerecognition.recognition import *
+# img=read_rgb_img('/home/eric/Work/vregRobot/contour_detection/a4.png')
 # contours=find_contours(color_mask(img))
-# faces=perspective_transformation(img, contours)
+# faces, boxes=perspective_transformation(img, contours)
+# # faces为识别出脸的结果，识别失败为-1
+# for i, face in enumerate(faces):
+#     # plt.imshow(face)
+#     # plt.savefig('output/%d.png'%i)
+#     # people_id=recogize_portrait(face)
+#     people_color = get_person_color(img, boxes[i], i)
+#     print('%d people= box=%s'%(i, boxes[i]))
