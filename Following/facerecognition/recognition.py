@@ -8,9 +8,12 @@ for i in range(1,7):
     data_image = face_recognition.load_image_file("data/face_data/face_%d.png"%(i,))
     data_encoding = face_recognition.face_encodings(data_image)[0]
     known_face_encodings.append(data_encoding)
-    known_face_names.append(str(i))
+    known_face_names.append(i)
 
 def recogize_portrait(portrait_rgb):
+    """
+    @return The id (int) of face index. -1 if no match faces.
+    """
     face_locations = [(0, portrait_rgb.shape[1], portrait_rgb.shape[0], 0)]
     face_encodings = face_recognition.face_encodings(portrait_rgb, face_locations)
 
@@ -19,7 +22,7 @@ def recogize_portrait(portrait_rgb):
         # See if the face is a match for the known face(s)
         matches = face_recognition.compare_faces(known_face_encodings, face_encoding)
 
-        name = "Unknown"
+        name = -1
         # If a match was found in known_face_encodings, just use the first one.
         # if True in matches:
         #     first_match_index = matches.index(True)

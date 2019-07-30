@@ -11,13 +11,14 @@ def rec_image(img_rgb):
     mask=color_mask(img_rgb)
     contours=find_contours(mask)
     faces, boxes=perspective_transformation(img, contours)
-    # faces为识别出脸的结果，faces[i]可能为'Unknown'
+    # faces为识别出脸的结果，识别失败为-1
     for i, face in enumerate(faces):
         # plt.imshow(face)
         # plt.savefig('output/%d.png'%i)
         people_id=recogize_portrait(face)
         people_color = get_person_color(img, boxes[i])
-        print('people=%d box=%s'%(people_id, boxes[i]))
+        plt.imshow(img[])
+        print('%d people=%d box=%s'%(i, people_id, boxes[i]))
         if  people_id==target_people:
             return people_id, boxes, people_color
         # TODO: 根据人脸识别结果和衣服颜色确定跟踪目标
@@ -29,7 +30,9 @@ if __name__ == '__main__':
     vrep.simxStartSimulation(clientID, vrep.simx_opmode_blocking)
     try:
         while True:
-            img=get_sensor_image(v0)
+            img = get_sensor_image(v0)
+            plt.imshow(img)
+            plt.savefig('a.png')
             _id,boxes,color=rec_image(img)
 
             # path_update()

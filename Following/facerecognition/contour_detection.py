@@ -73,6 +73,7 @@ def perspective_transformation(img, contours):
         top_points=sorted(approx[:2])
         bottom_points=sorted(approx[-2:])
         approx=np.array((bottom_points[0],*top_points,bottom_points[1]),np.float32)
+        # print('face_id=%d apprxo= %s'%(i ,approx) )
 
         h = np.array([ [0,output_size[1]],[0,0],[output_size[0],0],
             [output_size[0],output_size[1]] ], np.float32)
@@ -101,11 +102,14 @@ def which_color(image_block_rgb):
 
 def get_person_color(img_rgb, bounding_parallelogram_box):
     para=bounding_parallelogram_box.astype(int)
-    x_min=para[:,0].min()
-    x_max=para[:,0].max()
-    y_min=para[:,1].min()
-    y_max=para[:,1].max()
+    x_min=max(0, para[:,0].min())
+    x_max=min(img_rgb.shape[1], para[:,0].max())
+    y_min=max(0, para[:,1].min())
+    y_max=min(img_rgb.shape[0], para[:,1].max())
     y_offset=y_max-y_min
+    # print('img shape= ', img_rgb.shape)
+    # print(bounding_parallelogram_box)
+    # print(img_rgb.shape, x_min, x_max, y_min, y_max, y_offset)
     color_id = which_color(img_rgb[y_min+y_offset:y_max+y_offset,x_min:x_max])
     return color_id
 

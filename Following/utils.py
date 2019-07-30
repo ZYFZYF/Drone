@@ -9,15 +9,9 @@ import time
 
 logging.getLogger().setLevel(logging.INFO)
 vrep.simxFinish(-1)
-<<<<<<< HEAD
-clientID = vrep.simxStart('127.0.0.1', 19997, True, True, 5000, 5)
-=======
 clientID = vrep.simxStart('127.0.0.1', 19997, True, True, 5000, 5)  # Connect to V-REP
 _, drone = vrep.simxGetObjectHandle(clientID, 'drone_zed', vrep.simx_opmode_blocking)
 _, target = vrep.simxGetObjectHandle(clientID, 'Quadricopter_target', vrep.simx_opmode_blocking)
-
-default_height = 3
->>>>>>> 7b9daf1eaf7acc642c0c2e2f89e0e30b9b9af9ef
 
 if clientID==-1:
     logging.error("Failed to connect to remote API Server")
@@ -38,7 +32,7 @@ def change_color_and_resize(image,resolution):
     for i in range(len(image)):
         image[i]=(image[i]+256)%256
     image_buffer = I.frombuffer("RGB", (resolution[0],resolution[1]), bytes(image), "raw", "RGB", 0, 1).rotate(180)
-    return image_buffer
+    return np.array(image_buffer)
 
 def get_sensor_image(vision_sensor):
     cnt=0
