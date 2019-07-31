@@ -30,9 +30,10 @@ std::vector<Point> PRMRouter::route(const Point &start_pos, const Point &end_pos
     while (!q.empty())
     {
         int x = q.top().second;
+        q.pop();
         cnt++;
         if (cnt == n || x == t)break;
-        std::cout << x << ' ' << d[x] << ' ' << pNode[x] << std::endl;
+        //std::cout << x << ' ' << d[x] << ' ' << pNode[x] << std::endl;
         for (int y = 0; y < n; y++)
         {
             if (y != x &&
@@ -42,6 +43,7 @@ std::vector<Point> PRMRouter::route(const Point &start_pos, const Point &end_pos
             {
                 d[y] = d[x] + distance(nodes[x], nodes[y]);
                 pNode[y] = x;
+                //std::cout << x << ' ' << y << ' ' << d[x] << ' ' << d[y] << std::endl;
                 q.push(std::make_pair(d[y], y));
             }
         }
@@ -50,9 +52,11 @@ std::vector<Point> PRMRouter::route(const Point &start_pos, const Point &end_pos
     while (t)
     {
         ret.emplace_back(nodes[t]);
+        std::cout << t << std::endl;
         t = pNode[t];
     }
     ret.emplace_back(nodes[s]);
+    std::cout << s << std::endl;
     std::reverse(ret.begin(), ret.end());
     return ret;
 }

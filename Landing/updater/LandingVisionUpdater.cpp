@@ -21,7 +21,7 @@ float offsety;
 Point position;
 simxFloat angle[3];
 Point tar_position;
-simxInt camera;
+simxInt camera0;
 simxInt target;
 simxUChar *image = 0;
 simxInt resolution[2];
@@ -31,10 +31,10 @@ LandingVisionUpdater::LandingVisionUpdater(int client_id) : LandingUpdater(
 {
     clientID = client_id;
     std::cout << "VisionPlanner constructed" << std::endl;
-    simxGetObjectHandle(clientID, "zed_vision0", &camera, simx_opmode_blocking);
+    simxGetObjectHandle(clientID, "zed_vision0", &camera0, simx_opmode_blocking);
     simxGetObjectHandle(clientID, "land_plane", &target, simx_opmode_blocking);
-    std::cout << camera << ' ' << target << std::endl;
-    simxGetObjectOrientation(clientID, camera, -1, angle, simx_opmode_streaming);
+    std::cout << camera0 << ' ' << target << std::endl;
+    simxGetObjectOrientation(clientID, camera0, -1, angle, simx_opmode_streaming);
     //simxGetVisionSensorImage(clientID, camera, resolution, &image, 0, simx_opmode_streaming);
 }
 
@@ -52,13 +52,13 @@ void LandingVisionUpdater::update() {
     int RightDown = -1;
     int DownLeft = -1;
     int DownRight = -1;
-    int ret = simxGetVisionSensorImage(clientID, camera, resolution, &image, 0, simx_opmode_blocking);
+    int ret = simxGetVisionSensorImage(clientID, camera0, resolution, &image, 0, simx_opmode_blocking);
     if (ret != simx_return_ok) {
         return;
     }
-    position = utils::getObjectPosition(camera, m_cid);
+    position = utils::getObjectPosition(camera0, m_cid);
     float length = 0.8 * 1280 / rate / (position[2] - height);
-    simxGetObjectOrientation(clientID, camera, -1, angle, simx_opmode_buffer);
+    simxGetObjectOrientation(clientID, camera0, -1, angle, simx_opmode_buffer);
     cv::Mat channel(resolution[1], resolution[0], CV_8UC3, image);
     //鐠囪娲栭弶銉ф畱閸ユ儳鍎氶弫鐗堝祦閺勵垰鐎惄瀵哥倳鏉烆剛娈?闂傤噣顣芥惔鏃囶嚉閺勵垰婀猚vMat 閸?v-rep 閸ㄥ倻娲块崸鎰垼鏉炲娈戦弬鐟版倻閻╃寮?flip娑撯偓娑撳姘ㄥ锝呯埗娴?
     flip(channel, channel, 0);

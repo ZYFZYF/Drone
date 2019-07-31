@@ -28,12 +28,10 @@ private:
     Point m_start_pos, m_target_pos, m_previous_round_pos;
     std::vector<Point> m_path_points;
     int m_now_target_index;
-    const simxFloat HOVER_HEIGHT_OVER_PLATFORM = Config::Instance()->getFloatParam("MoveTask", "HOVER_HEIGHT_OVER_PLATFORM");
-    const simxFloat HOVER_HEIGHT_OVER_END = Config::Instance()->getFloatParam("MoveTask", "HOVER_HEIGHT_OVER_END");
-    const simxFloat Y_DISTANCE_FROM_DOOR = Config::Instance()->getFloatParam("MoveTask", "Y_DISTANCE_FROM_DOOR");
-    const simxFloat MOVE_STEP_LENGTH = Config::Instance()->getFloatParam("MoveTask", "MOVE_STEP_LENGTH");
     const simxFloat CLOSE_THRESHOLD = Config::Instance()->getFloatParam("MoveTask", "CLOSE_THRESHOLD");
     const simxInt CLOSE_ROUNDS_LIMIT = Config::Instance()->getIntParam("MoveTask", "CLOSE_ROUNDS_LIMIT");
+    const simxFloat MIDDLE_CLOSE_THRESHOLD = Config::Instance()->getFloatParam("MoveTask", "MIDDLE_CLOSE_THRESHOLD");
+    const simxInt MIDDLE_CLOSE_ROUNDS_LIMIT = Config::Instance()->getIntParam("MoveTask", "MIDDLE_CLOSE_ROUNDS_LIMIT");
 };
 
 
