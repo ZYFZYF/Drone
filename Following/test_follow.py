@@ -1,10 +1,13 @@
 # coding=utf-8
 from utils import *
+import utils
 from facerecognition.contour_detection import *
 from facerecognition.recognition import *
 import math
 from matplotlib import pyplot as plt
 from path import path_update
+import time
+close=False
 size=[0,0]
 rec_count=0
 position=[0,0]
@@ -12,7 +15,7 @@ target_people=3
 clothes_color=-1
 pants_color=-1
 def rec_image(img_rgb):
-    global position,recognize,target_people,clothes_color,pants_color,size,rec_count
+    global position,target_people,clothes_color,pants_color,size,rec_count,close
     mask=color_mask(img_rgb)
     contours=find_contours(mask)
     faces, boxes=perspective_transformation(img, contours)
@@ -33,41 +36,48 @@ def rec_image(img_rgb):
                 print("color: "+str(c_color)+"  "+str(p_color)) 
                 position=_position
                 size=_size
-                recognize=True
+                utils.recognize=True
                 clothes_color=c_color
                 pants_color=p_color
                 print("size: "+str(size))
                 break
-    if recognize==True:
-        distance=(180/math.sqrt(size[0]*size[0]+size[1]*size[1])-2)/2
+    if utils.recognize==True:
+        distance=(180/math.sqrt(size[0]*size[0]+size[1]*size[1])-2)/3
+        print("distance"+str(distance))
+        if distance<1:
+            close=True
+            return
         drone_pos=get_drone_position()
         drone_angle=get_drone_angle()[2]
         angle=math.atan((position[0]-640)*1.75/1280)
         if clothes_color==get_clothes_color(img_rgb, position,size, 0) and pants_color==get_pants_color(img_rgb, position,size, 0):   
             print(get_clothes_color(img_rgb, position,size, 0),get_pants_color(img_rgb, position,size, 0))     
-            print("exactly recognized")
-            set_target_position([angle,drone_pos[0]+distance*math.cos(drone_angle+angle),drone_pos[1]+distance*math.sin(drone_angle+angle),3])
+            print("exactly utils.recognized")
+            set_target_position([math.degrees(angle),drone_pos[0]+distance*math.cos(drone_angle+angle),drone_pos[1]+distance*math.sin(drone_angle+angle),3])
         else:
-            _position=find_target(img_rgb,clothes_color)
-            if not _position[0]==0:
+            _clothes_position=find_target(img_rgb,clothes_color)
+            _pants_position=find_target(img_rgb,pants_color)
+            print("_position: "+str(_clothes_position))
+            if not _clothes_position[0]==0 and not _pants_position[0]==0:
                 print("found target")
-                position=_position
+                position=_clothes_position
                 angle=math.atan((position[0]-640)*1.75/1280)
-                set_target_position([angle,drone_pos[0]+distance*math.cos(drone_angle+angle),drone_pos[1]+distance*math.sin(drone_angle+angle),3])
+                set_target_position([math.degrees(angle),drone_pos[0]+distance*math.cos(drone_angle+angle),drone_pos[1]+distance*math.sin(drone_angle+angle),3])
             else:
                 rec_count+=1
                 if rec_count>=10:
-                    recognize=False
+                    utils.recognize=False
 if __name__ == '__main__':
     assert drone != 0
     assert target != 0
     vrep.simxStartSimulation(clientID, vrep.simx_opmode_blocking)
     try:
-        while True:
+        while close==False:
             img = get_sensor_image(v0)
-            plt.imsave('img',img)
+            plt.imsave('img.png',img)
             rec_image(img)
             path_update()
+        input("回车结束")
     except KeyboardInterrupt:
         pass
     finally:

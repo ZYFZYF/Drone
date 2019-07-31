@@ -1,5 +1,6 @@
 # coding=utf-8
 from utils import *
+import utils
 import time
 import numpy as np
 
@@ -22,12 +23,12 @@ def arrive_now_target():
     vel_norm = np.linalg.norm(vel)
     print('now distance = ', round(distance,2),'\tvel =  ',round(vel_norm,2), ' ', now_index)
     now_time = time.time()
-    return distance < 0.5 and vel_norm<0.5 
+    return distance < 0.7 and vel_norm<0.5 
 
 def path_update():
     # 识别成功的情况下不作任何处理
     global is_ever_found_people, last_time_found_people
-    if recognize:
+    if utils.recognize:
         is_ever_found_people = True
         last_time_found_people = time.time()
         return
