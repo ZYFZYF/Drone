@@ -57,12 +57,8 @@ def set_target_position(pos):
     if len(pos) < 4:
         pos.append(default_height)
     _, now_pos = vrep.simxGetObjectPosition(clientID, drone, -1, vrep.simx_opmode_blocking)
-    # delta_x = pos[0] - now_pos[0]
-    # delta_y = pos[1] - now_pos[1]
-    print('move target from ', now_pos[0], ',', now_pos[1], ',', now_pos[2], ' to ', pos[1], ',', pos[2], ',', pos[3])
-        #   ' and the target angel is ', calc_angle_by_xy(delta_x, delta_y))
-    vrep.simxSetObjectOrientation(clientID,target,base,{0,0,pos[0]},vrep.simx_opmode_oneshot)
-    # rotate_drone_to(calc_angle_by_xy(delta_x, delta_y))
+    print('move target from ', round(now_pos[0],2), ',', round(now_pos[1],2), ',', round(now_pos[2],2), ' to ', pos[1], ',', pos[2], ',', pos[3],"rotate(deg) :",pos[0])
+    vrep.simxSetObjectOrientation(clientID,target,base,[0,0,math.radians(pos[0])],vrep.simx_opmode_oneshot)
     vrep.simxSetObjectPosition(clientID=clientID,
                                objectHandle=target,
                                relativeToObjectHandle=-1,
@@ -111,7 +107,11 @@ def get_drone_angle():
 def distance_between_drone_and_target():
     drone_pos = get_drone_position()
     target_pos = get_target_position()
-    return np.linalg.norm(np.array([d1-d2 for d1, d2 in zip(drone_pos, target_pos)]))
+    return distance(drone_pos, target_pos)
+
+
+def distance(p1, p2):
+    return np.linalg.norm(np.array([d1-d2 for d1, d2 in zip(p1, p2)]))
 
 if __name__ == '__main__':
     print(calc_angle_by_xy(0.1, 0))

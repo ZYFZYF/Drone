@@ -30,6 +30,8 @@ namespace utils
     bool existCollisionBetweenBaseAndObstacles(const Point &base_pos, const std::vector<Obstacle> &obstacles);
     bool existCollisionBetweenBaselineAndObstacles(const Point &start_pos, const Point &end_pos, const std::vector<Obstacle> &obstacles);
     const Point generateRandomPointBetween(const Point &start_pos, const Point &end_pos);
+    Point getCoordinateInLeftCamera(float x_p_left, float x_p_right, float y_p);
+    Point convertCoordinateSystem(simxInt handle, const Point &p);
 };
 
 
