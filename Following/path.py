@@ -13,7 +13,7 @@ task_list = [[0, -4, 3.5, 8.5],
              [90, -4, 0]]
 
 now_index = 0
-last_time_fount_people = time.time()
+last_time_found_people = time.time()
 is_ever_found_people = False
 
 
@@ -27,12 +27,13 @@ def arrive_now_target():
 
 def path_update():
     # 识别成功的情况下不作任何处理
-    global is_ever_found_people
+    global is_ever_found_people, last_time_found_people
     if recognize:
         is_ever_found_people = True
+        last_time_found_people = time.time()
         return
     # 若不曾发现过人或者距离上一次发现人已经过了一段时间则照之前规划的路径转圈
-    if not is_ever_found_people or time.time() - last_time_fount_people > 20:
+    if not is_ever_found_people or time.time() - last_time_found_people > 20:
         global now_index
         set_target_position(task_list[now_index])
         if arrive_now_target():
