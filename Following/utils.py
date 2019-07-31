@@ -57,17 +57,8 @@ def set_target_position(pos):
     if len(pos) < 4:
         pos.append(default_height)
     _, now_pos = vrep.simxGetObjectPosition(clientID, drone, -1, vrep.simx_opmode_blocking)
-<<<<<<< HEAD
     print('move target from ', round(now_pos[0],2), ',', round(now_pos[1],2), ',', round(now_pos[2],2), ' to ', pos[1], ',', pos[2], ',', pos[3],"rotate(deg) :",pos[0])
     vrep.simxSetObjectOrientation(clientID,target,base,[0,0,math.radians(pos[0])],vrep.simx_opmode_oneshot)
-=======
-    # delta_x = pos[0] - now_pos[0]
-    # delta_y = pos[1] - now_pos[1]
-    print('move target from ', now_pos[0], ',', now_pos[1], ',', now_pos[2], ' to ', pos[1], ',', pos[2], ',', pos[3])
-        #   ' and the target angel is ', calc_angle_by_xy(delta_x, delta_y))
-    # vrep.simxSetObjectOrientation(clientID,target,base,{0,0,pos[0]},vrep.simx_opmode_oneshot)
-    # rotate_drone_to(calc_angle_by_xy(delta_x, delta_y))
->>>>>>> ba3f43af28357bf02bcd63dfa03d9ba719981b6d
     vrep.simxSetObjectPosition(clientID=clientID,
                                objectHandle=target,
                                relativeToObjectHandle=-1,
