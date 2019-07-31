@@ -6,12 +6,13 @@ import math
 from matplotlib import pyplot as plt
 size=[0,0]
 recognize=False
+rec_count=0
 position=[0,0]
-target_people=6
+target_people=3
 clothes_color=-1
 pants_color=-1
 def rec_image(img_rgb):
-    global position,recognize,target_people,clothes_color,pants_color,size
+    global position,recognize,target_people,clothes_color,pants_color,size,rec_count
     mask=color_mask(img_rgb)
     contours=find_contours(mask)
     faces, boxes=perspective_transformation(img, contours)
@@ -47,22 +48,16 @@ def rec_image(img_rgb):
             print("exactly recognized")
             set_target_position([angle,drone_pos[0]+distance*math.cos(drone_angle+angle),drone_pos[1]+distance*math.sin(drone_angle+angle),3])
         else:
-            recogize_color=False
-            for i in range(9):
-                for j in range(9):
-                    if clothes_color==get_clothes_color(img_rgb, [position[0]-40+10*i,position[1]-40+10*j],size, 0) and pants_color==get_pants_color(img_rgb, [position[0]-40+10*i,position[1]-40+10*j],size, 0):
-                        print("found target")
-                        position[0]=position[0]-40+10*i
-                        position[1]=position[1]-40+10*j
-                        recogize_color=True
-                        break
-                if recogize_color:
-                    break
-            if recogize_color:
+            _position=find_target(img_rgb,clothes_color)
+            if not _position[0]==0:
+                print("found target")
+                position=_position
                 angle=math.atan((position[0]-640)*1.75/1280)
                 set_target_position([angle,drone_pos[0]+distance*math.cos(drone_angle+angle),drone_pos[1]+distance*math.sin(drone_angle+angle),3])
             else:
-                recognize=False
+                rec_count+=1
+                if rec_count>=10:
+                    recognize=False
 if __name__ == '__main__':
     assert drone != 0
     assert target != 0

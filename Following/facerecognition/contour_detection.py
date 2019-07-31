@@ -128,6 +128,12 @@ def get_pants_color(img_rgb, center,size, i):
     else:
         return -2
 
+def find_target(img_rgb,color_id):
+    img_hsv = cv2.cvtColor(img_rgb, cv2.COLOR_RGB2HSV)
+    mask = cv2.inRange(img_hsv, color_ranges[color_id][0], color_ranges[color_id][1])
+    pos=(mask.flatten()!=0).argmax()
+    pos=(pos%mask.shape[1],pos//mask.shape[1])
+    return pos
 
 # # from facerecognition.recognition import *
 # img=read_rgb_img('/home/eric/Work/vregRobot/contour_detection/a4.png')
