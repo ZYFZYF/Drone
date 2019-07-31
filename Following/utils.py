@@ -107,7 +107,11 @@ def get_drone_angle():
 def distance_between_drone_and_target():
     drone_pos = get_drone_position()
     target_pos = get_target_position()
-    return np.linalg.norm(np.array([d1-d2 for d1, d2 in zip(drone_pos, target_pos)]))
+    return distance(drone_pos, target_pos)
+
+
+def distance(p1, p2):
+    return np.linalg.norm(np.array([d1-d2 for d1, d2 in zip(p1, p2)]))
 
 if __name__ == '__main__':
     print(calc_angle_by_xy(0.1, 0))
