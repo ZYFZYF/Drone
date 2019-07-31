@@ -20,7 +20,7 @@ def recogize_portrait(portrait_rgb):
     # Loop through each face in this frame of video
     for (top, right, bottom, left), face_encoding in zip(face_locations, face_encodings):
         # See if the face is a match for the known face(s)
-        matches = face_recognition.compare_faces(known_face_encodings, face_encoding)
+        matches = face_recognition.compare_faces(known_face_encodings, face_encoding,0.7)
 
         name = -1
         # If a match was found in known_face_encodings, just use the first one.

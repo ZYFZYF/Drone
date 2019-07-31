@@ -57,11 +57,12 @@ def set_target_position(pos):
     if len(pos) < 4:
         pos.append(default_height)
     _, now_pos = vrep.simxGetObjectPosition(clientID, drone, -1, vrep.simx_opmode_blocking)
-    delta_x = pos[0] - now_pos[0]
-    delta_y = pos[1] - now_pos[1]
-    print('move target from ', now_pos[0], ',', now_pos[1], ',', now_pos[2], ' to ', pos[0], ',', pos[1], ',', pos[2],
-          ' and the target angel is ', calc_angle_by_xy(delta_x, delta_y))
-    rotate_drone_to(calc_angle_by_xy(delta_x, delta_y))
+    # delta_x = pos[0] - now_pos[0]
+    # delta_y = pos[1] - now_pos[1]
+    print('move target from ', now_pos[0], ',', now_pos[1], ',', now_pos[2], ' to ', pos[1], ',', pos[2], ',', pos[3])
+        #   ' and the target angel is ', calc_angle_by_xy(delta_x, delta_y))
+    vrep.simxSetObjectOrientation(clientID,target,base,{0,0,pos[0]},vrep.simx_opmode_oneshot)
+    # rotate_drone_to(calc_angle_by_xy(delta_x, delta_y))
     vrep.simxSetObjectPosition(clientID=clientID,
                                objectHandle=target,
                                relativeToObjectHandle=-1,
@@ -72,9 +73,9 @@ def set_target_position(pos):
 def rotate_drone(angle):
     vrep.simxSetObjectOrientation(clientID=clientID,
                                   objectHandle=target,
-                                  relativeToObjectHandle=target,
-                                  eulerAngles=[0, 0, math.radians(angle)],
-                                  operationMode=vrep.simx_opmode_oneshot)
+                                  relativeToObjectHandle=base,
+                                  eulerAngles=[0, 0, angle],
+                                  operationMode=vrep.simx_opmode_blocking)
 
 
 def rotate_drone_to(angle):
@@ -100,6 +101,12 @@ def get_position(handle):
                                         operationMode=vrep.simx_opmode_blocking)
     return ret
 
+def get_drone_angle():
+    _, ret = vrep.simxGetObjectOrientation(clientID=clientID,
+                                        objectHandle=drone,
+                                        relativeToObjectHandle=-1,
+                                        operationMode=vrep.simx_opmode_blocking)
+    return ret
 
 def distance_between_drone_and_target():
     drone_pos = get_drone_position()
