@@ -1,6 +1,5 @@
 # coding=utf-8
 from utils import *
-from path import path_update
 from facerecognition.contour_detection import *
 from facerecognition.recognition import *
 import time
