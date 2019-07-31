@@ -3,6 +3,7 @@
 #include "GrabTask.h"
 #include "../updater/PlanningPathUpdater.h"
 #include "../../Common/utils/utils.h"
+#include "../../Common/config/Handle.h"
 
 void GrabTask::Execute(PlanningPathUpdater *t)
 {
@@ -26,6 +27,7 @@ void GrabTask::Execute(PlanningPathUpdater *t)
     if (m_close_rounds >= CLOSE_ROUNDS_LIMIT)
     {
         m_now_target_index++;
+        m_close_rounds = 0;
         if (m_now_target_index == 3)
         {
             t->setHand();
@@ -62,10 +64,19 @@ void GrabTask::Enter(PlanningPathUpdater *t)
     use_vision = true;
     utils::sleep(MICRO_SECONDS_FOR_DISCRIMINATE);
     use_vision = false;
-    Point drone_pos = t->getTargetPosition();
-    m_path_points.emplace_back(drone_pos.x(), drone_pos.y(), GRAB_START_HEIGHT);
-    m_path_points.emplace_back(drone_pos.x(), drone_pos.y(), GRAB_START_HEIGHT - 0.3f);
-    m_path_points.emplace_back(drone_pos.x(), drone_pos.y(), GRAB_START_HEIGHT - 0.325f);
+    Point circle_pos = utils::getObjectPosition("CircleDummy", t->getCid());
+    Point target_pos = utils::getObjectPosition("TargetDummy", t->getCid());
+    std::cout << "circle_pos = " << circle_pos << std::endl;
+    std::cout << "target_pos = " << target_pos << std::endl;
+    Point selected_pos = target_pos;
+    m_path_points.emplace_back(selected_pos.x(), selected_pos.y(), GRAB_START_HEIGHT);
+    m_path_points.emplace_back(selected_pos.x(), selected_pos.y(), GRAB_START_HEIGHT - 0.3f);
+    m_path_points.emplace_back(selected_pos.x(), selected_pos.y(), GRAB_START_HEIGHT - 0.325f);
+    m_path_points.emplace_back(selected_pos.x(), selected_pos.y(), GRAB_START_HEIGHT);
+    for(const auto &point: m_path_points)
+    {
+        std::cout << point << std::endl;
+    }
     m_now_target_index = 0;
     if (m_now_target_index < m_path_points.size())
         t->setTargetPosition(m_path_points[m_now_target_index]);

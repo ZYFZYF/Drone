@@ -50,9 +50,10 @@ PlanningVisionUpdater::PlanningVisionUpdater(int client_id) : PlanningUpdater(
     platform = Handle::Instance()->getObjectHandle("Target_platform", m_cid);
     circle_dummy = Handle::Instance()->getObjectHandle("CircleDummy", m_cid);
     target_dummy = Handle::Instance()->getObjectHandle("TargetDummy", m_cid);
-
+    std::cout << "I'm here" << std::endl;
     simxGetVisionSensorImage(clientID, camera0, resolution, &image, 0, simx_opmode_streaming);
     simxGetVisionSensorImage(clientID, camera1, resolution, &image, 0, simx_opmode_streaming);
+    std::cout << "I'm there" << std::endl;
 };
 
 void PlanningVisionUpdater::update()
@@ -172,11 +173,11 @@ void PlanningVisionUpdater::update()
     setPosition(tmp, circle_dummy, camera0);
     cout << "camera0's position = " << utils::getObjectPosition(camera0, m_cid) << endl;
     cout << "                   = " << tmp <<endl;
-    cout << "circle_dummy's position = " << utils::getObjectPosition(circle_dummy, m_cid) << endl;
+//    cout << "circle_dummy's position = " << utils::getObjectPosition(circle_dummy, m_cid) << endl;
     tmp = utils::getCoordinateInLeftCamera(targetx_left, targetx_right, (targety_left + targety_right) / 2);
     tmp.setX(-tmp.x());
     setPosition(tmp, target_dummy, camera0);
     cout << "camera0's position = " << utils::getObjectPosition(camera0, m_cid) << endl;
     cout << "                   = " << tmp <<endl;
-    cout << "target_dummy's position = " << utils::getObjectPosition(target_dummy, m_cid) << endl;
+//    cout << "target_dummy's position = " << utils::getObjectPosition(target_dummy, m_cid) << endl;
 }

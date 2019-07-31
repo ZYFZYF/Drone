@@ -46,7 +46,7 @@ PlanningPathUpdater::PlanningPathUpdater(int client_id) : PlanningUpdater(
     for (const auto &platform: platforms)m_objects.push_back(new Platform(platform, client_id));
     for (const auto &object: m_objects)
     {
-        cout << object->getObjectHandle() << ' ' << object->getName() << ' ' << object->getPosition() << ' '
+        cout << object->getObjectHandle() << ' ' << object->getName() << ' ' << object->getPosition() << ' ' << object->getValidPosition() << ' '<< ' '
              << object->getSize() << endl;
     }
     //add router

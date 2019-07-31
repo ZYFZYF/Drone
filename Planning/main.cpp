@@ -84,15 +84,15 @@ int main(int argc, char const *argv[])
 
     PlanningPathUpdater path_updater(client_id);
     PlanningVisionUpdater vision_updater(client_id);
-//    std::thread vision([&vision_updater]() {
-//        vision_updater.run();
-//    });
-//    std::thread path([&path_updater]() {
-//        path_updater.run();
-//    });
-//    path.join();
-//    vision.join();
-    vision_updater.run();
+    std::thread vision([&vision_updater]() {
+        vision_updater.run();
+    });
+    std::thread path([&path_updater]() {
+        path_updater.run();
+    });
+    path.join();
+    vision.join();
+    //vision_updater.run();
     int tmp;
     std::cout<<"回车结束"<<std::endl;
     std::cin>>tmp;

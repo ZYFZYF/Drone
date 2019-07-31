@@ -8,7 +8,7 @@ void MoveTask::Enter(PlanningPathUpdater *t)
     Task::Enter(t);
     std::cout << "Prepare to move from " << m_source_object->getName() << " to " << m_destination_object->getName()
               << std::endl;
-    m_previous_round_pos  = t->getDronePosition();
+    //m_previous_round_pos  = t->getDronePosition();
     m_path_points = t->getPathPoints(m_start_pos, m_target_pos);
     std::cout << "start_pos = " << m_start_pos << std::endl;
     std::cout << "target_pos = " << m_target_pos << std::endl;
@@ -42,16 +42,22 @@ MoveTask::MoveTask(Object *source, Object *destination) : m_source_object(source
 
 void MoveTask::Execute(PlanningPathUpdater *t)
 {
-    if ((t->getDronePosition() - m_path_points[m_now_target_index]).norm() < CLOSE_THRESHOLD)
+//    std::cout << t->getDronePosition() << std::endl;
+//    std::cout << m_path_points[m_now_target_index] << std::endl;
+//    std::cout << (t->getDronePosition() - m_path_points[m_now_target_index]).norm() << std::endl;
+    if ((m_now_target_index + 1 == m_path_points.size() && (t->getDronePosition() - m_path_points[m_now_target_index]).norm() < CLOSE_THRESHOLD)||
+            (m_now_target_index + 1 < m_path_points.size() && (t->getDronePosition() - m_path_points[m_now_target_index]).norm() < MIDDLE_CLOSE_THRESHOLD))
     {
         m_close_rounds++;
     } else
     {
         m_close_rounds = 0;
     }
-    if (m_close_rounds >= CLOSE_ROUNDS_LIMIT)
+    if ((m_now_target_index + 1 == m_path_points.size() && m_close_rounds >= CLOSE_ROUNDS_LIMIT) ||
+            (m_now_target_index + 1 < m_path_points.size() && m_close_rounds >= MIDDLE_CLOSE_ROUNDS_LIMIT))
     {
         m_now_target_index++;
+        m_close_rounds = 0;
         if (m_now_target_index < m_path_points.size())
             t->setTargetPosition(m_path_points[m_now_target_index]);
     }
