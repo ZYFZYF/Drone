@@ -9,7 +9,7 @@ from matplotlib import pyplot as plt
 size=0
 recognize=False
 position=[0,0]
-target_people=2
+target_people=6
 color=0
 def rec_image(img_rgb):
     global position,recognize,target_people,color,size
@@ -28,7 +28,7 @@ def rec_image(img_rgb):
             recognize=True
             break
     if recognize==True:
-        distance=90/size
+        distance=(180/size-2)/2
         drone_pos=get_drone_position()
         drone_angle=get_drone_angle()[2]
         angle=math.atan((position[0]-640)*1.75/1280)
