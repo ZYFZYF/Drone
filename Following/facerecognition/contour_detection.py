@@ -19,7 +19,11 @@ color_ranges.append([np.asarray([0, 0, 95]), np.asarray([0, 0, 120])])
 # shadow grey
 # color.append([np.asarray([156, 156, 156]), np.asarray([176, 176, 176])])
 color_ranges.append([np.asarray([0, 0, 150]), np.asarray([0, 0, 200])])
-id_to_color=('red','green','blue','deep grey','shadow grey')
+# brown
+color_ranges.append([np.asarray([10,101,168]),np.asarray([10,103,199])])
+# deep brown
+color_ranges.append([np.asarray([21,77,143]),np.asarray([22,80,154])])
+id_to_color=('red','green','blue','deep grey','shadow grey','brown','deep brown')
 
 
 def color_mask(img):
@@ -112,23 +116,17 @@ def which_color(image_block_rgb):
     return color_id
 
 
-def get_person_color(img_rgb, bounding_parallelogram_box, i):
-    para=bounding_parallelogram_box.astype(int)
-    x_min=max(0, para[:,0].min())
-    x_max=min(img_rgb.shape[1], para[:,0].max())
-    y_min=max(0, para[:,1].min())
-    y_max=min(img_rgb.shape[0], para[:,1].max())
-    y_offset=y_max-y_min
-    # print('img shape= ', img_rgb.shape)
-    # print(bounding_parallelogram_box)
-    # print(img_rgb.shape, x_min, x_max, y_min, y_max, y_offset)
+def get_clothes_color(img_rgb, center,size, i):
+    if center[1]+size[1]-10>=0 and center[1]+size[1]+10<720 and center[0]+size[0]-10>=0 and center[0]+size[0]+10<1280:
+        return which_color(img_rgb[center[1]+size[1]-10:center[1]+size[1]+10,center[0]+size[0]-10:center[0]+size[0]+10])
+    else:
+        return -2
 
-    # plt.imshow(img_rgb[y_min:y_max,x_min:x_max])
-    # plt.axis('off')
-    # plt.savefig('a%d.%s.png'%(i, bounding_parallelogram_box))
-
-    color_id = which_color(img_rgb[y_min+y_offset:y_max+y_offset,x_min:x_max])
-    return color_id
+def get_pants_color(img_rgb, center,size, i):
+    if center[1]+size[1]*5-10>=0 and center[1]+size[1]*5+10<720 and center[0]+size[0]*5-10>=0 and center[0]+size[0]*5+10<1280:
+        return which_color(img_rgb[center[1]+size[1]*5-10:center[1]+size[1]*5+10,center[0]+size[0]*5-10:center[0]+size[0]*5+10])
+    else:
+        return -2
 
 
 # # from facerecognition.recognition import *

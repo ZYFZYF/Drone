@@ -3,16 +3,16 @@ from utils import *
 from path import path_update
 from facerecognition.contour_detection import *
 from facerecognition.recognition import *
-import time
 import math
 from matplotlib import pyplot as plt
-size=0
+size=[0,0]
 recognize=False
 position=[0,0]
 target_people=6
-color=0
+clothes_color=-1
+pants_color=-1
 def rec_image(img_rgb):
-    global position,recognize,target_people,color,size
+    global position,recognize,target_people,clothes_color,pants_color,size
     mask=color_mask(img_rgb)
     contours=find_contours(mask)
     faces, boxes=perspective_transformation(img, contours)
@@ -20,27 +20,41 @@ def rec_image(img_rgb):
     for i, face in enumerate(faces):
         people_id=recogize_portrait(face)
         if people_id==target_people:
-            print('%d people=%d box=%s'%(i, people_id, boxes[i]))
-            color=get_person_color(img, boxes[i], i)
-            size=boxes[i][0,1]-boxes[i][1,1]
-            position[0]=(boxes[i][0,0]+boxes[i][2,0])/2
-            position[1]=(boxes[i][0,1]+boxes[i][2,1])/2+size
-            recognize=True
-            break
+            _position=[0,0]
+            _size=[0,0]
+            _size[0]=(boxes[i][0,0]-boxes[i][1,0]).astype(int)
+            _size[1]=(boxes[i][0,1]-boxes[i][1,1]).astype(int)
+            _position[0]=((boxes[i][0,0]+boxes[i][2,0])/2).astype(int)
+            _position[1]=((boxes[i][0,1]+boxes[i][2,1])/2).astype(int)
+            c_color=get_clothes_color(img_rgb, _position,_size, i)
+            p_color=get_pants_color(img_rgb, _position,_size, i)
+            if (clothes_color==-1 and pants_color==-1) or (c_color==clothes_color and p_color==pants_color):
+                print('%d people=%d box=%s'%(i, people_id, boxes[i]))
+                print("color: "+str(c_color)+"  "+str(p_color)) 
+                position=_position
+                size=_size
+                recognize=True
+                clothes_color=c_color
+                pants_color=p_color
+                print("size: "+str(size))
+                break
     if recognize==True:
-        distance=(180/size-2)/2
+        distance=(180/math.sqrt(size[0]*size[0]+size[1]*size[1])-2)/2
         drone_pos=get_drone_position()
         drone_angle=get_drone_angle()[2]
         angle=math.atan((position[0]-640)*1.75/1280)
-        if color==which_color(img_rgb[position[1].astype(int)-5:position[1].astype(int)+5,position[0].astype(int)-5:position[0].astype(int)+5]):           
+        if clothes_color==get_clothes_color(img_rgb, position,size, 0) and pants_color==get_pants_color(img_rgb, position,size, 0):   
+            print(get_clothes_color(img_rgb, position,size, 0),get_pants_color(img_rgb, position,size, 0))     
+            print("exactly recognized")
             set_target_position([angle,drone_pos[0]+distance*math.cos(drone_angle+angle),drone_pos[1]+distance*math.sin(drone_angle+angle),3])
         else:
             recogize_color=False
-            for i in range(3):
-                for j in range(3):
-                    if color==which_color(img_rgb[position[1].astype(int)-10+10*i-5:position[1].astype(int)-10+10*i+5,position[0].astype(int)-10+10*j-5:position[0].astype(int)-10+10*j+5]):
-                        position[0]=position[0]-10+10*j
-                        position[1]=position[1]-10+10*i
+            for i in range(9):
+                for j in range(9):
+                    if clothes_color==get_clothes_color(img_rgb, [position[0]-40+10*i,position[1]-40+10*j],size, 0) and pants_color==get_pants_color(img_rgb, [position[0]-40+10*i,position[1]-40+10*j],size, 0):
+                        print("found target")
+                        position[0]=position[0]-40+10*i
+                        position[1]=position[1]-40+10*j
                         recogize_color=True
                         break
                 if recogize_color:
@@ -57,6 +71,7 @@ if __name__ == '__main__':
     try:
         while True:
             img = get_sensor_image(v0)
+            plt.imsave('img',img)
             rec_image(img)
             # path_update()
     except KeyboardInterrupt:
