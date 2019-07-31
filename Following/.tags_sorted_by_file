@@ -2,7 +2,7 @@ color_mask	facerecognition\contour_detection.py	/^def color_mask(img):$/;"	f
 color_ranges	facerecognition\contour_detection.py	/^color_ranges=[]$/;"	v
 cv2	facerecognition\contour_detection.py	/^import cv2$/;"	i
 find_contours	facerecognition\contour_detection.py	/^def find_contours(mask):$/;"	f
-get_person_color	facerecognition\contour_detection.py	/^def get_person_color(img_rgb, bounding_parallelogram_box):$/;"	f
+get_person_color	facerecognition\contour_detection.py	/^def get_person_color(img_rgb, bounding_parallelogram_box, i):$/;"	f
 id_to_color	facerecognition\contour_detection.py	/^id_to_color=('red','green','blue','deep grey','shadow grey')$/;"	v
 logging	facerecognition\contour_detection.py	/^import logging$/;"	i
 np	facerecognition\contour_detection.py	/^import numpy as np$/;"	i
@@ -71,29 +71,36 @@ time	mesh.py	/^import time$/;"	i
 vrep	mesh.py	/^import vrep$/;"	i
 arrive_now_target	path.py	/^def arrive_now_target():$/;"	f
 now_index	path.py	/^now_index = 0$/;"	v
+np	path.py	/^import numpy as np$/;"	i
 path_update	path.py	/^def path_update():$/;"	f
 start_time	path.py	/^start_time = 0$/;"	v
-task_list	path.py	/^task_list = [[-4.075003147, 3.399998665, 8.425001144],$/;"	v
+task_list	path.py	/^task_list = [[0,-4, 3.5, 8.5],$/;"	v
 time	path.py	/^import time$/;"	i
 ObjectDetection	test.py	/^from imageai.Detection import ObjectDetection$/;"	i
 detections	test.py	/^detections = detector.detectObjectsFromImage(input_image=os.path.join(execution_path , "\/image\/image2.jpg"), output_image_path=os.path.join(execution_path , "image2new.jpg"))$/;"	v
 detector	test.py	/^detector = ObjectDetection()$/;"	v
 execution_path	test.py	/^execution_path = os.getcwd()$/;"	v
 os	test.py	/^import os$/;"	i
-img	test_follow.py	/^            img=get_sensor_image(v0)$/;"	v
+color	test_follow.py	/^color=0$/;"	v
+img	test_follow.py	/^            img = get_sensor_image(v0)$/;"	v
+math	test_follow.py	/^import math$/;"	i
 path_update	test_follow.py	/^from path import path_update$/;"	i
 plt	test_follow.py	/^from matplotlib import pyplot as plt$/;"	i
+position	test_follow.py	/^position=[0,0]$/;"	v
 rec_image	test_follow.py	/^def rec_image(img_rgb):$/;"	f
-target_people	test_follow.py	/^target_people=1$/;"	v
+recognize	test_follow.py	/^recognize=False$/;"	v
+size	test_follow.py	/^size=0$/;"	v
+target_people	test_follow.py	/^target_people=6$/;"	v
 time	test_follow.py	/^import time$/;"	i
 I	utils.py	/^from PIL import Image as I$/;"	i
 array	utils.py	/^import array$/;"	i
 calc_angle_by_xy	utils.py	/^def calc_angle_by_xy(x, y):$/;"	f
-change_color_and_resize	utils.py	/^def change_color_and_resize(image):$/;"	f
-clientID	utils.py	/^clientID = vrep.simxStart('127.0.0.1', 19997, True, True, 5000, 5)$/;"	v
+change_color_and_resize	utils.py	/^def change_color_and_resize(image,resolution):$/;"	f
+clientID	utils.py	/^clientID = vrep.simxStart('127.0.0.1', 19997, True, True, 5000, 5)  # Connect to V-REP$/;"	v
 default_height	utils.py	/^default_height = 3$/;"	v
 disconnect	utils.py	/^def disconnect():$/;"	f
 distance_between_drone_and_target	utils.py	/^def distance_between_drone_and_target():$/;"	f
+get_drone_angle	utils.py	/^def get_drone_angle():$/;"	f
 get_drone_position	utils.py	/^def get_drone_position():$/;"	f
 get_position	utils.py	/^def get_position(handle):$/;"	f
 get_sensor_image	utils.py	/^def get_sensor_image(vision_sensor):$/;"	f
@@ -104,6 +111,7 @@ np	utils.py	/^import numpy as np$/;"	i
 rotate_drone	utils.py	/^def rotate_drone(angle):$/;"	f
 rotate_drone_to	utils.py	/^def rotate_drone_to(angle):$/;"	f
 set_target_position	utils.py	/^def set_target_position(pos):$/;"	f
+time	utils.py	/^import time$/;"	i
 vrep	utils.py	/^import vrep$/;"	i
 c_AddStatusbarMessage	vrep.py	/^c_AddStatusbarMessage       = ct.CFUNCTYPE(ct.c_int32,ct.c_int32, ct.POINTER(ct.c_char), ct.c_int32)(("simxAddStatusbarMessage", libsimx))$/;"	v
 c_AppendStringSignal	vrep.py	/^c_AppendStringSignal        = ct.CFUNCTYPE(ct.c_int32,ct.c_int32, ct.POINTER(ct.c_char), ct.POINTER(ct.c_ubyte), ct.c_int32, ct.c_int32)(("simxAppendStringSignal", libsimx))$/;"	v

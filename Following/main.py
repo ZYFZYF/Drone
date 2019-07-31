@@ -28,6 +28,7 @@ if __name__ == '__main__':
         #     _, ret = vrep.simxGetObjectOrientation(clientID, target, -1, vrep.simx_opmode_blocking)
         #     print(ret)
         #     time.sleep(0.5)
+
         while True:
             path_update()
     except KeyboardInterrupt:

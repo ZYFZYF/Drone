@@ -127,12 +127,13 @@ c_SynchronousTrigger	.\vrep.py	/^c_SynchronousTrigger        = ct.CFUNCTYPE(ct.c
 c_TransferFile	.\vrep.py	/^c_TransferFile              = ct.CFUNCTYPE(ct.c_int32,ct.c_int32, ct.POINTER(ct.c_char), ct.POINTER(ct.c_char), ct.c_int32, ct.c_int32)(("simxTransferFile", libsimx))$/;"	v
 c_WriteStringStream	.\vrep.py	/^c_WriteStringStream         = ct.CFUNCTYPE(ct.c_int32,ct.c_int32, ct.POINTER(ct.c_char), ct.POINTER(ct.c_ubyte), ct.c_int32, ct.c_int32)(("simxWriteStringStream", libsimx))$/;"	v
 calc_angle_by_xy	.\utils.py	/^def calc_angle_by_xy(x, y):$/;"	f
-change_color_and_resize	.\utils.py	/^def change_color_and_resize(image):$/;"	f
+change_color_and_resize	.\utils.py	/^def change_color_and_resize(image,resolution):$/;"	f
 clientID	.\mesh.py	/^    clientID = vrep.simxStart('127.0.0.1', 19997, True,$/;"	v
-clientID	.\utils.py	/^clientID = vrep.simxStart('127.0.0.1', 19997, True, True, 5000, 5)$/;"	v
+clientID	.\utils.py	/^clientID = vrep.simxStart('127.0.0.1', 19997, True, True, 5000, 5)  # Connect to V-REP$/;"	v
 clusters	.\facerecognition\portrait_detection.py	/^clusters=[]$/;"	v
 cm	.\facerecognition\portrait_detection.py	/^import matplotlib.cm as cm$/;"	i
 color	.\facerecognition\portrait_detection.py	/^    color = (255, 255, 255)$/;"	v
+color	.\test_follow.py	/^color=0$/;"	v
 color_mask	.\facerecognition\contour_detection.py	/^def color_mask(img):$/;"	f
 color_ranges	.\facerecognition\contour_detection.py	/^color_ranges=[]$/;"	v
 contours	.\facerecognition\portrait_detection.py	/^contours=[]$/;"	v
@@ -161,14 +162,15 @@ file_extension	.\vrep.py	/^        file_extension = '.dylib'$/;"	v
 file_extension	.\vrep.py	/^        file_extension = '.so'$/;"	v
 file_extension	.\vrep.py	/^    file_extension = '.so'$/;"	v
 find_contours	.\facerecognition\contour_detection.py	/^def find_contours(mask):$/;"	f
+get_drone_angle	.\utils.py	/^def get_drone_angle():$/;"	f
 get_drone_position	.\utils.py	/^def get_drone_position():$/;"	f
-get_person_color	.\facerecognition\contour_detection.py	/^def get_person_color(img_rgb, bounding_parallelogram_box):$/;"	f
+get_person_color	.\facerecognition\contour_detection.py	/^def get_person_color(img_rgb, bounding_parallelogram_box, i):$/;"	f
 get_position	.\utils.py	/^def get_position(handle):$/;"	f
 get_sensor_image	.\utils.py	/^def get_sensor_image(vision_sensor):$/;"	f
 get_target_position	.\utils.py	/^def get_target_position():$/;"	f
 id_to_color	.\facerecognition\contour_detection.py	/^id_to_color=('red','green','blue','deep grey','shadow grey')$/;"	v
 img	.\facerecognition\portrait_detection.py	/^img = cv2.imread('a26.png')$/;"	v
-img	.\test_follow.py	/^            img=get_sensor_image(v0)$/;"	v
+img	.\test_follow.py	/^            img = get_sensor_image(v0)$/;"	v
 known_face_encodings	.\facerecognition\portrait_detection.py	/^known_face_encodings = []$/;"	v
 known_face_encodings	.\facerecognition\recognition.py	/^known_face_encodings = []$/;"	v
 known_face_names	.\facerecognition\portrait_detection.py	/^known_face_names = []$/;"	v
@@ -179,6 +181,7 @@ libsimx	.\vrep.py	/^libsimx = None$/;"	v
 logging	.\facerecognition\contour_detection.py	/^import logging$/;"	i
 logging	.\utils.py	/^import logging$/;"	i
 mask	.\facerecognition\portrait_detection.py	/^mask=union_color_range(img, boundaries)$/;"	v
+math	.\test_follow.py	/^import math$/;"	i
 math	.\utils.py	/^import math$/;"	i
 matplotlib	.\facerecognition\portrait_detection.py	/^import matplotlib.cm as cm$/;"	i
 matplotlib	.\facerecognition\portrait_detection.py	/^import matplotlib.pyplot as plt$/;"	i
@@ -191,6 +194,7 @@ np	.\facerecognition\contour_detection.py	/^import numpy as np$/;"	i
 np	.\facerecognition\portrait_detection.py	/^import numpy as np$/;"	i
 np	.\facerecognition\recognition.py	/^import numpy as np$/;"	i
 np	.\mesh.py	/^import numpy as np$/;"	i
+np	.\path.py	/^import numpy as np$/;"	i
 np	.\utils.py	/^import numpy as np$/;"	i
 num_clusters	.\facerecognition\portrait_detection.py	/^num_clusters=10$/;"	v
 os	.\test.py	/^import os$/;"	i
@@ -204,6 +208,7 @@ plt	.\facerecognition\contour_detection.py	/^from matplotlib import pyplot as pl
 plt	.\facerecognition\portrait_detection.py	/^import matplotlib.pyplot as plt$/;"	i
 plt	.\main.py	/^from matplotlib import pyplot as plt$/;"	i
 plt	.\test_follow.py	/^from matplotlib import pyplot as plt$/;"	i
+position	.\test_follow.py	/^position=[0,0]$/;"	v
 ps	.\mesh.py	/^        ps = np.arange(0.004,0.02,0.002)$/;"	v
 pts1	.\facerecognition\portrait_detection.py	/^    pts1 = np.float32([rec[0], rec[1], rec[2], rec[3]])$/;"	v
 pts2	.\facerecognition\portrait_detection.py	/^    pts2 = np.float32([[0, 131], [0, 0], [126, 0], [126, 131]])$/;"	v
@@ -212,6 +217,7 @@ rec_image	.\main.py	/^def rec_image(img):$/;"	f
 rec_image	.\test_follow.py	/^def rec_image(img_rgb):$/;"	f
 recogize_portrait	.\facerecognition\portrait_detection.py	/^def recogize_portrait(portrait_rgb):$/;"	f
 recogize_portrait	.\facerecognition\recognition.py	/^def recogize_portrait(portrait_rgb):$/;"	f
+recognize	.\test_follow.py	/^recognize=False$/;"	v
 result	.\facerecognition\portrait_detection.py	/^    result = cv2.cvtColor(result, cv2.COLOR_BGR2RGB)$/;"	v
 result	.\facerecognition\portrait_detection.py	/^    result = cv2.warpPerspective(img, matrix, (126, 131))$/;"	v
 rng	.\facerecognition\portrait_detection.py	/^import random as rng$/;"	i
@@ -955,16 +961,18 @@ simx_return_remote_error_flag	.\vrepConst.py	/^simx_return_remote_error_flag    
 simx_return_split_progress_flag	.\vrepConst.py	/^simx_return_split_progress_flag    =0x000010        # previous similar command not yet fully processed (applies to opmode_oneshot_split operation modes) $/;"	v
 simx_return_timeout_flag	.\vrepConst.py	/^simx_return_timeout_flag        =0x000002        # command reply not received in time for opmode_oneshot_wait operation mode $/;"	v
 single_color_range	.\facerecognition\portrait_detection.py	/^def single_color_range(img,boundaries):$/;"	f
+size	.\test_follow.py	/^size=0$/;"	v
 start	.\mesh.py	/^                    start = time.time()$/;"	v
 start_time	.\path.py	/^start_time = 0$/;"	v
 struct	.\vrep.py	/^import struct$/;"	i
 sys	.\vrep.py	/^import sys$/;"	i
-target_people	.\test_follow.py	/^target_people=1$/;"	v
-task_list	.\path.py	/^task_list = [[-4.075003147, 3.399998665, 8.425001144],$/;"	v
+target_people	.\test_follow.py	/^target_people=6$/;"	v
+task_list	.\path.py	/^task_list = [[0,-4, 3.5, 8.5],$/;"	v
 time	.\main.py	/^import time$/;"	i
 time	.\mesh.py	/^import time$/;"	i
 time	.\path.py	/^import time$/;"	i
 time	.\test_follow.py	/^import time$/;"	i
+time	.\utils.py	/^import time$/;"	i
 two_color_mask	.\facerecognition\portrait_detection.py	/^two_color_mask=mask$/;"	v
 union_color_range	.\facerecognition\portrait_detection.py	/^def union_color_range(img,boundaries):$/;"	f
 vrep	.\mesh.py	/^import vrep$/;"	i
