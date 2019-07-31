@@ -1,14 +1,16 @@
 #include <iostream>
 #include "PlanningUpdater.h"
 #include "../../Common/utils/utils.h"
+#include "../../Common/config/Handle.h"
+
 bool use_vision = false;
-Point cylinder_pos;
+Point cylinder_pos, recog_circle_pos, recog_target_pos, single_circle_pos, single_target_pos;
 PlanningUpdater::PlanningUpdater(int time_step, int client_id) : Updater(time_step, client_id)
 {
     std::cout << "Try to get necessary handle" << std::endl;
-    simxGetObjectHandle(m_cid, "Quadricopter_base", &m_handle_drone, simx_opmode_blocking);
-    simxGetObjectHandle(m_cid, "Quadricopter_target", &m_handle_target, simx_opmode_blocking);
-    simxGetObjectHandle(m_cid, "Target", &m_handle_hot_target, simx_opmode_blocking);
+    m_handle_drone = Handle::Instance()->getObjectHandle("Quadricopter_base", m_cid);
+    m_handle_target = Handle::Instance()->getObjectHandle("Quadricopter_target", m_cid);
+    m_handle_hot_target = Handle::Instance()->getObjectHandle("Target", m_cid);
     std::cout << "Get drone's handle is " << m_handle_drone << " and target's handle is " << m_handle_target << std::endl;
 }
 
@@ -40,3 +42,13 @@ const Point PlanningUpdater::getHotTargetPosition()
 {
     return utils::getObjectPosition(m_handle_hot_target, m_cid);
 }
+
+void PlanningUpdater::setPosition(const Point &pos, simxInt handle, simxInt relative_handle)
+{
+    simxFloat p[3];
+    p[0] = pos[0];
+    p[1] = pos[1];
+    p[2] = pos[2];
+    simxSetObjectPosition(m_cid, handle, relative_handle, p, simx_opmode_oneshot);
+}
+
