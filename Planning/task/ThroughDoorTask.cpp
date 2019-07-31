@@ -9,7 +9,7 @@ void ThroughDoorTask::Execute(PlanningPathUpdater *t)
 
     //std::cout << error << ' ' << error.norm() << std::endl;
     //std::cout << (t->getDronePosition() - m_target_pos).norm() << std::endl;
-    if ((t->getDronePosition() - m_previous_round_pos).norm() < CLOSE_THRESHOLD)
+    if ((t->getDronePosition() - m_target_pos).norm() < CLOSE_THRESHOLD)
     {
         m_close_rounds++;
     } else
@@ -20,11 +20,11 @@ void ThroughDoorTask::Execute(PlanningPathUpdater *t)
     {
         std::cout << "close rounds is " << m_close_rounds << std::endl;
     }
-    if (m_close_rounds >= CLOSE_ROUNDS_LIMIT && (t->getDronePosition() - m_target_pos).norm() < CLOSE_THRESHOLD)
+    if (m_close_rounds >= CLOSE_ROUNDS_LIMIT)
     {
         t->finishCurrentTask();
     }
-    m_previous_round_pos = t->getDronePosition();
+    //m_previous_round_pos = t->getDronePosition();
 }
 
 const std::string ThroughDoorTask::getName()

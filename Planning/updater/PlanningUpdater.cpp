@@ -4,7 +4,7 @@
 #include "../../Common/config/Handle.h"
 
 bool use_vision = false;
-Point cylinder_pos;
+Point cylinder_pos, recog_circle_pos, recog_target_pos, single_circle_pos, single_target_pos;
 PlanningUpdater::PlanningUpdater(int time_step, int client_id) : Updater(time_step, client_id)
 {
     std::cout << "Try to get necessary handle" << std::endl;

@@ -27,6 +27,7 @@ float target_offsetx;
 float target_offsety;
 float circlex;
 float circley;
+float t_startx, t_starty, t_finishx, t_finishy, t_targetx, t_targety;
 Point position;
 simxFloat angle[3];
 Point tar_position;
@@ -85,18 +86,30 @@ void PlanningVisionUpdater::update()
                 {
                     starty = i;
                     startx = j;
+                    t_startx = i;
+                    t_starty = j;
                 }
                 finishy = i;
                 finishx = j;
+                t_finishx = i;
+                t_finishy = j;
             }
     if (startx == -1)
     {
         cout << "左摄像机未发现抓取物体" << endl;
-        return;
     } else
     {
         targetx_left = 1.0f * (startx + finishx) / 2 - 1.0f * channel0.cols / 2;
         targety_left = 1.0f * channel0.rows / 2 - 1.0f * (starty + finishy) / 2;
+
+        position = utils::getObjectPosition(camera0, m_cid);
+        t_targetx = (t_startx + t_finishx) / 2;
+        t_targety = (t_starty + t_finishy) / 2;
+        target_offsetx = (position[2] - target_height) * rate / 1280 * (640 - t_targety);
+        target_offsety = (position[2] - target_height) * rate / 1280 * (t_targetx - 360);
+        single_target_pos.setX(position[0] + target_offsetx * cos(angle[2]) + target_offsety * sin(angle[2]));
+        single_target_pos.setY(position[1] + target_offsety * cos(angle[2]) - target_offsetx * sin(angle[2]));
+        single_target_pos.setZ(plane);
     }
 
     cv::Mat gray0;
@@ -111,6 +124,7 @@ void PlanningVisionUpdater::update()
     } else
     {
         cout << "左摄像机没找到圆" << endl;
+        return;
     }
 
     if (simxGetVisionSensorImage(clientID, camera1, resolution, &image, 0, simx_opmode_buffer) != simx_return_ok)
@@ -171,13 +185,16 @@ void PlanningVisionUpdater::update()
     Point tmp = utils::getCoordinateInLeftCamera(x_p_left, x_p_right, (y_p_left + y_p_right) / 2);
     tmp.setX(-tmp.x());
     setPosition(tmp, circle_dummy, camera0);
-    cout << "camera0's position = " << utils::getObjectPosition(camera0, m_cid) << endl;
+    Point camera0_pos = utils::getObjectPosition(camera0, m_cid);
+    recog_circle_pos = Point(camera0_pos.x() + tmp.y(), camera0_pos.y() + tmp.x(), camera0_pos.z() - tmp.z());
+    cout << "camera0's position = " << camera0_pos << endl;
     cout << "                   = " << tmp <<endl;
 //    cout << "circle_dummy's position = " << utils::getObjectPosition(circle_dummy, m_cid) << endl;
     tmp = utils::getCoordinateInLeftCamera(targetx_left, targetx_right, (targety_left + targety_right) / 2);
     tmp.setX(-tmp.x());
     setPosition(tmp, target_dummy, camera0);
-    cout << "camera0's position = " << utils::getObjectPosition(camera0, m_cid) << endl;
+    recog_target_pos = Point(camera0_pos.x() + tmp.y(), camera0_pos.y() + tmp.x(), camera0_pos.z() - tmp.z());
+    cout << "camera0's position = " << camera0_pos << endl;
     cout << "                   = " << tmp <<endl;
 //    cout << "target_dummy's position = " << utils::getObjectPosition(target_dummy, m_cid) << endl;
 }

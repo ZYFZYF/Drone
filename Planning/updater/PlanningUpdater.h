@@ -5,6 +5,8 @@
 #include "../../Common/updater/Updater.h"
 extern bool use_vision;
 extern Point cylinder_pos;
+extern Point recog_target_pos, recog_circle_pos;
+extern Point single_target_pos, single_circle_pos;
 class PlanningUpdater: public Updater
 {
 public:

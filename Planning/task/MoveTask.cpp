@@ -69,7 +69,7 @@ void MoveTask::Execute(PlanningPathUpdater *t)
     {
         std::cout << "close rounds is " << m_close_rounds << std::endl;
     }
-    m_previous_round_pos = t->getDronePosition();
+    //m_previous_round_pos = t->getDronePosition();
 }
 
 float MoveTask::getDistance(Router *router) const

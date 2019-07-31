@@ -28,8 +28,35 @@ void GrabTask::Execute(PlanningPathUpdater *t)
     {
         m_now_target_index++;
         m_close_rounds = 0;
-        if (m_now_target_index == 3)
+        //二次标定
+        if(m_now_target_index == 1)
         {
+            use_vision = true;
+            utils::sleep(MICRO_SECONDS_FOR_DISCRIMINATE);
+            use_vision = false;
+
+            Point circle_pos = utils::getObjectPosition("CircleDummy", t->getCid());
+            Point target_pos = utils::getObjectPosition("TargetDummy", t->getCid());
+            std::cout << "second result : circle_pos = " << circle_pos << std::endl;
+            std::cout << "second result : target_pos = " << target_pos << std::endl;
+            std::cout << "second record result : circle_pos = " << recog_circle_pos << std::endl;
+            std::cout << "second record result : target_pos = " << recog_target_pos << std::endl;
+            std::cout << "second signal record result : target_pos = " << single_target_pos << std::endl;
+            Point selected_pos = target_pos;
+            selected_pos.setX(7.2f);
+            selected_pos.setY(-10.4f);
+            m_path_points.emplace_back(selected_pos.x(), selected_pos.y(), GRAB_START_HEIGHT);
+            m_path_points.emplace_back(selected_pos.x(), selected_pos.y(), GRAB_START_HEIGHT - 0.3f);
+            m_path_points.emplace_back(selected_pos.x(), selected_pos.y(), GRAB_START_HEIGHT - 0.325f);
+            m_path_points.emplace_back(selected_pos.x(), selected_pos.y(), GRAB_START_HEIGHT);
+            for(int i = 0; i < m_path_points.size(); i ++)
+            {
+                std::cout << i << ' ' << m_path_points[i] << std::endl;
+            }
+        }
+        if (m_now_target_index == m_path_points.size() - 1)
+        {
+            std::cout << "TATQAQ" << std::endl;
             t->setHand();
             utils::sleep(3000);
         }
@@ -66,13 +93,22 @@ void GrabTask::Enter(PlanningPathUpdater *t)
     use_vision = false;
     Point circle_pos = utils::getObjectPosition("CircleDummy", t->getCid());
     Point target_pos = utils::getObjectPosition("TargetDummy", t->getCid());
-    std::cout << "circle_pos = " << circle_pos << std::endl;
-    std::cout << "target_pos = " << target_pos << std::endl;
+    std::cout << "first result : circle_pos = " << circle_pos << std::endl;
+    std::cout << "first result : target_pos = " << target_pos << std::endl;
+    std::cout << "first record result : circle_pos = " << recog_circle_pos << std::endl;
+    std::cout << "first record result : target_pos = " << recog_target_pos << std::endl;
+    std::cout << "first signal record result : target_pos = " << single_target_pos << std::endl;
     Point selected_pos = target_pos;
-    m_path_points.emplace_back(selected_pos.x(), selected_pos.y(), GRAB_START_HEIGHT);
-    m_path_points.emplace_back(selected_pos.x(), selected_pos.y(), GRAB_START_HEIGHT - 0.3f);
-    m_path_points.emplace_back(selected_pos.x(), selected_pos.y(), GRAB_START_HEIGHT - 0.325f);
-    m_path_points.emplace_back(selected_pos.x(), selected_pos.y(), GRAB_START_HEIGHT);
+    Point now_position = t->getDronePosition();
+    if(fabsf(now_position.x() - 7.2f) < fabsf(selected_pos.x() - 7.2f))
+    {
+        selected_pos.setX(now_position.x());
+    }
+    if(fabsf(now_position.y() + 10.4f) < fabsf(selected_pos.y() + 10.4f))
+    {
+        selected_pos.setY(now_position.y());
+    }
+    m_path_points.emplace_back(selected_pos.x(), selected_pos.y(), 2.5f);
     for(const auto &point: m_path_points)
     {
         std::cout << point << std::endl;
