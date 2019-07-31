@@ -4,8 +4,8 @@ from facerecognition.contour_detection import *
 from facerecognition.recognition import *
 import math
 from matplotlib import pyplot as plt
+from path import path_update
 size=[0,0]
-recognize=False
 rec_count=0
 position=[0,0]
 target_people=3
@@ -67,7 +67,7 @@ if __name__ == '__main__':
             img = get_sensor_image(v0)
             plt.imsave('img',img)
             rec_image(img)
-            # path_update()
+            path_update()
     except KeyboardInterrupt:
         pass
     finally:

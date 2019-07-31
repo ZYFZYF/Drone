@@ -7,6 +7,8 @@ import numpy as np
 import logging
 import time
 
+recognize = False
+
 logging.getLogger().setLevel(logging.INFO)
 vrep.simxFinish(-1)
 clientID = vrep.simxStart('127.0.0.1', 19997, True, True, 5000, 5)  # Connect to V-REP

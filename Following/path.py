@@ -3,8 +3,6 @@ from utils import *
 import time
 import numpy as np
 
-from test_follow import recognize
-
 task_list = [[0, -4, 3.5, 8.5],
              [0, -4, 0, 8.5],
              [0, -4, 0, 3],
